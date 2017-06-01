@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+
+<tsg>
+  <elements>
+    
+    <element code="I01" name="Authorization Information Qualifier" min="2" max="2" repr="enum">
+      <value code="00" name="No Authorization Information Present (No Meaningful Information in I02)"/>
+      <value code="01" name="UCS Communications ID"/>
+      <value code="02" name="EDX Communications ID"/>
+      <value code="03" name="Additional Data Identification"/>
+      <value code="04" name="Rail Communications ID"/>
+      <value code="05" name="Department of Defense (DoD) Communication Identifier"/>
+      <value code="06" name="United States Federal Government Communication Identifier"/>
+    </element>
+
+    <element code="I02" name="Authorization Information" min="10" max="10" repr="mixed"/>
+
+    <element code="I03" name="Security Information Qualifier" min="2" max="2" repr="enum">
+      <value code="00" name="No Security Information Present (No Meaningful Information in I04)"/>
+      <value code="01" name="Password"/>
+    </element>
+
+    <element code="I04" name="Security Information" min="10" max="10" repr="mixed"/>
+
+    <element code="I05" name="Interchange ID Qualifier" min="2" max="2" repr="enum">
+      <value code="01" name="Duns (Dun + Bradstreet)"/>
+      <value code="02" name="SCAC (Standard Carrier Alpha Code)"/>
+      <value code="03" name="FMC (Federal Maritime Commission)"/>
+      <value code="04" name="IATA (International Air Transport Association)"/>
+      <value code="08" name="UCC EDI Communications ID (Comm ID)"/>
+      <value code="09" name="X.121 (CCITT)"/>
+      <value code="10" name="Department of Defense (DoD) Activity Address Code"/>
+      <value code="11" name="DEA (Drug Enforcement Administration)"/>
+      <value code="12" name="Phone (Telephone Companies)"/>
+      <value code="13" name="UCS Code (The UCS Code is a Code Used for UCS Transmissions; it includes the Area Code and Telephone Number of a Modem; it Does Not Include Punctuation, Blanks or Access Code)"/>
+      <value code="14" name="Duns Plus Suffix"/>
+      <value code="15" name="Petroleum Accountants Society of Canada Company Code"/>
+      <value code="16" name="Duns Number With 4-Character Suffix"/>
+      <value code="17" name="American Bankers Association (ABA) Transit Routing Number (Including Check Digit, 9 Digit)"/>
+      <value code="18" name="Association of American Railroads (AAR) Standard Distribution Code"/>
+      <value code="19" name="EDI Council of Australia (EDICA) Communications ID Number (COMM ID)"/>
+      <value code="20" name="Health Industry Number (HIN)"/>
+      <value code="21" name="Integrated Postsecondary Education Data System, or (IPEDS)"/>
+      <value code="22" name="Federal Interagency Commission on Education, or FICE"/>
+      <value code="23" name="National Center for Education Statistics Common Core of Data 12-Digit Number for Pre-K-Grade 12 Institutes, or NCES"/>
+      <value code="24" name="The College Board's Admission Testing Program 4-Digit Code of Postsecondary Institutes, or ATP"/>
+      <value code="25" name="American College Testing Program 4-Digit Code of Postsecondary Institutions, or ACT"/>
+      <value code="26" name="Statistics of Canada List of Postsecondary Institutions"/>
+      <value code="27" name="Carrier Identification Number as assigned by Health Care Financing Administration (HCFA)"/>
+      <value code="28" name="Fiscal Intermediary Identification Number as assigned by Health Care Financing Administration (HCFA)"/>
+      <value code="29" name="Medicare Provider and Supplier Identification Number as assigned by Health Care Financing Administration (HCFA)"/>
+      <value code="30" name="U.S. Federal Tax Identification Number"/>
+      <value code="31" name="Jurisdiction Identification Number Plus 4 as assigned by the International Association of Industrial Accident Boards and Commissions (IAIABC)"/>
+      <value code="32" name="U.S. Federal Employer Identification Number (FEIN)"/>
+      <value code="33" name="National Association of Insurance Commissioners Company Code (NAIC)"/>
+      <value code="34" name="Medicaid Provider and Supplier Identification Number as assigned by individual State Medicaid Agencies in conjunction with Health Care Financing Administration (HCFA)"/>
+      <value code="35" name="Statistics Canada Canadian College Student Information System Institution Codes"/>
+      <value code="36" name="Statistics Canada University Student Information System Institution Codes"/>
+      <value code="37" name="Society of Property Information Compilers and Analysts"/>
+      <value code="AM" name="Association Mexicana del Codigo de Producto (AMECOP) Communication ID"/>
+      <value code="NR" name="National Retail Merchants Association (NRMA) - Assigned"/>
+      <value code="SN" name="Standard Address Number"/>
+      <value code="ZZ" name="Mutually Defined"/>
+    </element>
+
+    <element code="I06" name="Interchange Sender ID" min="15" max="15" repr="mixed"/>
+    <element code="I07" name="Interchange Receiver ID" min="15" max="15" repr="mixed"/>
+    <element code="I08" name="Interchange Date" min="6" max="6" repr="date"/>
+    <element code="I09" name="Interchange Time" min="4" max="4" repr="time"/>
+
+    <element code="I10" name="Interchange Control Standards Identifier" min="1" max="1" repr="enum">
+      <value code="U" name="U.S. EDI Community of ASC X12, TDCC, and UCS"/>
+    </element>
+
+    <element code="I11" name="Interchange Control Version Number" min="5" max="5" repr="enum">
+      <value code="00200" name="Standard Issued as ANSI X12.5-1987"/>
+      <value code="00201" name="Draft Standard for Trial Use Approved by ASC X12 Through August 1988"/>
+      <value code="00204" name="Draft Standard for Trial Use Approved by ASC X12 Through May 1989"/>
+      <value code="00300" name="Standard Issued as ANSI X12.5-1992"/>
+      <value code="00301" name="Draft Standard for Trial Use Approved for Publication by ASC X12 Procedures Review Board Through October 1990"/>
+      <value code="00302" name="Draft Standard for Trial Use Approved for Publication by ASC X12 Procedures Review Board Through October 1991"/>
+      <value code="00303" name="Draft Standard for Trial Use Approved for Publication by ASC X12 Procedures Review Board Through October 1992"/>
+      <value code="00304" name="Draft Standards for Trial Use Approved for Publication by ASC X12 Procedures Review Board through October 1993"/>
+      <value code="00305" name="Draft Standards for Trial Use Approved for Publication by ASC X12 Procedures Review Board through October 1994"/>
+      <value code="00306" name="Draft Standards for Trial Use Approved for Publication by ASC X12 Procedures Review Board through October 1995"/>
+      <value code="00307" name="Draft Standards for Trial Use Approved for Publication by ASC X12 Procedures Review Board through October 1996"/>
+      <value code="00400" name="Standard Issued as ANSI X12.5-1997"/>
+      <value code="00401" name="Draft Standards for Trial Use Approved for Publication by ASC X12 Procedures Review Board through October 1997"/>
+      <value code="00402" name="Draft Standards for Trial Use Approved for Publication by ASC X12 Procedures Review Board through October 1998"/>
+    </element>
+
+    <element code="I12" name="Interchange Control Number" min="9" max="9" repr="numeric"/>
+
+    <element code="I13" name="Acknowledgment Requested" min="1" max="1" repr="enum">
+      <value code="0" name="No Acknowledgment Requested"/>
+      <value code="1" name="Interchange Acknowledgment Requested"/>
+    </element>
+
+    <element code="I14" name="Usage Indicator" min="1" max="1" repr="enum">
+      <value code="I" name="Information"/>
+      <value code="P" name="Production Data"/>
+      <value code="T" name="Test Data"/>
+    </element>
+
+	<!-- FIXME ID ? -->
+    <element code="I15" name="Component Element Separator" min="1" max="1" repr="mixed"/>
+
+    <element code="I16" name="Number of Included Functional Groups" min="1" max="5" repr="numeric"/>
+
+    <element code="28" name="Group Control Number" min="1" max="9" repr="numeric"/>
+    <element code="96" name="Number of Included Segments" min="1" max="10" repr="numeric"/>
+    <element code="97" name="Number of Transaction Sets Included" min="1" max="6" repr="numeric"/>
+    <element code="124" name="Application Receiver's Code" min="2" max="15" repr="mixed"/>
+    <element code="142" name="Application Sender's Code" min="2" max="15" repr="mixed"/>
+    
+    <element code="143" name="Transaction Set Identifier Code" desc=""
+    min="3" max="3" repr="enum">
+      <value code="100" name="Insurance Plan Description"/>
+      <value code="101" name="Name and Address Lists"/>
+      <value code="102" name="Associated Data"/>
+      <value code="103" name="Abandoned Property Filings"/>
+      <value code="104" name="Air Shipment Information"/>
+      <value code="105" name="Business Entity Filings"/>
+      <value code="106" name="Motor Carrier Rate Proposal"/>
+      <value code="107" name="Request for Motor Carrier Rate Proposal"/>
+      <value code="108" name="Response to a Motor Carrier Rate Proposal"/>
+      <value code="109" name="Vessel Content Details"/>
+      <value code="110" name="Air Freight Details and Invoice"/>
+      <value code="111" name="Individual Insurance Policy and Client Information"/>
+      <value code="112" name="Property Damage Report"/>
+      <value code="120" name="Vehicle Shipping Order"/>
+      <value code="121" name="Vehicle Service"/>
+      <value code="124" name="Vehicle Damage"/>
+      <value code="125" name="Multilevel Railcar Load Details"/>
+      <value code="126" name="Vehicle Application Advice"/>
+      <value code="127" name="Vehicle Baying Order"/>
+      <value code="128" name="Dealer Information"/>
+      <value code="129" name="Vehicle Carrier Rate Update"/>
+      <value code="130" name="Student Educational Record (Transcript)"/>
+      <value code="131" name="Student Educational Record (Transcript) Acknowledgment"/>
+      <value code="135" name="Student Loan Application"/>
+      <value code="138" name="Education Testing Results Request and Report"/>
+      <value code="139" name="Student Loan Guarantee Result"/>
+      <value code="140" name="Product Registration"/>
+      <value code="141" name="Product Service Claim Response"/>
+      <value code="142" name="Product Service Claim"/>
+      <value code="143" name="Product Service Notification"/>
+      <value code="144" name="Student Loan Transfer and Status Verification"/>
+      <value code="146" name="Request for Student Educational Record (Transcript)"/>
+      <value code="147" name="Response to Request for Student Educational Record (Transcript)"/>
+      <value code="148" name="Report of Injury, Illness or Incident"/>
+      <value code="149" name="Notice of Tax Adjustment or Assessment"/>
+      <value code="150" name="Tax Rate Notification"/>
+      <value code="151" name="Electronic Filing of Tax Return Data Acknowledgment"/>
+      <value code="152" name="Statistical Government Information"/>
+      <value code="153" name="Unemployment Insurance Tax Claim or Charge Information"/>
+      <value code="154" name="Uniform Commercial Code Filing"/>
+      <value code="155" name="Business Credit Report"/>
+      <value code="157" name="Notice of Power of Attorney"/>
+      <value code="159" name="Motion Picture Booking Confirmation"/>
+      <value code="160" name="Transportation Automatic Equipment Identification"/>
+      <value code="161" name="Train Sheet"/>
+      <value code="163" name="Transportation Appointment Schedule Information"/>
+      <value code="170" name="Revenue Receipts Statement"/>
+      <value code="175" name="Court and Law Enforcement Notice"/>
+      <value code="176" name="Court Submission"/>
+      <value code="180" name="Return Merchandise Authorization and Notification"/>
+      <value code="185" name="Royalty Regulatory Report"/>
+      <value code="186" name="Insurance Underwriting Requirements Reporting"/>
+      <value code="188" name="Educational Course Inventory"/>
+      <value code="189" name="Application for Admission to Educational Institutions"/>
+      <value code="190" name="Student Enrollment Verification"/>
+      <value code="191" name="Student Loan Pre-Claims and Claims"/>
+      <value code="194" name="Grant or Assistance Application"/>
+      <value code="195" name="Federal Communications Commission (FCC) License Application"/>
+      <value code="196" name="Contractor Cost Data Reporting"/>
+      <value code="197" name="Real Estate Title Evidence"/>
+      <value code="198" name="Loan Verification Information"/>
+      <value code="199" name="Real Estate Settlement Information"/>
+      <value code="200" name="Mortgage Credit Report"/>
+      <value code="201" name="Residential Loan Application"/>
+      <value code="202" name="Secondary Mortgage Market Loan Delivery"/>
+      <value code="203" name="Secondary Mortgage Market Investor Report"/>
+      <value code="204" name="Motor Carrier Load Tender"/>
+      <value code="205" name="Mortgage Note"/>
+      <value code="206" name="Real Estate Inspection"/>
+      <value code="210" name="Motor Carrier Freight Details and Invoice"/>
+      <value code="211" name="Motor Carrier Bill of Lading"/>
+      <value code="212" name="Motor Carrier Delivery Trailer Manifest"/>
+      <value code="213" name="Motor Carrier Shipment Status Inquiry"/>
+      <value code="214" name="Transportation Carrier Shipment Status Message"/>
+      <value code="215" name="Motor Carrier Pick-up Manifest"/>
+      <value code="216" name="Motor Carrier Shipment Pick-up Notification"/>
+      <value code="217" name="Motor Carrier Loading and Route Guide"/>
+      <value code="218" name="Motor Carrier Tariff Information"/>
+      <value code="219" name="Logistics Service Request"/>
+      <value code="220" name="Logistics Service Response"/>
+      <value code="222" name="Cartage Work Assignment"/>
+      <value code="223" name="Consolidators Freight Bill and Invoice"/>
+      <value code="224" name="Motor Carrier Summary Freight Bill Manifest"/>
+      <value code="225" name="Response to a Cartage Work Assignment"/>
+      <value code="240" name="Motor Carrier Package Status"/>
+      <value code="242" name="Data Status Tracking"/>
+      <value code="244" name="Product Source Information"/>
+      <value code="248" name="Account Assignment/Inquiry and Service/Status"/>
+      <value code="249" name="Animal Toxicological Data"/>
+      <value code="250" name="Purchase Order Shipment Management Document"/>
+      <value code="251" name="Pricing Support"/>
+      <value code="252" name="Insurance Producer Administration"/>
+      <value code="255" name="Underwriting Information Services"/>
+      <value code="256" name="Periodic Compensation"/>
+      <value code="260" name="Application for Mortgage Insurance Benefits"/>
+      <value code="261" name="Real Estate Information Request"/>
+      <value code="262" name="Real Estate Information Report"/>
+      <value code="263" name="Residential Mortgage Insurance Application Response"/>
+      <value code="264" name="Mortgage Loan Default Status"/>
+      <value code="265" name="Real Estate Title Insurance Services Order"/>
+      <value code="266" name="Mortgage or Property Record Change Notification"/>
+      <value code="267" name="Individual Life, Annuity and Disability Application"/>
+      <value code="268" name="Annuity Activity"/>
+      <value code="270" name="Eligibility, Coverage or Benefit Inquiry"/>
+      <value code="271" name="Eligibility, Coverage or Benefit Information"/>
+      <value code="272" name="Property and Casualty Loss Notification"/>
+      <value code="273" name="Insurance/Annuity Application Status"/>
+      <value code="275" name="Patient Information"/>
+      <value code="276" name="Health Care Claim Status Request"/>
+      <value code="277" name="Health Care Claim Status Notification"/>
+      <value code="278" name="Health Care Services Review Information"/>
+      <value code="280" name="Voter Registration Information"/>
+      <value code="285" name="Commercial Vehicle Safety and Credentials Information Exchange"/>
+      <value code="286" name="Commercial Vehicle Credentials"/>
+      <value code="288" name="Wage Determination"/>
+      <value code="290" name="Cooperative Advertising Agreements"/>
+      <value code="300" name="Reservation (Booking Request) (Ocean)"/>
+      <value code="301" name="Confirmation (Ocean)"/>
+      <value code="303" name="Booking Cancellation (Ocean)"/>
+      <value code="304" name="Shipping Instructions"/>
+      <value code="306" name="Dock Receipt"/>
+      <value code="309" name="Customs Manifest"/>
+      <value code="310" name="Freight Receipt and Invoice (Ocean)"/>
+      <value code="311" name="Canadian Customs Information"/>
+      <value code="312" name="Arrival Notice (Ocean)"/>
+      <value code="313" name="Shipment Status Inquiry (Ocean)"/>
+      <value code="315" name="Status Details (Ocean)"/>
+      <value code="317" name="Delivery/Pickup Order"/>
+      <value code="319" name="Terminal Information"/>
+      <value code="321" name="Demurrage Guarantee (Ocean)"/>
+      <value code="322" name="Terminal Operations and Intermodal Ramp Activity"/>
+      <value code="323" name="Vessel Schedule and Itinerary (Ocean)"/>
+      <value code="324" name="Vessel Stow Plan (Ocean)"/>
+      <value code="325" name="Consolidation of Goods in Container"/>
+      <value code="326" name="Consignment Summary List"/>
+      <value code="350" name="Customs Status Information"/>
+      <value code="352" name="U.S. Customs Carrier General Order Status"/>
+      <value code="353" name="Customs Events Advisory Details"/>
+      <value code="354" name="U.S. Customs Automated Manifest Archive Status"/>
+      <value code="355" name="U.S. Customs Acceptance/Rejection"/>
+      <value code="356" name="U.S. Customs Permit to Transfer Request"/>
+      <value code="357" name="U.S. Customs In-Bond Information"/>
+      <value code="358" name="Customs Consist Information"/>
+      <value code="361" name="Carrier Interchange Agreement (Ocean)"/>
+      <value code="362" name="Cargo Insurance Advice of Shipment"/>
+      <value code="404" name="Rail Carrier Shipment Information"/>
+      <value code="410" name="Rail Carrier Freight Details and Invoice"/>
+      <value code="411" name="Freight Details and Invoice Summary (Rail)"/>
+      <value code="414" name="Rail Carhire Settlements"/>
+      <value code="417" name="Rail Carrier Waybill Interchange"/>
+      <value code="418" name="Rail Advance Interchange Consist"/>
+      <value code="419" name="Advance Car Disposition"/>
+      <value code="420" name="Car Handling Information"/>
+      <value code="421" name="Estimated Time of Arrival and Car Scheduling"/>
+      <value code="422" name="Shipper's Car Order"/>
+      <value code="423" name="Rail Industrial Switch List"/>
+      <value code="425" name="Rail Waybill Request"/>
+      <value code="426" name="Rail Revenue Waybill"/>
+      <value code="429" name="Railroad Retirement Activity"/>
+      <value code="431" name="Railroad Station Master File"/>
+      <value code="432" name="Rail Deprescription"/>
+      <value code="433" name="Railroad Reciprocal Switch File"/>
+      <value code="434" name="Railroad Mark Register Update Activity"/>
+      <value code="435" name="Standard Transportation Commodity Code Master"/>
+      <value code="436" name="Locomotive Information"/>
+      <value code="437" name="Railroad Junctions and Interchanges Activity"/>
+      <value code="440" name="Shipment Weights"/>
+      <value code="451" name="Railroad Event Report"/>
+      <value code="452" name="Railroad Problem Log Inquiry or Advice"/>
+      <value code="453" name="Railroad Service Commitment Advice"/>
+      <value code="455" name="Railroad Parameter Trace Registration"/>
+      <value code="456" name="Railroad Equipment Inquiry or Advice"/>
+      <value code="460" name="Railroad Price Distribution Request or Response"/>
+      <value code="463" name="Rail Rate Reply"/>
+      <value code="466" name="Rate Request"/>
+      <value code="468" name="Rate Docket Journal Log"/>
+      <value code="470" name="Railroad Clearance"/>
+      <value code="475" name="Rail Route File Maintenance"/>
+      <value code="485" name="Ratemaking Action"/>
+      <value code="486" name="Rate Docket Expiration"/>
+      <value code="490" name="Rate Group Definition"/>
+      <value code="492" name="Miscellaneous Rates"/>
+      <value code="494" name="Scale Rate Table"/>
+      <value code="500" name="Medical Event Reporting"/>
+      <value code="501" name="Vendor Performance Review"/>
+      <value code="503" name="Pricing History"/>
+      <value code="504" name="Clauses and Provisions"/>
+      <value code="511" name="Requisition"/>
+      <value code="517" name="Material Obligation Validation"/>
+      <value code="521" name="Income or Asset Offset"/>
+      <value code="527" name="Material Due-In and Receipt"/>
+      <value code="536" name="Logistics Reassignment"/>
+      <value code="540" name="Notice of Employment Status"/>
+      <value code="561" name="Contract Abstract"/>
+      <value code="567" name="Contract Completion Status"/>
+      <value code="568" name="Contract Payment Management Report"/>
+      <value code="601" name="U.S. Customs Export Shipment Information"/>
+      <value code="602" name="Transportation Services Tender"/>
+      <value code="620" name="Excavation Communication"/>
+      <value code="622" name="Intermodal Ramp Activity"/>
+      <value code="625" name="Well Information"/>
+      <value code="650" name="Maintenance Service Order"/>
+      <value code="715" name="Intermodal Group Loading Plan"/>
+      <value code="805" name="Contract Pricing Proposal"/>
+      <value code="806" name="Project Schedule Reporting"/>
+      <value code="810" name="Invoice"/>
+      <value code="811" name="Consolidated Service Invoice/Statement"/>
+      <value code="812" name="Credit/Debit Adjustment"/>
+      <value code="813" name="Electronic Filing of Tax Return Data"/>
+      <value code="814" name="General Request, Response or Confirmation"/>
+      <value code="815" name="Cryptographic Service Message"/>
+      <value code="816" name="Organizational Relationships"/>
+      <value code="818" name="Commission Sales Report"/>
+      <value code="819" name="Operating Expense Statement"/>
+      <value code="820" name="Payment Order/Remittance Advice"/>
+      <value code="821" name="Financial Information Reporting"/>
+      <value code="822" name="Account Analysis"/>
+      <value code="823" name="Lockbox"/>
+      <value code="824" name="Application Advice"/>
+      <value code="826" name="Tax Information Exchange"/>
+      <value code="827" name="Financial Return Notice"/>
+      <value code="828" name="Debit Authorization"/>
+      <value code="829" name="Payment Cancellation Request"/>
+      <value code="830" name="Planning Schedule with Release Capability"/>
+      <value code="831" name="Application Control Totals"/>
+      <value code="832" name="Price/Sales Catalog"/>
+      <value code="833" name="Mortgage Credit Report Order"/>
+      <value code="834" name="Benefit Enrollment and Maintenance"/>
+      <value code="835" name="Health Care Claim Payment/Advice"/>
+      <value code="836" name="Procurement Notices"/>
+      <value code="837" name="Health Care Claim"/>
+      <value code="838" name="Trading Partner Profile"/>
+      <value code="839" name="Project Cost Reporting"/>
+      <value code="840" name="Request for Quotation"/>
+      <value code="841" name="Specifications/Technical Information"/>
+      <value code="842" name="Nonconformance Report"/>
+      <value code="843" name="Response to Request for Quotation"/>
+      <value code="844" name="Product Transfer Account Adjustment"/>
+      <value code="845" name="Price Authorization Acknowledgment/Status"/>
+      <value code="846" name="Inventory Inquiry/Advice"/>
+      <value code="847" name="Material Claim"/>
+      <value code="848" name="Material Safety Data Sheet"/>
+      <value code="849" name="Response to Product Transfer Account Adjustment"/>
+      <value code="850" name="Purchase Order"/>
+      <value code="851" name="Asset Schedule"/>
+      <value code="852" name="Product Activity Data"/>
+      <value code="853" name="Routing and Carrier Instruction"/>
+      <value code="854" name="Shipment Delivery Discrepancy Information"/>
+      <value code="855" name="Purchase Order Acknowledgment"/>
+      <value code="856" name="Ship Notice/Manifest"/>
+      <value code="857" name="Shipment and Billing Notice"/>
+      <value code="858" name="Shipment Information"/>
+      <value code="859" name="Freight Invoice"/>
+      <value code="860" name="Purchase Order Change Request - Buyer Initiated"/>
+      <value code="861" name="Receiving Advice/Acceptance Certificate"/>
+      <value code="862" name="Shipping Schedule"/>
+      <value code="863" name="Report of Test Results"/>
+      <value code="864" name="Text Message"/>
+      <value code="865" name="Purchase Order Change Acknowledgment/Request - Seller Initiated"/>
+      <value code="866" name="Production Sequence"/>
+      <value code="867" name="Product Transfer and Resale Report"/>
+      <value code="868" name="Electronic Form Structure"/>
+      <value code="869" name="Order Status Inquiry"/>
+      <value code="870" name="Order Status Report"/>
+      <value code="871" name="Component Parts Content"/>
+      <value code="872" name="Residential Mortgage Insurance Application"/>
+      <value code="875" name="Grocery Products Purchase Order"/>
+      <value code="876" name="Grocery Products Purchase Order Change"/>
+      <value code="877" name="Manufacturer Coupon Family Code Structure"/>
+      <value code="878" name="Product Authorization/De-Authorization"/>
+      <value code="879" name="Price Information"/>
+      <value code="880" name="Grocery Products Invoice"/>
+      <value code="881" name="Manufacturer Coupon Redemption Detail"/>
+      <value code="882" name="Direct Store Delivery Summary Information"/>
+      <value code="883" name="Market Development Fund Allocation"/>
+      <value code="884" name="Market Development Fund Settlement"/>
+      <value code="885" name="Retail Account Characteristics"/>
+      <value code="886" name="Customer Call Reporting"/>
+      <value code="887" name="Coupon Notification"/>
+      <value code="888" name="Item Maintenance"/>
+      <value code="889" name="Promotion Announcement"/>
+      <value code="891" name="Deduction Research Report"/>
+      <value code="893" name="Item Information Request"/>
+      <value code="894" name="Delivery/Return Base Record"/>
+      <value code="895" name="Delivery/Return Acknowledgment or Adjustment"/>
+      <value code="896" name="Product Dimension Maintenance"/>
+      <value code="920" name="Loss or Damage Claim - General Commodities"/>
+      <value code="924" name="Loss or Damage Claim - Motor Vehicle"/>
+      <value code="925" name="Claim Tracer"/>
+      <value code="926" name="Claim Status Report and Tracer Reply"/>
+      <value code="928" name="Automotive Inspection Detail"/>
+      <value code="940" name="Warehouse Shipping Order"/>
+      <value code="943" name="Warehouse Stock Transfer Shipment Advice"/>
+      <value code="944" name="Warehouse Stock Transfer Receipt Advice"/>
+      <value code="945" name="Warehouse Shipping Advice"/>
+      <value code="947" name="Warehouse Inventory Adjustment Advice"/>
+      <value code="980" name="Functional Group Totals"/>
+      <value code="990" name="Response To a Load Tender"/>
+      <value code="994" name="Administrative Message"/>
+      <value code="996" name="File Transfer"/>
+      <value code="997" name="Functional Acknowledgment"/>
+      <value code="998" name="Set Cancellation"/>
+    </element>
+    
+    <element code="329" name="Transaction Set Control Number" min="4" max="9" repr="mixed"/>
+    <element code="337" name="Time" min="4" max="8" repr="time"/>
+    <element code="373" name="Date" min="8" max="8" repr="date"/>
+
+    <element code="455" name="Responsible Agency Code" min="1" max="2" repr="enum">
+      <value code="T" name="Transportation Data Coordinating Committee (TDCC)"/>
+      <value code="X" name="Accredited Standards Committee X12"/>
+      </element>
+
+    <element code="479" name="Functional Identifier Code" min="2" max="2" repr="enum">
+      <value code="AA" name="Account Analysis (822)"/>
+      <value code="AB" name="Logistics Service Request (219)"/>
+      <value code="AC" name="Associated Data (102)"/>
+      <value code="AD" name="Individual Life, Annuity and Disability Application (267)"/>
+      <value code="AF" name="Application for Admission to Educational Institutions (189)"/>
+      <value code="AG" name="Application Advice (824)"/>
+      <value code="AH" name="Logistics Service Response (220)"/>
+      <value code="AI" name="Automotive Inspection Detail (928)"/>
+      <value code="AK" name="Student Educational Record (Transcript) Acknowledgment (131)"/>
+      <value code="AL" name="Set Cancellation (998) and Application Acceptance/Rejection Advice (499)"/>
+      <value code="AN" name="Return Merchandise Authorization and Notification (180)"/>
+      <value code="AO" name="Income or Asset Offset (521)"/>
+      <value code="AP" name="Abandoned Property Filings (103)"/>
+      <value code="AR" name="Warehouse Stock Transfer Shipment Advice (943)"/>
+      <value code="AS" name="Transportation Appointment Schedule Information (163)"/>
+      <value code="AT" name="Animal Toxicological Data (249)"/>
+      <value code="AW" name="Warehouse Inventory Adjustment Advice (947)"/>
+      <value code="BC" name="Business Credit Report (155)"/>
+      <value code="BE" name="Benefit Enrollment and Maintenance (834)"/>
+      <value code="BF" name="Business Entity Filings (105)"/>
+      <value code="BL" name="Motor Carrier Bill of Lading (211)"/>
+      <value code="BS" name="Shipment and Billing Notice (857)"/>
+      <value code="CA" name="Purchase Order Change Acknowledgment/Request - Seller Initiated (865)"/>
+      <value code="CB" name="Unemployment Insurance Tax Claim or Charge Information (153)"/>
+      <value code="CC" name="Clauses and Provisions (504)"/>
+      <value code="CD" name="Credit/Debit Adjustment (812)"/>
+      <value code="CE" name="Cartage Work Assignment (222)"/>
+      <value code="CF" name="Corporate Financial Adjustment Information (844 and 849)"/>
+      <value code="CG" name="Administrative Message (994)"/>
+      <value code="CH" name="Car Handling Information (420)"/>
+      <value code="CI" name="Consolidated Service Invoice/Statement (811)"/>
+      <value code="CJ" name="Manufacturer Coupon Family Code Structure (877)"/>
+      <value code="CK" name="Manufacturer Coupon Redemption Detail (881)"/>
+      <value code="CM" name="Component Parts Content (871)"/>
+      <value code="CN" name="Coupon Notification (887)"/>
+      <value code="CO" name="Cooperative Advertising Agreements (290)"/>
+      <value code="CP" name="Electronic Proposal Information (251, 805)"/>
+      <value code="CR" name="Rail Carhire Settlements (414)"/>
+      <value code="CS" name="Cryptographic Service Message (815)"/>
+      <value code="CT" name="Application Control Totals (831)"/>
+      <value code="CV" name="Commercial Vehicle Safety and Credentials Information Exchange (285)"/>
+      <value code="D3" name="Contract Completion Status (567)"/>
+      <value code="D4" name="Contract Abstract (561)"/>
+      <value code="D5" name="Contract Payment Management Report (568)"/>
+      <value code="DA" name="Debit Authorization (828)"/>
+      <value code="DD" name="Shipment Delivery Discrepancy Information (854)"/>
+      <value code="DF" name="Market Development Fund Allocation (883)"/>
+      <value code="DI" name="Dealer Information (128)"/>
+      <value code="DM" name="Shipper's Car Order (422)"/>
+      <value code="DS" name="Data Status Tracking (242)"/>
+      <value code="DX" name="Direct Exchange Delivery and Return Information (894, 895)"/>
+      <value code="EC" name="Educational Course Inventory (188)"/>
+      <value code="ED" name="Student Educational Record (Transcript) (130)"/>
+      <value code="EI" name="Railroad Equipment Inquiry or Advice (456)"/>
+      <value code="ER" name="Revenue Receipts Statement (170)"/>
+      <value code="ES" name="Notice of Employment Status (540)"/>
+      <value code="EV" name="Railroad Event Report (451)"/>
+      <value code="EX" name="Excavation Communication (620)"/>
+      <value code="FA" name="Functional Acknowledgment (997)"/>
+      <value code="FB" name="Freight Invoice (859)"/>
+      <value code="FC" name="Court and Law Enforcement Information (175, 176)"/>
+      <value code="FG" name="Motor Carrier Loading and Route Guide (217)"/>
+      <value code="FH" name="Motor Carrier Tariff Information (218)"/>
+      <value code="FR" name="Financial Reporting (821, 827)"/>
+      <value code="FT" name="File Transfer (996)"/>
+      <value code="GB" name="Average Agreement Demurrage (423)"/>
+      <value code="GC" name="Damage Claim Transaction Sets (920, 924, 925, 926)"/>
+      <value code="GE" name="General Request, Response or Confirmation (814)"/>
+      <value code="GF" name="Response to a Load Tender (990)"/>
+      <value code="GL" name="Intermodal Group Loading Plan (715)"/>
+      <value code="GP" name="Grocery Products Invoice (880)"/>
+      <value code="GR" name="Statistical Government Information (152)"/>
+      <value code="GT" name="Grant or Assistance Application (194)"/>
+      <value code="HB" name="Eligibility, Coverage or Benefit Information (271)"/>
+      <value code="HC" name="Health Care Claim (837)"/>
+      <value code="HI" name="Health Care Services Review Information (278)"/>
+      <value code="HN" name="Health Care Claim Status Notification (277)"/>
+      <value code="HP" name="Health Care Claim Payment/Advice (835)"/>
+      <value code="HR" name="Health Care Claim Status Request (276)"/>
+      <value code="HS" name="Eligibility, Coverage or Benefit Inquiry (270)"/>
+      <value code="IA" name="Air Freight Details and Invoice (110, 980)"/>
+      <value code="IB" name="Inventory Inquiry/Advice (846)"/>
+      <value code="IC" name="Rail Advance Interchange Consist (418)"/>
+      <value code="ID" name="Insurance/Annuity Application Status (273)"/>
+      <value code="IE" name="Insurance Producer Administration (252)"/>
+      <value code="IF" name="Individual Insurance Policy and Client Information (111)"/>
+      <value code="IG" name="Direct Store Delivery Summary Information (882)"/>
+      <value code="II" name="Rail Freight Details and Invoice Summary (411)"/>
+      <value code="IJ" name="Report of Injury, Illness or Incident (148)"/>
+      <value code="IM" name="Motor Carrier Freight Details and Invoice (210, 980)"/>
+      <value code="IN" name="Invoice Information (810,819)"/>
+      <value code="IO" name="Ocean Shipment Billing Details (310, 312, 980)"/>
+      <value code="IP" name="Intermodal Ramp Activity (622)"/>
+      <value code="IR" name="Rail Carrier Freight Details and Invoice (410, 980)"/>
+      <value code="IS" name="Estimated Time of Arrival and Car Scheduling (421)"/>
+      <value code="KM" name="Commercial Vehicle Credentials (286)"/>
+      <value code="LA" name="Federal Communications Commission (FCC) License Application (195)"/>
+      <value code="LB" name="Lockbox (823)"/>
+      <value code="LI" name="Locomotive Information (436)"/>
+      <value code="LN" name="Property and Casualty Loss Notification (272)"/>
+      <value code="LR" name="Logistics Reassignment (536)"/>
+      <value code="LS" name="Asset Schedule (851)"/>
+      <value code="LT" name="Student Loan Transfer and Status Verification (144)"/>
+      <value code="MA" name="Motor Carrier Summary Freight Bill Manifest (224)"/>
+      <value code="MC" name="Request for Motor Carrier Rate Proposal (107)"/>
+      <value code="MD" name="Department of Defense Inventory Management (527)"/>
+      <value code="ME" name="Mortgage Origination (198, 200, 201, 261, 262, 263, 833, 872)"/>
+      <value code="MF" name="Market Development Funds Settlement (884)"/>
+      <value code="MG" name="Mortgage Servicing Transaction Sets (203, 206, 260, 264, 266)"/>
+      <value code="MH" name="Motor Carrier Rate Proposal (106)"/>
+      <value code="MI" name="Motor Carrier Shipment Status Inquiry (213)"/>
+      <value code="MJ" name="Secondary Mortgage Market Loan Delivery (202)"/>
+      <value code="MK" name="Response to a Motor Carrier Rate Proposal (108)"/>
+      <value code="MM" name="Medical Event Reporting (500)"/>
+      <value code="MN" name="Mortgage Note (205)"/>
+      <value code="MO" name="Maintenance Service Order (650)"/>
+      <value code="MP" name="Motion Picture Booking Confirmation (159)"/>
+      <value code="MQ" name="Consolidators Freight Bill and Invoice (223)"/>
+      <value code="MR" name="Multilevel Railcar Load Details (125)"/>
+      <value code="MS" name="Material Safety Data Sheet (848)"/>
+      <value code="MT" name="Electronic Form Structure (868)"/>
+      <value code="MV" name="Material Obligation Validation (517)"/>
+      <value code="MW" name="Rail Waybill Response (427)"/>
+      <value code="MX" name="Material Claim (847)"/>
+      <value code="MY" name="Response to a Cartage Work Assignment (225)"/>
+      <value code="MZ" name="Motor Carrier Package Status (240)"/>
+      <value code="NC" name="Nonconformance Report (842)"/>
+      <value code="NL" name="Name and Address Lists (101)"/>
+      <value code="NP" name="Notice of Power of Attorney (157)"/>
+      <value code="NT" name="Notice of Tax Adjustment or Assessment (149)"/>
+      <value code="OC" name="Cargo Insurance Advice of Shipment (362)"/>
+      <value code="OG" name="Order Group - Grocery (875, 876)"/>
+      <value code="OR" name="Organizational Relationships (816)"/>
+      <value code="OW" name="Warehouse Shipping Order (940)"/>
+      <value code="PA" name="Price Authorization Acknowledgment/Status (845)"/>
+      <value code="PB" name="Railroad Parameter Trace Registration (455)"/>
+      <value code="PC" name="Purchase Order Change Request - Buyer Initiated (860)"/>
+      <value code="PD" name="Product Activity Data (852)"/>
+      <value code="PE" name="Periodic Compensation (256)"/>
+      <value code="PF" name="Annuity Activity (268)"/>
+      <value code="PG" name="Insurance Plan Description (100)"/>
+      <value code="PH" name="Pricing History (503)"/>
+      <value code="PI" name="Patient Information (275)"/>
+      <value code="PJ" name="Project Schedule Reporting (806)"/>
+      <value code="PK" name="Project Cost Reporting (839) and Contractor Cost Data Reporting (196)"/>
+      <value code="PL" name="Railroad Problem Log Inquiry or Advice (452)"/>
+      <value code="PN" name="Product Source Information (244)"/>
+      <value code="PO" name="Purchase Order (850)"/>
+      <value code="PQ" name="Property Damage Report (112)"/>
+      <value code="PR" name="Purchase Order Acknowledgement (855)"/>
+      <value code="PS" name="Planning Schedule with Release Capability (830)"/>
+      <value code="PT" name="Product Transfer and Resale Report (867)"/>
+      <value code="PU" name="Motor Carrier Shipment Pick-up Notification (216)"/>
+      <value code="PV" name="Purchase Order Shipment Management Document (250)"/>
+      <value code="PY" name="Payment Cancellation Request (829)"/>
+      <value code="QG" name="Product Information (878, 879, 888, 889, 893, 896)"/>
+      <value code="QM" name="Transportation Carrier Shipment Status Message (214)"/>
+      <value code="QO" name="Ocean Shipment Status Information (313, 315)"/>
+      <value code="RA" name="Payment Order/Remittance Advice (820)"/>
+      <value code="RB" name="Railroad Clearance (470)"/>
+      <value code="RC" name="Receiving Advice/Acceptance Certificate (861)"/>
+      <value code="RD" name="Royalty Regulatory Report (185)"/>
+      <value code="RE" name="Warehouse Stock Receipt Advice (944)"/>
+      <value code="RH" name="Railroad Reciprocal Switch File (433)"/>
+      <value code="RI" name="Routing and Carrier Instruction (853)"/>
+      <value code="RJ" name="Railroad Mark Register Update Activity (434)"/>
+      <value code="RK" name="Standard Transportation Commodity Code Master (435)"/>
+      <value code="RL" name="Rail Industrial Switch List (423)"/>
+      <value code="RM" name="Railroad Station Master File (431)"/>
+      <value code="RN" name="Requisition Transaction (511)"/>
+      <value code="RO" name="Ocean Booking Information (300, 301,303)"/>
+      <value code="RP" name="Commission Sales Report (818)"/>
+      <value code="RQ" name="Request for Quotation (840) and Procurement Notices (836)"/>
+      <value code="RR" name="Response to Request For Quotation (843)"/>
+      <value code="RS" name="Order Status Information (869, 870)"/>
+      <value code="RT" name="Report of Test Results (863)"/>
+      <value code="RU" name="Railroad Retirement Activity (429)"/>
+      <value code="RV" name="Railroad Junctions and Interchanges Activity (437)"/>
+      <value code="RW" name="Rail Revenue Waybill (426)"/>
+      <value code="RX" name="Rail Deprescription (432)"/>
+      <value code="RY" name="Request for Student Educational Record (Transcript) (146)"/>
+      <value code="RZ" name="Response to Request for Student Educational Record (Transcript) (147)"/>
+      <value code="SA" name="Air Shipment Information (104)"/>
+      <value code="SB" name="Switch Rails (424)"/>
+      <value code="SC" name="Price/Sales Catalog (832)"/>
+      <value code="SD" name="Student Loan Pre-Claims and Claims (191)"/>
+      <value code="SE" name="Shipper's Export Declaration (601)"/>
+      <value code="SG" name="SG Receiving Advice - Grocery (885)"/>
+      <value code="SH" name="Ship Notice/Manifest (856)"/>
+      <value code="SI" name="Shipment Information (858)"/>
+      <value code="SJ" name="Transportation Automatic Equipment Identification (160)"/>
+      <value code="SL" name="Student Loan Application and Guarantee (135, 139)"/>
+      <value code="SM" name="Motor Carrier Load Tender (204)"/>
+      <value code="SN" name="Rail Route File Maintenance (475)"/>
+      <value code="SO" name="Ocean Shipment Information (304, 306, 309, 311, 317, 319, 321, 322, 323, 324, 325, 350, 352, 353, 354, 355, 356, 357, 358, 361)"/>
+      <value code="SP" name="Specifications/Technical Information (841)"/>
+      <value code="SQ" name="Production Sequence (866)"/>
+      <value code="SR" name="Rail Carrier Shipment Information (404, 419)"/>
+      <value code="SS" name="Shipping Schedule (862)"/>
+      <value code="ST" name="Railroad Service Commitment Advice (453)"/>
+      <value code="SU" name="Account Assignment/Inquiry and Service/Status (248)"/>
+      <value code="SV" name="Student Enrollment Verification (190)"/>
+      <value code="SW" name="Warehouse Shipping Advice (945)"/>
+      <value code="TA" name="Electronic Filing of Tax Return Data Acknowledgment (151)"/>
+      <value code="TC" name="Court Submission (176)"/>
+      <value code="TD" name="Trading Partner Profile (838)"/>
+      <value code="TF" name="Electronic Filing of Tax Return Data (813)"/>
+      <value code="TI" name="Tax Information Exchange (826)"/>
+      <value code="TM" name="Motor Carrier Delivery Trailer Manifest (212)"/>
+      <value code="TN" name="Tax Rate Notification (150)"/>
+      <value code="TO" name="Real Estate Title Services (197, 199, 265)"/>
+      <value code="TP" name="Rail Rate Transactions (460, 463, 466, 468, 485, 486, 490, 492, 494)"/>
+      <value code="TR" name="Train Sheet (161)"/>
+      <value code="TS" name="Transportation Services Tender (602)"/>
+      <value code="TT" name="Education Testing Results Request and Report (138)"/>
+      <value code="TX" name="Text Message (864)"/>
+      <value code="UA" name="Retail Account Characteristics (885)"/>
+      <value code="UB" name="Customer Call Reporting (886)"/>
+      <value code="UC" name="Uniform Commercial Code Filing (154)"/>
+      <value code="UD" name="Deduction Research Report (891)"/>
+      <value code="UI" name="Underwriting Information Services (255)"/>
+      <value code="UP" name="Motor Carrier Pick-up Manifest (215)"/>
+      <value code="UW" name="Insurance Underwriting Requirements Reporting (186)"/>
+      <value code="VA" name="Vehicle Application Advice (126)"/>
+      <value code="VB" name="Vehicle Baying Order (127)"/>
+      <value code="VC" name="Vehicle Shipping Order (120)"/>
+      <value code="VD" name="Vehicle Damage (124)"/>
+      <value code="VE" name="Vessel Content Details (109)"/>
+      <value code="VH" name="Vehicle Carrier Rate Update (129)"/>
+      <value code="VI" name="Voter Registration Information (280)"/>
+      <value code="VS" name="Vehicle Service (121)"/>
+      <value code="WA" name="Product Service Transaction Sets (140, 141, 142, 143)"/>
+      <value code="WB" name="Rail Carrier Waybill Interchange (417)"/>
+      <value code="WG" name="Vendor Performance Review (501)"/>
+      <value code="WI" name="Wage Determination (288)"/>
+      <value code="WL" name="Well Information (625)"/>
+      <value code="WR" name="Shipment Weights (440)"/>
+      <value code="WT" name="Rail Waybill Request (425)"/>
+    </element>
+
+    <element code="480" name="Version / Release / Industry Identifier Code" min="1" max="12" repr="mixed">
+      <value code="001000" name="ASC X12 Standards Approved by ANSI in 1983"/>
+      <value code="002000" name="ASC X12 Standards Approved by ANSI in Feb, 1986"/>
+      <value code="002001" name="Draft Standards Approved by ASC X12 in November 1987"/>
+      <value code="002002" name="Draft Standards Approved by ASC X12 through February 1988"/>
+      <value code="002003" name="Draft Standards Approved by ASC X12 through August 1988"/>
+      <value code="002031" name="Draft Standards Approved by ASC X12 Through February 1989"/>
+      <value code="002040" name="Draft Standards Approved by ASC X12 Through May 1989"/>
+      <value code="002041" name="Draft Standards Approved by ASC X12 Through October 1989"/>
+      <value code="002042" name="Draft Standards Approved By ASC X12 Through February 1990"/>
+      <value code="003000" name="ASC X12 Standards Approved by ANSI in 1992"/>
+      <value code="003010" name="Draft Standards Approved By ASC X12 Through June 1990"/>
+      <value code="003011" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through February 1991"/>
+      <value code="003012" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through June 1991"/>
+      <value code="003020" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through October 1991"/>
+      <value code="003021" name="Draft Standards Approved for Publication By ASC X12 Procedures Review Board through February 1992"/>
+      <value code="003022" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through June 1992"/>
+      <value code="003030" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board Through October 1992"/>
+      <value code="003031" name="Draft Standards for Publication by ASC X12 Procedures Review Board Through February 1993"/>
+      <value code="003032" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board Through June 1993"/>
+      <value code="003040" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through October 1993"/>
+      <value code="003041" name="Draft Standards Approved for Publication by ASC by ASC X12 Procedures Review Board through February 1994"/>
+      <value code="003042" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through June 1994"/>
+      <value code="003050" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through October 1994"/>
+      <value code="003051" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through February 1995"/>
+      <value code="003052" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through June 1995"/>
+      <value code="003060" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through October 1995"/>
+      <value code="003061" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through February 1996"/>
+      <value code="003062" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through June 1996"/>
+      <value code="003070" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through October 1996"/>
+      <value code="003071" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through February 1997"/>
+      <value code="003072" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through June 1997"/>
+      <value code="004000" name="ASC X12 Standards Approved by ANSI in 1997"/>
+      <value code="004010" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through October 1997"/>
+      <value code="004011" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through February 1998"/>
+      <value code="004012" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through June 1998"/>
+      <value code="004020" name="Draft Standards Approved for Publication by ASC X12 Procedures Review Board through October 1998"/>
+    </element>
+
+  </elements>
+  
+  <segments>
+    
+    <segment code="GE" name="Functional Group Trailer">
+      <elemref code="97" reqr="mandatory" type="simple"/>
+      <elemref code="28" reqr="mandatory" type="simple"/>
+    </segment>
+    
+    <segment code="GS" name="Functional Group Header">
+      <elemref code="479" reqr="mandatory" type="simple"/>
+      <elemref code="142" reqr="mandatory" type="simple"/>
+      <elemref code="124" reqr="mandatory" type="simple"/>
+      <elemref code="373" reqr="mandatory" type="simple"/>
+      <elemref code="337" reqr="mandatory" type="simple"/>
+      <elemref code="28" reqr="mandatory" type="simple"/>
+      <elemref code="455" reqr="mandatory" type="simple"/>
+      <elemref code="480" reqr="mandatory" type="simple"/>
+    </segment>
+    
+    <segment code="IEA" name="Interchange Control Trailer">
+      <elemref code="I16" reqr="mandatory" type="simple"/>
+      <elemref code="I12" reqr="mandatory" type="simple"/>
+    </segment>
+    
+    <segment code="ISA" name="Interchange Control Header">
+      <elemref code="I01" reqr="mandatory" type="simple"/>
+      <elemref code="I02" reqr="mandatory" type="simple"/>
+      <elemref code="I03" reqr="mandatory" type="simple"/>
+      <elemref code="I04" reqr="mandatory" type="simple"/>
+      <elemref code="I05" reqr="mandatory" type="simple"/>
+      <elemref code="I06" reqr="mandatory" type="simple"/>
+      <elemref code="I05" reqr="mandatory" type="simple"/>
+      <elemref code="I07" reqr="mandatory" type="simple"/>
+      <elemref code="I08" reqr="mandatory" type="simple"/>
+      <elemref code="I09" reqr="mandatory" type="simple"/>
+      <elemref code="I10" reqr="mandatory" type="simple"/>
+      <elemref code="I11" reqr="mandatory" type="simple"/>
+      <elemref code="I12" reqr="mandatory" type="simple"/>
+      <elemref code="I13" reqr="mandatory" type="simple"/>
+      <elemref code="I14" reqr="mandatory" type="simple"/>
+      <elemref code="I15" reqr="mandatory" type="simple"/>
+    </segment>
+
+
+    <segment code="SE" name="Transaction Set Trailer">
+      <elemref code="96" reqr="mandatory" type="simple"/>
+      <elemref code="329" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="ST" name="Transaction Set Header">
+      <elemref code="143" reqr="mandatory" type="simple"/>
+      <elemref code="329" reqr="mandatory" type="simple"/>
+    </segment>
+
+  </segments>
+  
+</tsg>

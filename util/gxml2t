@@ -1,0 +1,311 @@
+#!/usr/bin/perl -w
+use Getopt::Std;
+use XML::DOM;
+$| = 1;
+
+my $XML     = '<?xml version="1.0" encoding="UTF-8"?><tsg/>';
+my $PARSER  = new XML::DOM::Parser;
+my $DOC     = $PARSER->parse($XML);
+my $ROOT    = $DOC->getDocumentElement;
+my $ELEMENT = $ROOT->cloneNode;
+
+# what is the difference between optional and conditional?
+my %REQR = ( 'O' => 'optional',
+	     'M' => 'mandatory',
+	     'C' => 'conditional');
+
+my %TYPE = ( 'AN' => 'mixed',    # Alphanumeric presumably?
+	     'DT' => 'numeric',  # Date ?
+	     'ID' => 'enum',     # Enumerated list
+	     'N0' => 'numeric',  # Integer?
+	     'R'  => 'numeric',  # Real?
+	     'TM' => 'numeric'); # Time?
+
+
+my %options;
+
+getopt('s:v:', \%options);
+
+my $tree = {};
+my $file = shift or die "Usage: gxml2t <gxmlfile> ...\n";
+
+do {
+    read_xml($tree, $file);
+} while($file = shift);
+
+my $doc = &new_document;
+my $root = $doc->getDocumentElement;
+
+$root->setAttribute('standard', $options{'s'}) if defined $options{'s'};
+$root->setAttribute('version',  $options{'v'}) if defined $options{'v'};
+
+my $elements     = new_element('elements');
+my $composites   = new_element('composites');
+my $segments     = new_element('segments');
+my $transactions = new_element('transactions');
+
+foreach (values %{$tree->{_transactions}}) {
+    $transactions->appendChild(&transaction($_));
+}
+
+foreach (values %{$tree->{_segments}}) {
+    $segments->appendChild(&segment($_));
+}
+
+foreach (keys %{$tree->{_elements}}) {
+    $elements->appendChild(&element($tree->{_elements}{$_},
+				    $tree->{_codelists}{$_}));
+}
+
+foreach (values %{$tree->{_composites}}) {
+    $composites->appendChild(&composite($_));
+}
+
+$root->appendChild($elements);
+$root->appendChild($composites);
+$root->appendChild($segments);
+$root->appendChild($transactions);
+print $doc->toString;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub segment {
+    my($item) = @_;
+    my %attr;
+    $attr{code} = $item->{ID};
+    $attr{name} = $item->{Name};
+
+    my $segment = &new_element('segment', undef, %attr);
+
+    foreach(@{$item->{_list}}) {
+	my %attr;
+
+	my $type = 'error';
+	$type = 'simple'    if $_->{_type} eq 'Element';
+	$type = 'composite' if $_->{_type} eq 'Composite';
+
+	my $reqr = 'error';
+	$reqr = $REQR{$_->{StdRequirement}} if defined $_->{StdRequirement};
+
+	$attr{code} = $_->{ID};
+	$attr{name} = $_->{Name};
+	$attr{type} = $type;
+	$attr{reqr} = defined $reqr ? $reqr : 'error';
+	$segment->appendChild(&new_element('elemref', undef, %attr));
+    }
+
+    $segment;
+}
+
+
+sub composite {
+    my($item) = @_;
+    my %attr;
+    $attr{code} = $item->{ID};
+    $attr{name} = $item->{Name};
+
+    my $composite = &new_element('composite', undef, %attr);
+
+    foreach(@{$item->{_list}}) {
+	my %attr;
+
+	my $type = 'error';
+	$type = 'elemref' if $_->{_type} eq 'Element';
+
+	my $reqr = 'error';
+	$reqr = $REQR{$_->{StdRequirement}} if defined $_->{StdRequirement};
+
+	$attr{code} = $_->{ID};
+	$attr{name} = $_->{Name};
+	$attr{reqr} = defined $reqr ? $reqr : 'error';
+	$composite->appendChild(&new_element($type, undef, %attr));
+    }
+
+    $composite;
+}
+
+
+
+
+
+
+sub element {
+    my($item, $codes) = @_;
+    my %attr;
+
+    my $repr = 'error';
+    $repr = $TYPE{$item->{DataType}} if defined $item->{DataType};
+    
+    $attr{'code'}  = $item->{ID};
+    $attr{'name'}  = $item->{Name};
+    $attr{'min'}   = $item->{MinSize};
+    $attr{'max'}   = $item->{MaxSize};
+    $attr{'repr'}  = defined $repr ? $repr : 'error';
+
+    my $element = &new_element('element', undef, %attr);
+
+    if(defined $codes) {
+	foreach(keys %$codes) {
+	    $element->appendChild(&new_element('value', undef,
+					       'code' => $_,
+					       'name' => $codes->{$_}));
+
+	}
+    }
+
+    return $element;
+}
+
+
+sub transaction {
+    my($item) = @_;
+    my $tag = 'error';
+    my %attr;
+
+    $tag = $item->{_type};
+    $tag =~ tr/[A-Z]/[a-z]/;
+    $tag = 'segref' if $tag eq 'segment';
+
+    $attr{code} = $item->{ID};
+    $attr{name} = $item->{Name};
+
+    $attr{version}  = $item->{StdVersion};
+    $attr{standard} = $item->{Standard};
+    $attr{group}    = $item->{GroupID};
+    
+    $reqr = $item->{StdRequirement};
+    $attr{reqr} = $REQR{$reqr} if defined $reqr;
+
+    my $min;
+    my $max;
+    $max = $item->{MaxUse} if defined $item->{MaxUse};
+    $max = $item->{Count}  if defined $item->{Count};
+
+    #$min = 1 if $reqr eq 'mandatory';
+    
+    ($max = 9999, $min = $1 + 1) if defined $max && $max =~ />(\d+)/;
+    
+    $attr{reps} = $max;
+    #$attr{min} = $min;
+    #$attr{max} = $max;
+
+
+    my $element = new_element($tag, undef, %attr);
+
+    foreach(@{$item->{_list}}) {
+	$element->appendChild(&transaction($_))
+	    if $_->{_type} =~ /Segment|Loop/;
+    }
+
+    return $element;
+}
+
+
+
+
+
+
+
+
+sub new_document { return $DOC->cloneNode(1)  }
+sub new_element  {
+    my($tag, $text, %attr) = @_;
+    my($name, $value);
+    my $element = $ELEMENT->cloneNode(1);
+    $element->setTagName($tag);
+    $element->addText($text) if defined $text;
+    $element->setAttribute($name, $value) while(($name, $value) = each %attr);
+    return $element;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub read_xml {
+    my($tree, $file) = @_;
+    my $parser = new XML::DOM::Parser;
+    my $doc = $parser->parsefile ($file);
+    &interpret_xml($doc->getDocumentElement, $tree);
+    $doc->dispose;
+}
+
+sub interpret_xml {
+    my($node, $output, $target) = @_;
+    $output = {} unless defined $output;
+    $target = {} unless defined $target;
+
+    #printf "%s\n", $node->getData if $node->getNodeType == TEXT_NODE;
+    
+    $target->{_text} = $node->getData if $node->getNodeType == TEXT_NODE;
+    
+    return if $node->getNodeType == TEXT_NODE;
+
+
+    my $tag = $node->getTagName;
+
+    my @children = $node->getChildNodes;
+
+    my $newtarget = {};
+    $newtarget = $target if $tag eq 'ChildNodes';
+    
+    foreach (@children) { &interpret_xml($_, $output, $newtarget) }
+    
+
+    my $id = $newtarget->{ID};
+    $newtarget->{_type} = $tag;
+    $target->{$tag} = $newtarget->{_text};
+    
+    if($tag =~ /^(Segment|Loop|Transaction|Element|Composite)$/) {
+	push(@{$target->{_list}}, $newtarget)
+	    if($tag ne 'Segment' || $newtarget->{ID} !~ /^(ISA|GS|GE|IEA)$/);
+    }
+    
+    $output->{_transactions}{$id} = $newtarget if $tag eq 'Transaction';
+    $output->{_segments}{$id}     = $newtarget if $tag eq 'Segment';
+    $output->{_elements}{$id}     = $newtarget if $tag eq 'Element';
+    $output->{_composites}{$id}   = $newtarget if $tag eq 'Composite';
+    
+
+    if($tag eq 'Code') {
+	my $parent = $node->getParentNode;
+	my $pid = $parent->getAttribute(ID);
+    
+	if($pid =~ /^CD\.([^\.]+)/) {
+	    $pid = $1;
+	    $newtarget->{ID} = $pid;
+	    $output->{_codelists}{$pid}{$newtarget->{CodeValue}} =
+		$newtarget->{CodeName} if defined $newtarget->{CodeValue};
+	    #printf STDERR "%s / %s: %s\n",
+	    #$pid, $newtarget->{CodeValue}, $newtarget->{CodeName}
+	}
+    }
+
+    return $output;
+}

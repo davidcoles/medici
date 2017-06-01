@@ -1,0 +1,219 @@
+#!/usr/bin/perl
+
+use XML::DOM;
+use strict;
+
+my $file   = shift or die "$0 <tsgfile>\n";
+my $parser = new XML::DOM::Parser or die "Parser: $!\n";
+my $doc    = $parser->parsefile ($file);
+my $root   = $doc->getDocumentElement;
+
+elements($root);
+#composites($root);
+#components($root);
+#segments($root);
+
+#elementValues($root);
+#compositeElemrefs($root);
+#segmentElemrefs($root);
+
+sub elements {
+    my($root) = @_;
+
+    print "static edi_francesco_element_info_t element_info[] = {\n";
+
+    foreach($root->getElementsByTagName('element'), undef) {
+	my $code = 'NULL';
+	my $name = 'NULL';
+	my $desc = 'NULL';
+	my $repr = 0;
+	my $min  = 0;
+	my $max  = 0;
+
+	if(defined $_) {
+	    $code = $_->getAttribute('code');
+	    $name = $_->getAttribute('name');
+	    $desc = $_->getAttribute('desc');
+	    $repr = $_->getAttribute('repr');
+	    $min  = $_->getAttribute('min');
+	    $max  = $_->getAttribute('max');
+	    
+	    $repr = 'EDI_ISO2382X' if $repr =~ /^mixed/;
+	    $repr = 'EDI_ISO2382A' if $repr =~ /^alpha/;
+	    $repr = 'EDI_ISO2382N' if $repr =~ /^numeric/;
+	    $repr = 'EDI_DECIMAL1' if $repr =~ /^1decimal/;
+	    $repr = 'EDI_DECIMAL2' if $repr =~ /^2decimal/;
+	    $repr = 'EDI_DECIMAL3' if $repr =~ /^3decimal/;
+	    $repr = 'EDI_DECIMAL4' if $repr =~ /^4decimal/;
+	    $repr = 'EDI_ENUMLIST' if $repr =~ /^enum/;
+	    $repr = 'EDI_DATESPEC' if $repr =~ /^date/;
+	    $repr = 'EDI_TIMESPEC' if $repr =~ /^time/;
+	    
+	    ($code, $name, $desc) =
+		(map { s/\042/\\\042/g; $_ ne '' ? '"'.$_ .'"' : 'NULL'}
+		 $code, $name, $desc);
+	}
+
+	printf "  { %-8s, %-12s, %2d, %2d, %s, %s }%s\n",
+	$code, $repr, $min, $max, $name, $desc, defined $_ ? ',' : '';
+    }
+
+    print "};\n\n";
+}
+
+sub segments {
+    foreach($root->getElementsByTagName('segment')) {
+	my $code = $_->getAttribute('code');
+	my $name = $_->getAttribute('name');
+	my $desc = $_->getAttribute('desc');
+	
+	($code, $name, $desc) =
+	    (map { s/\042/\\\042/g; $_ ne '' ? '"'.$_ .'"' : 'NULL'}
+	     $code, $name, $desc);
+	
+	printf "{ %-5s, %s, %s },\n", $code, $name, $desc;    
+    }
+}
+
+
+sub composites {
+    my($root) = @_;
+    
+    foreach($root->getElementsByTagName('composite'), undef) {
+	my $code = 'NULL';
+	my $name = 'NULL';
+	my $desc = 'NULL';
+
+	if(defined $_) {
+	    $code = $_->getAttribute('code');
+	    $name = $_->getAttribute('name');
+	    $desc = $_->getAttribute('desc');
+	    
+	    ($code, $name, $desc) =
+	    (map { s/\042/\\\042/g; $_ ne '' ? '"'.$_ .'"' : 'NULL'}
+	     $code, $name, $desc);
+	}
+
+	printf "{ %-6s, %s, %s },\n", $code, $name, $desc;
+    }
+}
+
+
+sub segments {
+    my($root) = @_;
+
+    foreach($root->getElementsByTagName('segment'), undef) {
+        my $code = 'NULL';
+        my $name = 'NULL';
+        my $desc = 'NULL';
+	
+        if(defined $_) {
+            $code = $_->getAttribute('code');
+            $name = $_->getAttribute('name');
+            $desc = $_->getAttribute('desc');
+	    
+	    ($code, $name, $desc) =
+		(map { s/\042/\\\042/g; $_ ne '' ? '"'.$_ .'"' : 'NULL'}
+		 $code, $name, $desc);
+	}
+	
+	printf "{ %-6s, %s, %s },\n", $code, $name, $desc;
+    }
+}
+
+
+sub elementValues {
+    my($root) = @_;
+
+    foreach($root->getElementsByTagName('value'), undef) {
+	my $code = 'NULL';
+        my $name = 'NULL';
+        my $desc = 'NULL';
+        my $parc = 'NULL';
+	
+	if(defined $_) {
+	    $code = $_->getAttribute('code');
+	    $name = $_->getAttribute('name');
+	    $desc = $_->getAttribute('desc');
+	    $parc = $_->getParentNode->getAttribute('code');
+	    
+	    ($parc, $code, $name, $desc) =
+		(map { s/\042/\\\042/g; $_ ne '' ? '"'.$_ .'"' : 'NULL'}
+		 $parc, $code, $name, $desc);
+	}
+
+	printf "{ %-5s, %-14s, %s, %s },\n", $parc, $code, $name, $desc;
+    }
+}
+
+sub components {
+    my($root) = @_;
+
+    foreach($root->getElementsByTagName('component'), undef) {
+	my $parc = 'NULL';
+	my $code = 'NULL';
+	my $reqr = 'NULL';
+	
+	if(defined $_) {
+	    $code = $_->getAttribute('code');
+	    $reqr = $_->getAttribute('reqr');
+	    $parc = $_->getParentNode->getAttribute('code');
+	    $reqr = ($reqr =~ /^m/) ? 'EDI_MANDATORY' : 'EDI_CONDITIONAL';
+	    
+	    ($parc, $code) =
+		(map { s/\042/\\\042/g; $_ ne '' ? '"'.$_ .'"' : 'NULL'}
+		 $parc, $code);
+	}
+
+	printf "{ %-6s, %-6s, %-15s },\n", $parc, $code, $reqr;
+    }
+}
+
+sub compositeElemrefs {
+    my($root) = @_;
+    my @node;
+    
+    foreach($root->getElementsByTagName('composite')) {
+	push(@node, $_->getElementsByTagName('elemref'));
+    }
+
+    elemrefs(@node);
+}
+
+sub segmentElemrefs {
+    my($root) = @_;
+    my @node;
+    
+    foreach($root->getElementsByTagName('segment')) {
+	push(@node, $_->getElementsByTagName('elemref'));
+    }
+
+    elemrefs(@node);
+}
+
+sub elemrefs {
+    my(@node) = @_;
+
+    foreach(@node, undef) {
+	my $code = 'NULL';
+	my $reqr = 'NULL';
+	my $type = 'NULL';
+	my $parc = 'NULL';
+	
+	if(defined $_) {
+	    $code = $_->getAttribute('code');
+	    $reqr = $_->getAttribute('reqr');
+	    $type = $_->getAttribute('type');
+	    $parc = $_->getParentNode->getAttribute('code');
+	    
+	    $reqr = ($reqr =~ /^m/) ? 'EDI_MANDATORY' : 'EDI_CONDITIONAL';
+	    $type = ($type =~ /^c/) ? 'EDI_COMPOSITE' : 'EDI_ELEMENT';
+	    
+	    ($parc, $code) =
+		(map { s/\042/\\\042/g; $_ ne '' ? '"'.$_ .'"' : 'NULL'}
+		 $parc, $code);
+	}
+	
+	printf "{ %-5s, %-6s, %-15s, %-13s },\n", $parc, $code, $reqr, $type;
+    }
+}

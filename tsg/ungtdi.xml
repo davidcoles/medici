@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+
+<!-- TRADACOMS Version 9 (1995) -->
+
+<tsg>
+  <elements>
+    <element code="STDS01" name="Syntax Rules Identifier" min="1" max="4" repr="mixed"/>
+    <element code="STDS02" name="Syntax Rules Version" min="1" max="4" repr="mixed"/>
+    <element code="FROM01" name="Transmission Sender Code" min="1" max="14" repr="mixed"/>
+    <element code="FROM02" name="Transmission Sender Name" min="1" max="35" repr="mixed"/>
+    <element code="UNTO01" name="Transmission Recipient Code" min="1" max="14" repr="mixed"/>
+    <element code="UNTO02" name="Transmission Recipient Name" min="1" max="35" repr="mixed"/>
+    <element code="TRDT01" name="Transmission Date" min="1" max="6" repr="numeric"/>
+    <element code="TRDT02" name="Transmission Time" min="1" max="6" repr="numeric"/>
+    <element code="SNRF" name="Sender's Transmission Reference" min="1" max="14" repr="mixed"/>
+    <element code="RCRF" name="Recipient's Transmission Reference" min="1" max="14" repr="mixed"/>
+    <element code="APRF" name="Application Reference" min="1" max="14" repr="mixed">
+      <value code="ACKHDR" name="Acknowledgement of Order"/>
+      <value code="AVLHDR" name="Availability Report"/>
+      <value code="BTOHDR" name="Book Order File"/>
+      <value code="CAKHDR" name="Claims Acknowledgement File"/>
+      <value code="CLAHDR" name="Claims File"/>
+      <value code="CORHDR" name="Complex Order"/>
+      <value code="CRAHDR" name="Credit Advice File"/>
+      <value code="CREHDR" name="Credit Note File"/>
+      <value code="CUSHDR" name="Customer Information File"/>
+      <value code="DELHDR" name="Delivery Notification File"/>
+      <value code="DLCHDR" name="Delivery Confirmation File"/>
+      <value code="DRAHDR" name="Debit Advice File"/>
+      <value code="DYEHDR" name="Dye Instruction File"/>
+      <value code="EFTHDR" name="Electronic Funds Transaction File"/>
+      <value code="EXCHDR" name="Exception Condition File"/>
+      <value code="GENHDR" name="General Communications File"/>
+      <value code="HOTHDR" name="Hot Card File"/>
+      <value code="HSOHDR" name="Home shopping Order File"/>
+      <value code="INTHDR" name="Interchange Acknowledgement File"/>
+      <value code="INVFIL" name="Invoice File"/>
+      <value code="ISSUES" name="Issues File"/>
+      <value code="LPRHDR" name="Location Planning Report file"/>
+      <value code="ORDHDR" name="Order File"/>
+      <value code="PAYHDR" name="Payment Order File"/>
+      <value code="PICHDR" name="Picking Instructions File"/>
+      <value code="PPRHDR" name="Product Planning Report File"/>
+      <value code="PRIHDR" name="Price Information File"/>
+      <value code="PROHDR" name="Product Information File"/>
+      <value code="PVUHDR" name="Price and Availability Updates File"/>
+      <value code="SADHDR" name="Stock Adjustment File"/>
+      <value code="SNPHDR" name="Stock Snapshot File"/>
+      <value code="SORHDR" name="Supply and Return File"/>
+      <value code="SRMHDR" name="Statement/Remittance Details File"/>
+      <value code="UCNHDR" name="Uplift Confirmation File"/>
+      <value code="UPLHDR" name="Uplift Instruction File"/>
+      <value code="UTLHDR" name="Utility Bill File"/>
+    </element>
+
+    <element code="PRCD" name="Transmission Priority Code" min="1" max="1" repr="mixed">
+      <value code="A" name="Urgent"/>
+      <value code="B" name="Normal"/>
+      <value code="C" name="Low"/>
+    </element>
+
+    <element code="MSRF" name="Message Reference" min="1" max="12" repr="numeric"/>
+
+    <element code="TYPE01" name="Message Type" min="1" max="6" repr="mixed">
+      <value code="ACKHDR" name="Acknowledgement of Order"/>
+      <value code="AVLHDR" name="Availability Report"/>
+      <value code="BTOHDR" name="Book Order File"/>
+      <value code="CAKHDR" name="Claims Acknowledgement File"/>
+      <value code="CLAHDR" name="Claims File"/>
+      <value code="CORHDR" name="Complex Order"/>
+      <value code="CRAHDR" name="Credit Advice File"/>
+      <value code="CREHDR" name="Credit Note File"/>
+      <value code="CUSHDR" name="Customer Information File"/>
+      <value code="DELHDR" name="Delivery Notification File"/>
+      <value code="DLCHDR" name="Delivery Confirmation File"/>
+      <value code="DRAHDR" name="Debit Advice File"/>
+      <value code="DYEHDR" name="Dye Instruction File"/>
+      <value code="EFTHDR" name="Electronic Funds Transaction File"/>
+      <value code="EXCHDR" name="Exception Condition File"/>
+      <value code="GENHDR" name="General Communications File"/>
+      <value code="HOTHDR" name="Hot Card File"/>
+      <value code="HSOHDR" name="Home shopping Order File"/>
+      <value code="INTHDR" name="Interchange Acknowledgement File"/>
+      <value code="INVFIL" name="Invoice File"/>
+      <value code="ISSUES" name="Issues File"/>
+      <value code="LPRHDR" name="Location Planning Report file"/>
+      <value code="ORDHDR" name="Order File"/>
+      <value code="PAYHDR" name="Payment Order File"/>
+      <value code="PICHDR" name="Picking Instructions File"/>
+      <value code="PPRHDR" name="Product Planning Report File"/>
+      <value code="PRIHDR" name="Price Information File"/>
+      <value code="PROHDR" name="Product Information File"/>
+      <value code="PVUHDR" name="Price and Availability Updates File"/>
+      <value code="SADHDR" name="Stock Adjustment File"/>
+      <value code="SNPHDR" name="Stock Snapshot File"/>
+      <value code="SORHDR" name="Supply and Return File"/>
+      <value code="SRMHDR" name="Statement/Remittance Details File"/>
+      <value code="UCNHDR" name="Uplift Confirmation File"/>
+      <value code="UPLHDR" name="Uplift Instruction File"/>
+      <value code="UTLHDR" name="Utility Bill File"/>
+    </element>
+
+    <element code="TYPE02" name="Message Version Number" min="1" max="1" repr="numeric"/>
+    <element code="NOSG" name="Number of Segments in Message" min="1" max="10" repr="numeric"/>
+    <element code="NMST" name="Number of Messages in Transmission" min="1" max="5" repr="numeric"/>
+  </elements>
+  
+  <composites>
+    <composite code="STDS" name="Syntax Rules Identifier">
+      <component code="STDS01" reqr="mandatory"/>
+      <component code="STDS02" reqr="mandatory"/>
+    </composite>
+    
+    <composite code="FROM" name="Identification of Transmission Sender">
+      <component code="FROM01" reqr="conditional"/>
+      <component code="FROM02" reqr="conditional"/>
+    </composite>
+    
+    <composite code="UNTO" name="Identification of Transmission Recipient">
+      <component code="UNTO01" reqr="conditional"/>
+      <component code="UNTO02" reqr="conditional"/>
+    </composite>
+    
+    <composite code="TYPE" name="Type of Message">
+      <component code="TYPE01" reqr="mandatory"/>
+      <component code="TYPE02" reqr="mandatory"/>
+    </composite>
+    
+    <composite code="TRDT" name="Date and Time of Transmission">
+      <component code="TRDT01" reqr="mandatory"/>
+      <component code="TRDT02" reqr="conditional"/>
+    </composite>
+    
+  </composites>
+  
+  
+  <segments>
+    <segment code="STX" name="START OF TRANSMISSION" desc="">
+      <elemref code="STDS" reqr="mandatory" type="composite"/>
+      <elemref code="FROM" reqr="mandatory" type="composite"/>
+      <elemref code="UNTO" reqr="mandatory" type="composite"/>
+      <elemref code="TRDT" reqr="mandatory" type="composite"/>
+      <elemref code="SNRF" reqr="mandatory" type="simple"/>
+      <elemref code="RCRF" reqr="conditional" type="simple"/>
+      <elemref code="APRF" reqr="conditional" type="simple"/>
+      <elemref code="PRCD" reqr="conditional" type="simple"/>
+    </segment>
+    
+    <segment code="MHD" name="MESSAGE HEADER" desc="">
+      <elemref code="MSRF" reqr="mandatory" type="simple"/>
+      <elemref code="TYPE" reqr="mandatory" type="composite"/>
+    </segment>
+    
+    <segment code="MTR" name="MESSAGE TRAILER" desc="">
+      <elemref code="NOSG" reqr="mandatory" type="simple"/>
+    </segment>
+    
+    <segment code="END" name="END OF TRANSMISSION" desc="">
+      <elemref code="NMST" reqr="mandatory" type="simple"/>
+    </segment>
+  </segments>
+  
+</tsg>

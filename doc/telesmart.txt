@@ -1,0 +1,893 @@
+
+
+TeleOrdering Ltd
+
+
+
+Value Added Network
+
+Edifact Commands
+And Acknowledgements
+
+
+
+
+
+
+
+
+
+
+
+	Document Reference:	IS/002		
+
+
+	Document Version :	2.0.5
+
+
+	Date :	4th April, 1995
+
+
+	Document Authors :	P Bird (Technical Director, Telesmart API Ltd)
+		S Low (Technical Director, Alprange Communications Ltd)
+
+
+
+
+
+
+
+
+
+
+
+
+	Telesmart API Ltd		TeleOrdering Ltd
+	Quay West		3 The Windmills
+	Trafford Wharf Road		Turk Street
+	Wharfside		Alton
+	Manchester		Hampshire
+	M17 1HH		GU34 1EF
+	
+
+Foreword
+
+
+
+
+The objective of this document is to provide a basic framework of network commands and acknowledgements suitable for use by any Value Added Network service handling EDI (Electronic Data Interchange) data.
+
+It is hoped that the use of the Edifact syntax will encourage the spread of these commands as a worldwide standard and thus make VAN interfacing more generic and therefore easier.  The adoption of Edifact will also enable applications to interface with the networks via standard EDI translation packages, thus removing the need for bespoke programming.
+
+The scope of this document does not cover the communication protocols used to transmit these files, nor does it intend to replace any accepted OSI (X.400) protocols.
+
+COPYRIGHT
+
+
+Information contained in this Manual is the copyright of Telesmart API Ltd and Teleordering Ltd and may not be copied, photocopied, reproduced in any form, sold, hired or loaned without the express permission of either Telesmart API Ltd and/or Teleordering Ltd. Telesmart and/or Teleordering reserve the right to change the contents of this Manual without prior notice and do not give entitlement to the licensee of a revised version.
+
+
+Contents
+
+Foreword	2
+COPYRIGHT	3
+Contents	4
+1.	Introduction	5
+2.	Network Commands Overview	6
+2.1	Create Mailbox List	6
+2.2	Create Postbox List	6
+2.3	Receive Commands	6
+2.4	Delete files	6
+2.5	Set automatic file deletion	6
+2.6	Change Password	6
+3.	Network Command Structure	7
+4.	Code Lists	9
+4.1	Network Command Code List	9
+4.2	Network Acknowledgement Code List	9
+4.3	Interchange Status Code List	9
+4.3.1	Network Session Acknowledgement Status Codes	9
+4.3.2	Mailbox Status Codes	10
+4.3.3	Postbox Status Codes	10
+4.4	Status Diagnostic Information Code List	10
+4.5	Interchange Type Code List	11
+5.	Create Mailbox List Command	12
+6.	Create Postbox List Command	13
+7.	Receive File(s) Command	14
+8.	Delete File(s) Command	16
+9.	Set Automatic File Deletion Command	18
+10.	Change Password Command.	19
+11.	Mailbox and Postbox Listing	20
+11.1	Function	20
+11.2	Structure	20
+11.3	Example	22
+12.	Network Acknowledgement	23
+12.1	Function	23
+12.2	Structure	23
+12.3	Example	25
+13.	Segment Information	26
+13.1	The BGM Segment	26
+13.2	The New NCP Segment	26
+13.3	The New FRD segment	26
+13.4	The New NPS Segment	27
+13.5	The New NAC Segment	27
+14.	Binary File Transfer	28
+
+
+1.	Introduction
+
+This document describes the structure of the commands and acknowledgements to be used on any EDI Value Added Network.
+
+Both the commands and the acknowledgements are based on the Edifact syntax and make use of the Edifact 93.2 Directory as well as additional proprietary elements.
+
+A special header structure has also been defined (using the Edifact syntax) to enable unstructured (non-EDI) data to be directed through EDI networks from sender to recipient.
+
+
+2.	Network Commands Overview
+
+The commands available on the system will be as follows:
+
+	Create Mailbox List
+	Create Postbox List
+	Receive Files
+	Delete Files
+	Set automatic file deletion
+	Change Password
+
+2.1	Create Mailbox List
+
+This command produces a list of the current contents of the Mailbox being accessed.  The list is created and is automatically sent to the user within the same communication session.
+
+
+2.2	Create Postbox List
+
+This command produces a list of all the files that have been sent onto the network since the last use of this command or since the postbox was registered, whichever is the latter.  The list is created and is automatically sent to the user within the same communication session.
+
+
+2.3	Receive Commands
+
+This command enables the user to receive one or more files from the mailbox.  The receive command has a number of variants which allow the selection of files by specific criteria.
+
+
+2.4	Delete files
+
+This command enables the user to delete files from the mailbox.  The delete command has a number of variants which allow the deletion of selected files by specific criteria.
+
+2.5	Set automatic file deletion
+
+This command enables the user to set the length of time which files are maintained in the mailbox after they have been received by the user.  This time period applies to all file types (including postbox and mailbox listings) and remains set to a particular period until another such command is sent onto the network.
+
+2.6	Change Password
+
+This command enables the user to change their network access password for security purposes.  The new password will be registered at the end of the session that the command was sent (ie. The next communication session with the network must be established using the new password).
+
+3.	Network Command Structure
+
+The basic network command structure is based on an Edifact interchange header (envelope) with one or more Network Command messages within it (ie. the UNH to UNT section can repeat for as many commands as required).
+
+Irrespective of whether the commands are issued within separate interchanges or grouped in a single interchange, the network will process them in the order that they are sent by the user.
+
+Structure is:-
+
+UNB+UNOA:1
+	+<Senders Network Id>
+	+EDINETWORK
+	+<Date> : <Time>
+	+<Interchange Reference Number>
+	+<Network Password>'
+UNH+<Message Reference Number>
+	+NETCMD :2:93'
+BGM+<Network Command Coded> :::
+	<Network Command Name>'
+
+.....Network command parameter segment.Varies depending on command type. This segment may repeat for selection criteria...
+
+UNT+<Number of Segments>
+	+<Message Reference Number>'
+UNZ+<Interchange Control Count>
+	+<Interchange Reference Number>'
+
+
+Where the parameters are as follows:-
+
+UNB
+
+Senders Network Id 	an..35 	The identifier allocated by the network service provider at registration. This is alpha-numeric up to a maximum of 35 characters.
+
+Date 	n6	The date the command was created. Format is YYMMDD.
+
+Time 	n4 	The time the command was created. Format is HHMM.
+
+Interchange Reference Number	an..14	Uniquely identifies each interchange (envelope) containing one or more commands in a file sent to the network. 
+
+Network Password	an..14	This is the users password to enable access to the network. This must conform to either the initial password allocated by the network or the last password selected in the 'change password' command, whichever is the latter.
+
+UNH
+
+Message Reference Number	an..14	This is normally an incrementing number per message (ie. per command) per interchange.
+
+BGM
+
+Network Command Name	an..35	This is a conditional mnemonic which represents the command being issued. See the Network Command Code List. It is considered to be mandatory if the 'Network Command Coded' field is not used.
+
+Network Command Coded 	an..3	This is a conditional three digit code which represents the command being issued. See the Network Command Code List. It is considered to be mandatory if the 'Network Command Name' field is not used.
+
+UNT
+
+Number of Segments 	n..6 	This is a count of the number of segments in the message including the UNH and UNT.
+
+UNZ
+
+Interchange Control Count	n..6 	This is a count of the number of messages (commands) within this interchange.
+
+Interchange Reference Number 	an..14	This must be exactly the same as the reference used in the interchange header (UNB segment).
+
+4.	Code Lists
+
+Please note that the codes (and possibly the names) may change before this document gains approval from the Edifact Board.
+
+
+4.1	Network Command Code List
+
+
+The following table is a list of valid Network Command Codes, their related names and their meanings.  The codes and names are for use within the BGM segment.
+
+Code	Name	Meaning
+
+250	NLMAIL	Network List Mailbox Command
+251	NLPOST	Network List Postbox Command
+252	NRECEIVE	Network Receive Files (s) Command
+253	NDELETE	Network Delete File(s) Command
+254	NAUTODEL	Network Auto-delete Files Command
+255	NCPASS	Network Change Password Command
+
+4.2	Network Acknowledgement Code List
+
+The following table is a list of valid Network Command Codes, their related names and their meanings.  The codes and names are for use within the BGM segment.
+
+Code	Name	Meaning
+
+260	SESSACK	Network session acknowledgement
+261	MAILACK	Mailbox listing generated by NLMAIL 	command
+262	POSTACK	Postbox listing generated by NLPOST command
+
+4.3	Interchange Status Code List
+
+The following table lists the possible status' of a file (interchange) on the network.  The table is divided into three sections to show the valid status' in the Mailbox Listing, Postbox listing and a network session acknowledgement.
+
+4.3.1	Network Session Acknowledgement Status Codes
+
+Code	Meaning
+
+001	File accepted by network
+002	Invalid Interchange Header (see diagnostic)
+003	Mismatching Interchange Trailer Control Ref.
+004	Mismatching Functional Group Trailer Ref 
+005	Functional Group Trailer Message Count wrong
+006	Mismatching Message Trailer Msg Ref
+007	Message Trailer Message Count wrong
+008	Interchange Trailer Control Count wrong
+009	Duplicate Interchange Reference
+010	Start envelope with no end envelope
+011	No interchange start found
+012	Service unavailable
+013	Invalid command (see diagnostic)
+014	Bad Segment Syntax
+015	Unexpected Segment (sequence error)
+
+4.3.2	Mailbox Status Codes
+
+100	File awaiting extraction
+101	File received
+
+4.3.3	Postbox Status Codes
+
+200	File delivered to recipients mailbox
+201	File extracted by recipient
+202	File deleted by recipient before extraction
+203	Unknown recipient
+204	Accepted by Network, but not yet delivered
+205	Purged by Network before recipient extraction
+206	Duplicate File discarded by Network
+
+4.4	Status Diagnostic Information Code List
+
+Diagnostic	Applicable	Meaning
+Info.Code	Interchange Code
+
+001	002	Invalid Date
+002	002	Recipient does not exist
+003	002	Invalid Password
+004	002	Invalid Sender
+005	002	Invalid Priority
+006	002	Invalid Application Ref
+007	002	Invalid Syntax Id
+008	002	Invalid Interchange Ref
+009	002	Invalid Binary File Size
+
+100	013	Command Not Recognised
+101	013	InvalidPost Box List Command
+102	013	Invalid Mail Box List Command
+103	013	Invalid Receive Command
+104	013	Invalid Delete Command
+105	013	Invalid Auto-delete Command
+106	013	Invalid Change Password Command
+
+<any>	<other>	Number of segment in interchange
+		where error detected
+
+4.5	Interchange Type Code List
+
+Code	Message
+
+X12	ANSI ASC X12
+UNTDI	UN(G) TDI
+EDIFACT	EDIFACT
+
+5.	Create Mailbox List Command
+
+Function
+
+This command produces a list of the current contents of the mailbox being accessed.  The list is created in an Edifact format and is automatically sent to the user within the same communication session  i.e. no retrieve command is required.  All such listings will be transient and will not remain in the users mailbox.
+
+
+Command Code and Name
+
+250 - NLMAIL
+
+
+Parameters (and associated qualifiers)
+
+None
+
+
+Command Structure
+
+UNH+<Message Reference No.>+NETCMD+2:93'
+BGM+250:::NLMAIL'
+UNT+3+<Message Reference No.>'
+
+
+Example
+
+UNH+000102+NETCMD+2:93'BGM+250:::NLMAIL'
+UNT+3+000102'
+
+
+Note
+
+This command may be extended in the future to allow the listing of files based on specific criteria.  For example, an NCP segement the same as that used for NRECEIVE (see later) could be used.  Any comments on this additional functionality would be appreciated.
+
+
+6.	Create Postbox List Command
+
+Function
+
+This command produces a list of all the files and/or commands that have been sent onto the network since the last use of this command or since the postbox was registered, whichever is the latter.  The list is created in an Edifact format and is automatically sent to the user within the same communication session  i.e. no retrieve command is required.  All such listings will be transient and will not remain in the users mailbox.
+
+
+Command Code and Name
+
+251 - NLPOST
+
+
+Parameters
+
+NONE
+
+
+Command Structure
+
+UNH+<Message Reference No.>+NETCMD:2:93'
+BGM+251:::NLPOST'
+UNT+3+<Message Reference No.>'
+
+
+Example
+
+UNH+00013+NETCMD:2:93'BGM+251:::NLPOST'
+UNT+3+00013'
+
+
+Note
+
+The issuing of this command will eventually (see the NAUTODEL command) result in the network clearing all entries that have reached their ultimate status  i.e. Extracted by recipient, deleted, purged, rejected or undelivered.  The clearing will occur after the <File Retention Day> period.  Subsequent postbox listings will not provide any information regarding such 'cleared' entries.
+
+7.	Receive File(s) Command
+
+Function
+
+This command enables the user to receive one or more files from the Mailbox.  The command is used for receiving data files and network information such as mail and post box listings.  A number of parameters are related to this command that enable the selection of files based on specific criteria.
+
+
+Command Code and Name
+
+252 - NRECEIVE
+
+
+
+
+Parameters
+
+File Status		'U' will enable the selection of all or specific files that have not been previously received  i.e. Unreceived.  If this command is used and no other.parameters are present then it is assumed that ALL files have been selected.  If other parameters are present then these selection criteria are applied.
+
+		'R' will enable the selection of specific files that have been previously received (provided they have not been deleted from the mailbox).  At least one additional selection criteria parameter is required as a 'select all received files' command is illegal.
+
+Application Reference		This parameter is used to select files of a particular type.  This will only be possible if the EDI standard used in the file to be received has such a reference (ie. not X12) and the reference was used by the sender  (as it is a conditional field).
+
+Senders Identifier		This parameter is used to select those files that have been sent by a particular trading partner.  
+
+Interchange Reference No		This parameter is used to select files with a particular interchange number.  This is always used in conjunction with the Senders ID parameter in order to select a specific file.  For a selection to be valid, this Id must be an exact match.and not just numerically correct  (ie 243 would fail to match against an Id.of 00243).
+
+Interchange Type		This parameter the receipt of files that are of a particular EDI syntax ie. Edifact, UNTDI or ANSI X12.  See code list in section 4.5.
+
+Date		This parameter the receipt of files that were sent before a specific date.  The date must be today or earlier.  No date parameter will assume all dates are valid in this selection.
+
+Command Structure
+
+UNH+<Message Reference No.>+NETCMD:2:93'
+BGM+252:::NRECEIVE'
+NCP+<File Status>
+	+<Application Reference>
+	+<Senders Id>:<Interchange Reference No.>
+	+<Interchange Type>
+	+<Date>'
+UNT+<No. of segments>+<Message reference No.>'
+
+Examples
+
+1.	Command to receive all previously received (and not deleted) orders (ie. application reference set to ORDER) from a specific trading partner.
+
+UNH+025+NETCMD:2:93'BGM+252:::NRECEIVE'
+NCP+R+ORDER+TRADER523'UNT+4+025'
+
+2.	Command to receive a specific file that has not been received previously.
+
+UNH+3356+NETCMD:2:93'BGM+252:::NRECEIVE'
+NCP+U++TRADER2911:0000925'
+UNT+4+3356'
+
+3.	Command to receive two specific files from different trading partners (TRAD123 and TRAD456) as well as selecting all the 'ORDERS' files from all the trading partners.  None of the files have been previously received.
+
+UNH+2367+NETCMD:2:93'BGM+252:::NRECEIVE'
+NCP+U++TRAD123:023911'NCP+U++TRAD456:00991852'NCP+U
++ORDERS'
+
+4.	Command to receive all the invoices (application reference INVOIC) sent to us by trader TRAD789 before 23rd January 1993.  These files have been previously received by recipient.
+
+UNH+11125+NETCMD:2:93'BGM+252:::NRECEIVE'
+NCP+R+INVOIC+++930123'UNT+4+11125'
+
+8.	Delete File(s) Command
+
+Function
+
+This command enables the user to delete one or more files from the Mailbox.  The command is used for deleting data files and network information such as mail and post box listings.  A number of parameters are related to this command that enable the deletion of files based on specific criteria.
+
+
+Command Code and Name
+
+253 - NDELETE
+
+
+Parameters
+
+File Status		'U' will enable the deletion of specific files that have not been previously received i.e.  Unreceived.  At least one additional selection criteria parameter is required  (not including the date parameter) as a general 'delete all unreceived files' is illegal.
+
+		'R' will enable the deletion of all or specific files that have been previously Received.  If this command is used and no other parameters are present then it is assumed that ALL files (that have been received) should be deleted.
+
+Application Reference		This parameter is used to delete files of a particular type.  This will only be possible if the EDI standard used in the file to be deleted has such a reference (ie. not X12) and the reference was used by the sender (as it is a conditional field).
+
+Senders Identifier		This parameter is used to delete those files that have been sent by a particular trading partner.  
+
+Interchange Reference No.		This parameter is used to delete files with a particular interchange number.  This is always used in conjunction with the Senders ID parameter in order to delete a specific file.  For a selection to be valid, this Id must be an exact match and not just numerically correct. (ie. 243 would fail to match against an Id of 00243).  Specific mail and post box listings can also be deleted using this as the network will generate an incremental number for each such listing.
+
+Interchange Type		This parameter allows the deletion of files that are of a particular EDI syntax ie. Edifact, UNTDI or ANSI X12.  see code list in section 4.5.
+
+Date		This parameter allows the deletion of files that were sent before a specific date.  The date must be today or earlier.  If no date parameter is specified, 'today' will be assumed  It is not possible to delete files sent 'today'.
+
+Command Structure
+
+UNH+<Message Reference No.>+NETCMD:2:93'
+BGM+253:::NDELETE'
+NCP+<File Status>
+	+<Application Reference>
+	+<Senders Id>:<Interchange Reference No.>
+	+<Interchange Type>
+	+<Date>'
+UNT+<No. of segments>+<Message Reference No.>'
+
+Examples
+
+1.	Command to delete all previously received files from a specific trader (id.TRADER5231) that were sent before a specific date (22nd July 1993).
+
+UNH+00256+NETCMD:2:93'BGM+253:::NDELETE'
+NCP+R++TRADER5231++930722'UNT+4+00256'
+
+2.	Command to delete all previously received files.
+
+UNH+0014+NETCMD:2:93'BGM+253:::NDELETE'NCP+R'
+UNT+4+0014'
+
+3.	Command to delete a specific file which has not been received.
+
+UNH+25671+NETCMD:2:93'BGM+253:::NDELETE'
+NCP+U++TRAD253291:501291233'UNT+4+25671'
+
+4.	Command to delete all unreceived files.
+
+	Although a structure exists to support this command, it is in fact INVALID and will be rejected by the network.
+
+
+9.	Set Automatic File Deletion Command
+
+Function
+
+This command enables the user to set the length of time which files are maintained in the mailbox after they have been received by the user.  This time period applies to all file types and remains set to a particular period until another such command is sent on to the network.  The command is also used by the Network to determine the time that 'read' Postbox entries (and others that have reached their ultimate status) are retained.  The time period is taken as starting at the time the file is stored in the mailbox. 
+
+Command Code and Name
+
+254 - NAUTODEL
+
+Parameters
+
+File Retention Days		This is the number of days that a file will reside in the Mailbox after it has been received.  The minimum value is 2 days and the maximum 30.  This parameter is mandatory with this command.
+
+Command Structure
+
+UNH+<Message Reference No.>+NETCMD:2:93'
+BGM+254:::NAUTODEL'
+FRD+<File Retention Days>'
+UNT+4+<Message Reference No.>'
+
+
+Example
+
+Retain Files for 5 days after reception (assuming read on same day as created).
+
+UNH+0054+NETCMD:2:93'BGM+245:::NAUTODEL'FRD+
+5'UNT+4+0054'
+
+
+10.	Change Password Command.
+
+Function
+
+This command enables the user to change their network access password for security purposes.  The new password will be registered at the end of the session that the command was sent (ie. The next communication session with the network must be established using the new password).
+
+Command Code and Name
+
+255 - NCPASS
+
+Parameters
+
+New Password		This is the new network password which is to be used in all future transmissions.  As with all network commands, the password in the interchange header (envelope) must be the current valid password. This parameter is mandatory for this command.
+
+Command Structure
+
+UNH+<Message Reference No.>+NETCMD:2:93'
+BGM+255:::NCPASS'
+NPS+<New Password>'
+UNT+4+<Message Reference No.>'
+
+Example
+
+Change the current password to NEWPASS1.
+
+UNH+25600+NETCMD:2:93'BGM+255:::NCPASS'
+NPS+NEWPASS1'UNT+4+25600'
+
+
+11.	Mailbox and Postbox Listing
+
+11.1	Function
+
+The Mailbox listing will be produced whenever an NLMAIL command is issued.  The list will contain information about the files that are present in the users Mailbox.  The list will not include this Mailbox listing.
+
+The Postbox listing will be identical in structure to the Mailbox listing and will be produced whenever an NLPOST command is issued.  The list will contain information about the commands and files sent onto the network since the last NLPOST command was issued or since the Postbox was registered, whichever is the latter.
+
+The use of conditional elements within the standard segments has been kept to a minimum in order to reduce unnecessary transmission overheads.
+
+
+11.2	Structure
+
+The structure of the listing is based on the Edifact standard (93.2 Directory) and is as follows:-
+
+UNB+UNOA:1+EDINETWORK
+	+<Receivers Network Id>
+	+<Date>:<Time>
+	+<Interchange Reference Number>
+	+<Password>'
+UNH+1+NETACK:2:93'
+BGM+<Network Ack. Coded>:::<Network Ack.Name>'
+NAC+<Senders/Receivers Id>
+	+<Interchange Reference Number>
+	+<Application Reference>
+	+<Interchange Type>
+	+<File Size>
+	+<Date>:<Time>
+	+<Interchange Level Status>:<Status Diagnostic Info.>
+		:<Message Reference No.>'
+
+........Repeat NAC segment for each file.......
+
+UNT+<Number of Segments>+1'
+UNZ+<Interchange Control Count>+<Interchange Reference Number>'
+
+Where the parameters are as follows:-
+
+UNB
+
+Receivers Network Id	an...35	The identifier allocated by the network service provider.  This is alpha-numeric up to 35 characters, and the same as the logon name.
+
+Date	n6	The date the listing was generated in the format YYMMDD
+
+Time	n4	The time the listing was generated in the format HHMM
+
+Interchange Reference Number	an...14	Unique value assigned by Network
+
+Password	an...14	Copy of password supplied by sender
+
+
+BGM
+
+Network Ack.Name	an...35	This is a mnemonic which represents the type of listing.  That is MAILACK for a Mailbox listing and POSTACK for a Postbox listing.
+
+Network Ack.Coded	an...3	This is a three digit code which represents the type of listing.  See the Network Acknowledgement Code List.
+
+NAC
+
+Senders/Receivers Id		In the case of the Postbox listing this is the Network Identifier of the Sender.  In the case of the Mailbox listing this is the Network Identifier of the intended recipient.
+
+Interchange Reference Number	an...14	This is a unique number for a particular interchange assigned by the sender of that interchange.
+
+Application Reference	an...14	This is a free format alphanumeric string that may be assigned by the sender of the interchange.  It will be placed here if the EDI standard of the interchange included such a reference and the sender used the field.  If not, this field will be null.
+
+Interchange Type	an..8	This is a code that denotes the syntax of the EDI data contained within this interchange ie. whether it is Edifact, UNTDI or ANSI X12.  See code list in section 4.5.
+
+File Size	n..14	This is the size of the file in bytes.
+
+Date	n6	This is the date when the file was sent onto the network.  The date is in format YYMMDD.
+
+Time	n4	This is the time (associated with the date) when the file was sent onto the network.
+
+Interchange Level Status	n3	This is the current status of the file. See section 4.4 Interchange Level Status Codes for more information.
+Status Diagnostic Information	n5	This is a conditional NAC field which is generally used to provide more detailed information regarding the Interchange Level Status.  It is only relevant to invalid interchanges, not listings.
+
+Message Reference	an..14	This is a conditional field which may be used to pinpoint the exact message within the interchange that is being reported on.  The use of this field will depend on the sophistication of the network validation.  It is only relevant to invalid interchanges, not listings.
+
+
+11.3	Example
+
+	
+Get details of two postbox messages sent to recipients RECIP1 and RECIP2.  RECIP2 has extracted the message.
+
+UNH+1+NETCMD:2:93'
+BGM+262:::POSTACK'
+NAC+RECIP1+ICREF1+APPREF1+1000+931207:1045+200'
+NAC+RECIP2+ICREF2++1500+931206:1422+201'
+'UNT+5+1'
+
+12.	Network Acknowledgement
+
+12.1	Function
+
+A network session acknowledgement will always be returned to the user whenever any files are sent and/or received via the network.  Acknowledgements are at interchange level.  That is; one acknowledgement for each EDI envelope header where one file may contain many envelopes.
+
+Should any error be detected within an interchange, the whole interchange will be rejected on the basis of that error, and processing if the file contining that interchange will be terminated.  Further errors will  only be detected by the network when the initial one has been resolved and the interchange resubmitted.
+
+One interchange may contain many network commands and therefore negative acknowledgement of such an interchange will relate to the first invalid command detected.
+
+If any of the commands fail validation then none of them (within that interchange) will be actioned.  If a user wishes to ensure that a single command failure does not result in the failure of all commands, then each command must be submitted in a separate interchange in separate files.
+
+12.2	Structure
+
+The structure of the listing is based on the Edifact standard (93.2 Directory) and is as follows:-
+
+UNB+UNOA:1+EDINETWORK
+	+<Receivers Network Id>
+	+<Date>:<Time>
+	+<Interchange Reference Number>+<Password>'
+UNH+1+NETACK:2:93'
+BGM+260:::SESSACK'
+NAC +<Senders/Receivers Id>
+	+<Interchange Reference Number>
+	+<Application Reference>
+	+<Interchange Type>
+	+<File Size>
+	+<Date>:<Time>
+	+<Interchange Level Status>:<Status Diagnostic Info.>
+		:<Message Reference No.>'
+
+........Repeat NAC segment for each interchange..........
+
+UNT+<Number of Segments>+1'
+UNZ+1+<Interchange Reference Number>'
+
+
+Where the parameters are as follows:-
+
+UNB
+
+Receivers Network Id	an...35	The identifier allocated by the network service provider.  This is alpha-numeric up to 35 characters and is the same as the logon name.
+
+Date 	n6	The date the listing was generated in the format YYMMDD
+
+Time 	n4	The time the listing was generated in the format HHMM
+
+Interchange Reference Number	an...14	Unique value assigned by Network
+
+Password	an...14	Copy of password supplied by sender
+
+
+BGM
+
+Network Ack.name 	an...35	This is a mnemonic which represents to type of listing.  Always SESSACK.
+
+Network Ack.Coded 	an...3	This is a three digit code which represents the type of listing.  Always 260.
+
+NAC
+
+Senders/Receivers Id		In the case of the Postbox listing this is the Network Identifier of the Sender.  In the case of the Mailbox listing this is the Network Identifier of the intended recipient.
+
+Interchange Reference Number	an...14	This is a unique number for a particular interchange assigned by the sender of that interchange.
+
+Application Reference 	an...14	This is a free format alphanumeric string that may be assigned by the sender of the interchange.  It will be placed here if the EDI standard of the interchange included such a reference and the sender used the field.  If not, this field will be null.
+
+Interchange Type	an..8	This is a code that denotes the syntax of the EDI data contained within this interchange ie. whether it is Edifact, UNTDI or ANSI X12.  See code list in section 4.5.
+
+File Size 	n..14	For a valid interchange, this is the size of it in bytes.  In the case of a syntax error being detected, it is the offset of the end of the segment within the interchange that is being decoded.
+
+Date 	n6	This is the date when the file was sent onto or extracted from the network, whichever is the latter.  The date is in format YYMMDD.
+
+Time 	n4	This is the time (associated with the date) when the file was sent onto or extracted from the network.
+
+Interchange Level Status	n3	This is the current status of the file.See section 4.4 Interchange Level Status Codes for more information.
+
+Status Diagnostic Information	n5	This is a conditional field which may be used to provide more detailed information regarding the Interchange Level Status.  The use of this field will depend on the sophistication of the network validation and the Interchange Status being reported.  See section 4 on Status Diagnostic Information Codes for more information.
+
+Message Reference	an..14	This is a conditional field which may be used to pinpoint the exact message within the interchange that is being reported on.  The use of this field will depend on the sophistication of the network validation and is only really relevant to invalid interchanges.
+
+12.3	Example
+
+	
+Get results of messages sent to recipients RECIP1 and RECIP2.  The RECIP2 message had a syntax problem in the interchange header (invalid interchange refernce), so the returned size is the offset of the end of the Interchange Header, and subsequent header fields are empty
+
+UNH+1+NETACK:2:93'
+BGM+260:::SESSACK'
+NAC+RECIP1+ICREF1+APPREF1+1000+931207:1045+1'
+NAC+RECIP2++++32+931207:1046+2:8'
+'UNT+5+1'
+
+
+13.	Segment Information
+
+13.1	The BGM Segment
+
+The BGM Segment is used as per the definition within the Edifact 93.2 directory except that for the purposes of the network commands and acknowledgments the C002 composite element is mandatory.
+
+Within the C002 composite element, either element 1001 or 1000  (or both) must be used when constructing a network command.
+
+
+13.2	The New NCP Segment
+
+For the purpose of specifying selection criteria in an Edifact based network command, a new segment has been defined.  The new segment is NCP which stands for 'Network Command Parameters'.
+
+The structure is as follows:-
+
+NCP	Network Command Parameter
+
+   9500	File Status	M	a1
+   0026	Application Reference	C	an..14
+   C998	File Identifier	C
+       0004	Senders Id	M	an..35
+       0200	Interchange Reference Number	C	an..14
+  9506	Interchange Type	C	an..8
+  0017	Date	C	n6
+
+13.3	The New FRD segment
+
+For the purpose of specifying a network file retention period in an Edifact based network command, a new segment has been defined.  The new segment is FRD which stands for 'File Retention Days'.
+
+The structure is as follows:-
+
+FRD	File Retention Days
+   9501	File Retention Days	M	n..2
+
+
+13.4	The New NPS Segment
+
+For the purpose of specifying a new network password in an Edifact based network command, a new segment has been defined.  The new segment is NPS which stands for 'New Password'.
+
+The Structure is as follows:-
+
+NPS	New Password
+   0022	Network Password	M	an..14
+
+
+13.5	The New NAC Segment
+
+For the purpose of designing a generic Edifact based network acknowledgment, a new segment has been defined.  The new segment is NAC which stands for 'Network Acknowledgment'.
+
+The structure is as follows:-
+
+NAC	Network Acknowledgment
+9504	Sender/Receiver Identification	M	an  35
+0020	Interchange Reference Number	M	an..14
+0026	Application Reference	C	an..14
+9506	Interchange Type	M	an..8
+9505	File Size	M	n..14
+S004	Date/Time of preparation	M
+   0017	Date	M	n6
+   0019	Time	M	n4
+C999	Status Information	M
+   9502	Interchange Level Status	M	n3
+   9503	Status Diagnostic Information	C	n3
+   0062	Message Reference Number	C	an..14
+
+When used in Mailbox / Postbox listings, and Network Acknowledgements of valid interchanges, the MANDATORY fields are as described above.  When used in Network Acknowledgments to reject interchanges, then the nature of the error will determine which fields can be filled in; in this situation only the Interchange Level Status is MANDATORY.
+
+14.	Binary File Transfer
+
+This section defines how the standard Edifact interchange header (UNH) can be used to route unstructured (binary) files through an EDI orientated network.
+
+The use of conditional elements within the standard segments has been kept to a minimum in order to reduce unnecessary transmission overheads.
+
+The structure of the listing is based on the Edifact standard (93.2 Directory) and is as follows:-
+
+UNB+UNOA:1+<Senders Id>
+	+<Recipients Id>
+	+<Date>:<Time>
+	+<Interchange Reference Number>
+	+<Password>
+	+BINFILE
+	+++<File Size>'
+	<File Type Id>+
+
+	    .....Data.....
+
+	UNZ+0+<Interchange Reference Number>'
+
+
+
+Where the parameters are as follows:-
+
+UNB
+
+Senders Id	an...35	The identifier allocated by the network service provider.  This is alphanumeric up to 35 characters.
+
+Recipients Id	an..35	The identifier specified by the service provider in order to identify the user.  This is alphanumeric up to a maximum of 35 characters.
+
+Date	n6	The date the listing was generated in the format YYMMDD
+
+Time	n4	The time the listing was generated in the format HHMM
+
+Interchange Reference Number	an...14	A unique number that is generated by the network for each interchange ie. Mailbox Listings, Postbox Listings and end of session acknowledgements.
+
+Password	an..14	Password value acceptable to message recipient
+
+File Size	an...35	This is the Communications Agreement
+(Communications	 	Identifier Element which for binary
+Agreement Identifier)		file transmission will be used for defining the total size in bytes of the following <data> field (between the '+' terminating the <File Type Id> and the 'U' of the UNZ).
+
+File Type Id		This is an alphanumeric string which is used to identify the type of binary file being transferred.  The Id. will be used for directing the file to specific applications.  It is of variable length and is terminated with a '+' (data separator) character.
+
+Data		This is the actual binary data.  Note that there is nothing to mark the end of the data; the <file size> field determines this.
+
+UNZ
+
+Interchange Reference Number		This must be exactly the same as the reference used in the interchange Number header (UNB segment) and is used for reconciliation purposes.
+
+Example
+Binary transfer of characters "0123456789", using reference "file ref".
+
+UNB+UN0A:1+SNDID+RCVID+931207:1045+ICREF+PWD:BINFILE+++10'
+file ref+0123456789
+UNZ+0+ICREF'
+Value Added Network Edifact Commands And Acknowledgments
+
+
+
+
+13/05/94	Page 29 of 1
+
+

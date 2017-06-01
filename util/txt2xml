@@ -1,0 +1,349 @@
+#!/usr/bin/perl
+
+# Primarily for converting the old tradacom.txt tsg to xml format
+
+while(<>) {
+    chop;
+    next if /^\s*$/;
+    next if /^\s*\043/;
+    $type = $1 if(/^([A-Z]+)/);
+    next unless /^\t/;
+
+    @fields = split(/\t/);
+    shift(@fields);
+
+    #print "@fields\n";
+
+    if($type eq 'ELEMENT') {
+	my $element = {
+	    _code => $fields[0],
+	    _repr => $fields[1],
+	    _min  => $fields[2],
+	    _max  => $fields[3],
+	    _name => $fields[4],
+	    _desc => $fields[5],
+	    _note => $fields[6],
+	};
+	$elements{$fields[0]} = $element;
+    }
+
+    if($type eq 'SEGMENT') {
+        my $segment = {
+            _code => $fields[0],
+            _name => $fields[1],
+            _desc => $fields[2],
+            _note => $fields[3],
+        };
+        $segments{$fields[0]} = $segment;
+    }
+
+    if($type eq 'COMPOSITE') {
+        my $composite = {
+            _code => $fields[0],
+            _name => $fields[1],
+            _desc => $fields[2],
+            _note => $fields[3],
+        };
+        $composites{$fields[0]} = $composite;
+    }
+
+    if($type eq 'SEGLIST') {
+        my $seglist = {
+            _code => $fields[1],
+            _reqr => $fields[2],
+            _type => $fields[3],
+        };
+        push(@{$seglists{$fields[0]}}, $seglist);
+    }
+
+    if($type eq 'COMPONENT') {
+        my $component = {
+            _code => $fields[1],
+            _reqr => $fields[2],
+        };
+        push(@{$components{$fields[0]}}, $component);
+    }
+
+    if($type eq 'CODELIST') {
+        my $codelist = {
+            _code => $fields[1],
+            _name => $fields[2],
+            _desc => $fields[3],
+            _note => $fields[4],
+        };
+        push(@{$codelists{$fields[0]}}, $codelist);
+    }
+
+}
+
+
+
+
+
+printf "%s\n", '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>';
+printf "%s\n", xmlStart('tsg');
+
+printf " %s\n", xmlStart('elements');
+foreach(sort keys %elements) {
+    my $repr = $elements{$_}{_repr};
+
+    $repr = 'alpha'    if $repr eq 'A';
+    $repr = 'mixed'    if $repr eq 'X';
+    $repr = 'numeric'  if $repr eq 'N';
+    $repr = '1decimal' if $repr eq '1';
+    $repr = '2decimal' if $repr eq '2';
+    $repr = '3decimal' if $repr eq '3';
+    $repr = '4decimal' if $repr eq '4';
+    
+    my %attr = (
+		'code' => $elements{$_}{_code},
+		'max'  => $elements{$_}{_max},
+		'min'  => $elements{$_}{_min},
+		'name' => $elements{$_}{_name},
+		'desc' => $elements{$_}{_desc},
+		'note' => $elements{$_}{_note},
+		'repr' => $repr,
+		);
+    
+
+    if(!defined $codelists{$_}) {
+	printf "  %s\n", xmlEmpty('element', %attr);
+    } else {
+	printf "  %s\n", xmlStart('element', %attr);
+	foreach my $c (sort @{$codelists{$_}}) {
+	    printf "   %s\n", xmlEmpty('value',
+				       'code' => $c->{_code},
+				       'name' => $c->{_name},
+				       'desc' => $c->{_desc},
+				       'note' => $c->{_note},
+				       );
+	}
+	printf "  %s\n\n", xmlEnd('element');
+    }
+}
+printf " %s\n", xmlEnd('elements');
+
+
+
+
+
+
+
+
+
+
+
+printf " %s\n", xmlStart('composites');
+foreach(sort keys %composites) {
+    my %attr = (
+                'code' => $composites{$_}{_code},
+                'name' => $composites{$_}{_name},
+                'desc' => $composites{$_}{_desc},
+                'note' => $composites{$_}{_note},
+                );
+    
+    printf "  %s\n", xmlStart('composite', %attr);
+    
+    foreach my $c (sort @{$components{$_}}) {
+	printf "   %s\n", xmlEmpty('elemref',
+				   'code' => $c->{_code},
+				   'reqr' => $c->{_reqr} eq 'M' ?
+				   'mandatory' : 'conditional',
+				   );
+    }
+    printf "  %s\n\n", xmlEnd('composite');
+}
+printf " %s\n", xmlEnd('composites');
+
+
+
+
+
+
+
+
+
+
+printf " %s\n", xmlStart('segments');
+foreach(sort keys %segments) {
+    my %attr = (
+                'code' => $segments{$_}{_code},
+                'name' => $segments{$_}{_name},
+                'desc' => $segments{$_}{_desc},
+                'note' => $segments{$_}{_note},
+                );
+    
+    printf "  %s\n", xmlStart('segment', %attr);
+    
+    foreach my $s (sort @{$seglists{$_}}) {
+	printf "   %s\n", xmlEmpty('elemref',
+				   'code' => $s->{_code},
+				   'reqr' => $s->{_reqr} eq 'M' ?
+				   'mandatory' : 'conditional',
+				   'type' => $s->{_type} eq 'COMPOSITE' ?
+				   'composite' : 'simple',
+				   );
+    }
+    printf "  %s\n\n", xmlEnd('segment');
+}
+printf " %s\n", xmlEnd('segments');
+
+
+print <DATA>;
+
+printf "%s\n", xmlEnd('tsg');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub xmlText {
+    my(@text) = @_;
+    my $text = '';
+    foreach my $val (@text) {
+        $val =~ s/\046/&amp;/g;  # & - must do this one first
+        $val =~ s/\042/&quot;/g; # "
+        $val =~ s/\047/&apos;/g; # '
+        $val =~ s/\074/&lt;/g;   # <
+        $val =~ s/\076/&gt;/g;   # >
+
+        $text .= $val;
+    }
+    return $text;
+}
+ 
+sub xmlAttr {
+    my($key, $val) = @_;
+    return unless defined $key && $key =~ /\S/;
+    return unless defined $val;
+    return sprintf '%s="%s"', $key, xmlText($val);
+}
+ 
+sub xmlTag {
+    my($tag, %attr) = @_;
+    my($key,  @attr);
+    foreach $key (sort { $a cmp $b } keys %attr) {
+        my $attr = &xmlAttr($key, $attr{$key});
+        push(@attr, $attr) if defined $attr;
+    }
+    return join(' ', $tag, @attr);
+}
+ 
+sub xmlPI      { return sprintf "<?%s?>", &xmlTag(shift(@_), @_) }
+sub xmlComment { return sprintf "<!-- %s -->", xmlText(@_) }
+sub xmlStart   { return sprintf "<%s>",   &xmlTag(shift(@_), @_) }
+sub xmlEmpty   { return sprintf "<%s/>",  &xmlTag(shift(@_), @_) }
+sub xmlEnd     { return sprintf "</%s>",  $_[0]}
+
+
+
+
+
+
+
+
+__END__;
+<transactions>
+
+
+ <!-- THE INVOICE FILE - FF08D.doc -->
+ <transaction code="INVOIC">
+  <segref code="MHD" reqr="mandatory" reps="1"/>
+  <segref code="CLO" reqr="mandatory" reps="1"/>
+  <segref code="IRF" reqr="mandatory" reps="1"/>
+  <segref code="PYT" reqr="mandatory" reps="999999"/>
+  <segref code="DNA" reqr="mandatory" reps="999999"/> 
+  <loop code="ODD" reqr="mandatory" reps="999999">
+   <segref code="ODD" reqr="mandatory" reps="1"/>
+   <loop code="ILD" reqr="mandatory" reps="999999">
+    <segref code="ILD" reqr="mandatory" reps="1"/>
+    <segref code="CIA" reqr="conditional" reps="999999"/>
+    <segref code="DNC" reqr="conditional" reps="999999"/>
+   </loop>
+  </loop>
+  <segref code="STL" reqr="mandatory" reps="999999"/>
+  <segref code="TLR" reqr="mandatory" reps="1"/>
+  <segref code="MTR" reqr="mandatory" reps="1"/>
+ </transaction>
+
+
+ <!-- THE ORDER FILE - FF04D.doc -->
+ <transaction code="ORDERS">
+  <segref code="MHD" reqr="mandatory" reps="1"/>
+  <segref code="CLO" reqr="mandatory" reps="1"/>
+  <segref code="ORD" reqr="mandatory" reps="1"/>
+  <segref code="DIN" reqr="conditional" reps="1"/>
+   <!-- this seems odd - go re-read spec -->
+   <loop code="DNA" reqr="conditional" reps="999999">
+    <segref code="DNA" reqr="mandatory" reps="999999"/>
+   </loop>
+   <loop code="OLD" reqr="mandatory" reps="999999">
+    <segref code="OLD" reqr="mandatory" reps="1"/>
+    <segref code="DNB" reqr="conditional" reps="999999"/>
+   </loop>
+  <segref code="OTR" reqr="mandatory" reps="1"/>
+  <segref code="MTR" reqr="mandatory" reps="1"/>
+ </transaction>
+
+
+ <!-- THE STATEMENT/REMITTANCE DETAILS FILE - FF10D.doc -->
+ <transaction code="SRMHDR">
+  <segref code="MHD" reqr="mandatory" reps="1"/>
+  <segref code="TYP" reqr="mandatory" reps="1"/>
+  <segref code="SDT" reqr="mandatory" reps="1"/>
+  <segref code="CDT" reqr="mandatory" reps="1"/>
+  <segref code="DNA" reqr="conditional" reps="999999"/>
+  <segref code="FIL" reqr="mandatory" reps="1"/>
+  <segref code="MTR" reqr="mandatory" reps="1"/>
+ </transaction>
+
+ <transaction code="SRMINF">
+  <segref code="MHD" reqr="mandatory" reps="1"/>
+  <loop code="SRD" reqr="mandatory" reps="999999">
+   <segref code="SRD" reqr="mandatory" reps="1"/>
+   <segref code="DNB" reqr="conditional" reps="999999"/>
+  </loop>
+  <segref code="SRT" reqr="mandatory" reps="1"/>
+  <segref code="PYC" reqr="conditional" reps="1"/>
+  <segref code="MTR" reqr="mandatory" reps="1"/>
+ </transaction>
+
+ <transaction code="SRMTLR">
+  <segref code="MHD" reqr="mandatory" reps="1"/>
+  <segref code="RST" reqr="mandatory" reps="1"/>
+  <segref code="MTR" reqr="mandatory" reps="1"/>
+ </transaction>
+
+
+</transactions>

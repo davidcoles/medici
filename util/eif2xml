@@ -1,0 +1,287 @@
+#!/usr/bin/perl
+
+# Convert WebSphere Data Interchange to simple XML format. eg. files from
+# http://www-306.ibm.com/software/integration/wdi/downloads/client41_std.shtml
+
+use strict;
+
+my $tag = undef; # should be able to get rid of this (see FIXME-TBLID)
+my %elements;
+my %values;
+my %segments;
+my %elemrefs;
+my %composites;
+my %components;
+
+my $head = <>;
+my @body;
+
+# 1st pass - tokenise each line into easy to deal with perl objects
+# and push onto @body
+
+while(<>) {
+    chomp;
+
+    my %cols;
+    my $buf;
+    my $tok = '';
+    my $key = '';
+    my $sep = 0;
+    my $esc = 0;
+    my $val = 0;
+
+    ($cols{_}, $buf) = split(/\s+/, $_, 2);
+
+    last if $cols{_} eq '000';
+
+    while(length($buf)) {
+	my $char = substr($buf, 0, 1, '');
+	
+	if($esc) {
+	    $esc = 0;
+	    $tok .= $char;
+	    next;
+	}
+	
+	if($char eq ' ') {
+	    next if $sep;
+	}
+	
+	$sep = 0;
+	
+	if($char eq '?') {
+	    $esc = 1;
+	    
+	} elsif($char eq '(') {
+	    if($val) {
+		$tok .= $char;
+	    } else {
+		$key = $tok;
+		$val = 1;
+		$tok = '';
+	    }
+
+	} elsif($char eq ')') {
+	    $val = 0;
+	    $sep = 1;
+	    $cols{$key} = $tok;
+	    die "[$key, $tok]\n" if $tok eq '' || $key eq ''; #debug
+	    $tok = '';
+	} else {
+	    $tok .= $char;
+	}
+    }
+
+    push(@body, \%cols);
+}
+
+
+
+# 2nd pass - depending on line type create entry in appropriate global
+# hash table
+
+while(defined(my $cols = shift(@body))) {
+    my %cols = %$cols;
+
+    #foreach(keys %cols) { printf "%s=%s ", $_, $cols{$_} }
+    #print "\n";
+    #print "******************************\n";
+
+    
+    # Segment contents
+    # 1Y5  STDID(X12V4R1)  SEGID(Y4)  POSNO(10)  DEID(56)  DEREQ(O)
+    if($cols{_} eq '1Y5') {
+	# 1Y7 SEGID POSNO DEID DEREQ
+	my $reqr = $cols{DEREQ} eq 'M' ? 'mandatory' : 'conditional';
+	$elemrefs{$cols{SEGID}}[$cols{POSNO} - 1]{'code'} = $cols{DEID};
+	$elemrefs{$cols{SEGID}}[$cols{POSNO} - 1]{'reqr'} = $reqr;
+    }
+    
+    # Composite contents
+    # 1Y7  STDID(X12V4R1)  COMPID(C003)  POSNO(7)  DEID(352)  DEREQ(O)
+    if($cols{_} eq '1Y7') {
+	# 1Y7 COMPID POSNO DEID DEREQ
+	my $reqr = $cols{DEREQ} eq 'M' ? 'mandatory' : 'conditional';
+	$components{$cols{COMPID}}[$cols{POSNO} - 1]{'code'} = $cols{DEID};
+	$components{$cols{COMPID}}[$cols{POSNO} - 1]{'reqr'} = $reqr;
+    }
+    
+    # Segment definition
+    if($cols{_} eq '1Y4') {
+	# 1Y4 - SEGID STDDESC STDURP
+	$segments{$cols{SEGID}}{'name'} = $cols{STDDESC};
+	$segments{$cols{SEGID}}{'desc'} = $cols{STDPURP};
+    }
+    
+    # Data Element definition
+    if($cols{_} eq '1Y6') {
+	# 1Y6 - DEID DETYPE DEMIN DEMAX STDDESC STDURP
+	# if DETYPE(CD) then it's a composite data element
+	
+	if($cols{DETYPE} eq 'CD') {
+	    $composites{$cols{DEID}}{'name'} = $cols{STDDESC};
+	    $composites{$cols{DEID}}{'desc'} = $cols{STDPURP};
+	} else {
+	    $elements{$cols{DEID}}{'min'} = $cols{DEMIN};
+	    $elements{$cols{DEID}}{'max'} = $cols{DEMAX};
+	    $elements{$cols{DEID}}{'repr'} = $cols{DETYPE};
+	    $elements{$cols{DEID}}{'name'} = $cols{STDDESC};
+	    $elements{$cols{DEID}}{'desc'} = $cols{STDPURP};
+	}
+    }
+    
+    # start of (codelist) table 
+    if($cols{_} eq '1B1') {
+	# 1B1 - 
+	$tag = $cols{TAG};
+    }
+    
+    # codelist table entry
+    if($cols{_} eq '1B2') {
+	# 1B2 - VAR1 VAR2
+	# TBLID could be used to link to table header? (FIXME-TBLID)
+	#printf "%s %s %s\n", $tag, $cols{VAR1}, $cols{VAR2};
+	$values{$tag}{$cols{VAR1}}{'name'} = $cols{VAR2};
+    }
+}
+
+
+
+
+
+
+
+
+# 3rd pass - for each global hash table type render apporpriate XML
+
+printf "%s\n", '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>';
+printf "%s\n", xmlStart('tsg');
+
+printf "%s\n", xmlStart('elements');
+foreach my $tag (sort keys %elements) {
+    if(!defined $values{$tag}) {
+	printf "%s\n", xmlEmpty('element', 'code' => $tag, %{$elements{$tag}});
+	next;
+    }
+    
+    printf "%s\n", xmlStart('element', 'code' => $tag, %{$elements{$tag}});
+    
+    foreach(sort keys %{$values{$tag}}) {
+	printf "%s\n", xmlEmpty('value', 'code' => $_, %{$values{$tag}{$_}});
+    }
+    
+    printf "%s\n", xmlEnd('element');
+}
+printf "%s\n", xmlEnd('elements');
+
+
+printf "%s\n", xmlStart('composites');
+foreach my $tag (sort keys %composites) {
+    printf "%s\n", xmlStart('composite', 'code' => $tag, %{$composites{$tag}});
+
+    foreach(@{$components{$tag}}) { printf "%s\n", xmlEmpty('component', %$_) }
+    
+    printf "%s\n", xmlEnd('composite');
+    
+}
+printf "%s\n", xmlEnd('composites');
+
+
+printf "%s\n", xmlStart('segments');
+foreach my $tag (sort keys %segments) {
+    printf "%s\n", xmlStart('segment', 'code' => $tag, %{$segments{$tag}});
+    
+    foreach(@{$elemrefs{$tag}}) {
+	my $type = defined $composites{$_->{'code'}} ? 'composite' : 'simple';
+	printf "%s\n", xmlEmpty('elemref', %$_, 'type' => $type);
+    }
+    printf "%s\n", xmlEnd('segment');
+}
+printf "%s\n", xmlEnd('segments');
+printf "%s\n", xmlEnd('tsg');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# stock XML formatting functions ...
+
+
+# http://www.w3.org/TR/2004/REC-xml-20040204/#dt-escape
+# <!ENTITY lt     "&#38;#60;">
+# <!ENTITY gt     "&#62;">
+# <!ENTITY amp    "&#38;#38;">
+# <!ENTITY apos   "&#39;">
+# <!ENTITY quot   "&#34;">
+
+sub xmlText {
+    my(@text) = @_;
+    my $text = '';
+    foreach my $val (@text) {
+#        $val =~ s/\046/&#38;#38;/g; # & - must do this one first
+#        $val =~ s/\042/&#34;/g;     # "
+#        $val =~ s/\047/&#39;/g;     # '
+#        $val =~ s/\074/&#38;#60;/g; # <
+#        $val =~ s/\074/&#62;/g;     # >
+
+	$val =~ s/\046/&amp;/g;  # & - must do this one first
+	$val =~ s/\042/&quot;/g; # "
+	$val =~ s/\047/&apos;/g; # '
+	$val =~ s/\074/&lt;/g;   # <
+	$val =~ s/\076/&gt;/g;   # >
+     
+	$text .= $val;
+    }
+    return $text;
+}
+ 
+sub xmlAttr {
+    my($key, $val) = @_;
+    return unless defined $key && $key =~ /\S/;
+    return unless defined $val;
+    return sprintf '%s="%s"', $key, xmlText($val);
+}
+
+sub xmlTag {
+    my($tag, %attr) = @_;
+    my($key,  @attr);
+    foreach $key (sort { $a cmp $b } keys %attr) {
+        my $attr = &xmlAttr($key, $attr{$key});
+        push(@attr, $attr) if defined $attr;
+    }
+    return join(' ', $tag, @attr);
+}
+ 
+sub xmlComment { return sprintf "<!-- %s -->", xmlText(@_) }
+sub xmlPI      { return sprintf "<?%s?>", &xmlTag(@_) }
+sub xmlStart   { return sprintf "<%s>",   &xmlTag(@_) }
+sub xmlEmpty   { return sprintf "<%s/>",  &xmlTag(@_) }
+sub xmlEnd     { return sprintf "</%s>",  $_[0]}

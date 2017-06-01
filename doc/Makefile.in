@@ -1,0 +1,28 @@
+.SUFFIXES:
+.SUFFIXES: .xml .sgml .dvi .pdf .ps .html .txt
+
+DOCS = medici.html medici.ps medici.pdf medici.txt
+
+all: $(DOCS)
+
+
+.xml.html:
+	# bah. silly db2html puts diagnostics to stdout as well as the html :(
+	db2html -u $< | perl -0777 -pe 's/^[^<]*|[^>]*$$//g' | \
+	  (tidy -utf8 -q -i -c -n 2>/dev/null; true) >$@
+
+.xml.ps:
+	db2ps $<
+
+.xml.pdf:
+	db2pdf $<
+
+.html.txt:
+	lynx -dump -nolist $< >$@
+
+clean:
+	rm -f medici.out medici.junk >/dev/null 2>&1 || true
+	rmdir medici >/dev/null 2>&1 || true
+
+distclean:
+	rm -f $(DOCS) >/dev/null 2>&1 || true

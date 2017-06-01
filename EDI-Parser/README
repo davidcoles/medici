@@ -1,0 +1,39 @@
+EDI::Parser version 0.01
+========================
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+Read the comment at the top of Parser.pm to get this to work on Perl
+older than 5.006.
+
+DEPENDENCIES
+
+This module requires these other modules and libraries:
+
+  The MEDICI Data Interchange Library.
+  The Expat XML Parsing Library.
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2003 David Coles <david@disintegration.org>
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA

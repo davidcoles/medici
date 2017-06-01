@@ -1,0 +1,3518 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+
+<!-- This file is not complete and almost certainly has errors -->
+<!-- If you notice mistakes please contribute feedback/diffs -->
+<!-- Also if you can transcribe more transactions, please do! -->
+
+<tsg>
+  <elements>
+    <element code="AADJ01" max="3" min="1" name="Adjustment &quot;Percentage" repr="3decimal"/>
+    <element code="AADJ02" max="10" min="1" name="Adjustment Amount" repr="4decimal"/>
+    <element code="ACCR" max="1" min="1" name="Accumulation Rules" repr="mixed"/>
+    <element code="ACID01" max="17" min="1" name="Account Number" repr="mixed"/>
+    <element code="ACID02" max="35" min="1" name="Account Name" repr="mixed"/>
+    <element code="ADJF01" max="3" min="1" name="Adjustment Factor Code" repr="mixed"/>
+    <element code="ADJF02" max="1" min="1" name="Adjustment Factor Value" repr="numeric"/>
+    <element code="ADJF03" max="4" min="1" name="Negative Indicator" repr="mixed"/>
+    <element code="ADJT" max="3" min="1" name="Adjustment Type Indicator" repr="mixed"/>
+    <element code="AEXC01" max="13" min="1" name="Area of Exception Condition" repr="mixed"/>
+    <element code="AEXC02" max="53" min="1" name="Repeat of original content" repr="mixed"/>
+    <element code="AMPY" max="13" min="1" name="Amount Payable" repr="2decimal"/>
+    <element code="AOCI" max="1" min="1" name="Allowance (Discount)/Charge Indicator" repr="mixed"/>
+    <element code="APIN" max="1" min="1" name="Actual/Proposed Status Indicator" repr="mixed"/>
+    <element code="APRF" max="14" min="1" name="Application Reference" repr="mixed">
+      <value code="ACKHDR" name="Acknowledgement of Order"/>
+      <value code="AVLHDR" name="Availability Report"/>
+      <value code="BTOHDR" name="Book Order File"/>
+      <value code="CAKHDR" name="Claims Acknowledgement File"/>
+      <value code="CLAHDR" name="Claims File"/>
+      <value code="CORHDR" name="Complex Order"/>
+      <value code="CRAHDR" name="Credit Advice File"/>
+      <value code="CREHDR" name="Credit Note File"/>
+      <value code="CUSHDR" name="Customer Information File"/>
+      <value code="DELHDR" name="Delivery Notification File"/>
+      <value code="DLCHDR" name="Delivery Confirmation File"/>
+      <value code="DRAHDR" name="Debit Advice File"/>
+      <value code="DYEHDR" name="Dye Instruction File"/>
+      <value code="EFTHDR" name="Electronic Funds Transaction File"/>
+      <value code="EXCHDR" name="Exception Condition File"/>
+      <value code="GENHDR" name="General Communications File"/>
+      <value code="HOTHDR" name="Hot Card File"/>
+      <value code="HSOHDR" name="Home shopping Order File"/>
+      <value code="INTHDR" name="Interchange Acknowledgement File"/>
+      <value code="INVFIL" name="Invoice File"/>
+      <value code="ISSUES" name="Issues File"/>
+      <value code="LPRHDR" name="Location Planning Report file"/>
+      <value code="ORDHDR" name="Order File"/>
+      <value code="PAYHDR" name="Payment Order File"/>
+      <value code="PICHDR" name="Picking Instructions File"/>
+      <value code="PPRHDR" name="Product Planning Report File"/>
+      <value code="PRIHDR" name="Price Information File"/>
+      <value code="PROHDR" name="Product Information File"/>
+      <value code="PVUHDR" name="Price and Availability Updates File"/>
+      <value code="SADHDR" name="Stock Adjustment File"/>
+      <value code="SNPHDR" name="Stock Snapshot File"/>
+      <value code="SORHDR" name="Supply and Return File"/>
+      <value code="SRMHDR" name="Statement/Remittance Details File"/>
+      <value code="UCNHDR" name="Uplift Confirmation File"/>
+      <value code="UPLHDR" name="Uplift Instruction File"/>
+      <value code="UTLHDR" name="Utility Bill File"/>
+    </element>
+
+    <element code="APSE" max="10" min="1" name="Payable Sub-Total Amount (before settlement discount)" repr="2decimal"/>
+    <element code="APSI" max="10" min="1" name="Payable Sub-Total Amount (after settlement discount has been applied)" repr="2decimal"/>
+    <element code="AQTY01" max="15" min="1" name="Number of Traded Units required" repr="numeric"/>
+    <element code="AQTY02" max="10" min="1" name="Total Measure Ordered" repr="3decimal"/>
+    <element code="AQTY03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="AREF" max="17" min="1" name="Availability References/Series No." repr="mixed"/>
+    <element code="ASDA" max="10" min="1" name="Extended Sub-Total Amount (after settlement discount has been applied)" repr="2decimal"/>
+    <element code="ASDT" max="10" min="1" name="Total Amount (after settlement discount has been applied)" repr="2decimal"/>
+    <element code="AUCT01" max="10" min="1" name="Cost Price (excluding VAT)" repr="4decimal"/>
+    <element code="AUCT02" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="AUTH" max="17" min="1" name="Authority Reference" repr="mixed"/>
+    <element code="AUTR01" max="70" min="1" name="Authentication Result 1" repr="mixed"/>
+    <element code="AUTR02" max="70" min="1" name="Authentication Result 2" repr="mixed"/>
+    <element code="AUTR03" max="70" min="1" name="Authentication Result 3" repr="mixed"/>
+    <element code="BABF01" max="10" min="1" name="Balance Brought Forward" repr="2decimal"/>
+    <element code="BABF02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="BBID" max="11" min="1" name="Bank/Branch Identifier" repr="mixed"/>
+    <element code="BIFR" max="3" min="1" name="Bill Frequency Code" repr="mixed"/>
+    <element code="BINN" max="1" min="1" name="Booking in Necessity" repr="mixed"/>
+    <element code="BKIC" max="2" min="1" name="Bank Identity Code" repr="mixed"/>
+    <element code="BKIN" max="17" min="1" name="Bank Information" repr="mixed"/>
+    <element code="BNAM" max="35" min="1" name="Bank Name" repr="mixed"/>
+    <element code="BPRI" max="10" min="1" name="Base Price Per Unit" repr="numeric"/>
+    <element code="BTCD" max="3" min="1" name="Bill Type Code" repr="mixed">
+      <value code="A" name="Amended bill"/>
+      <value code="F" name="Final bill - last bill when an account is closed"/>
+      <value code="I" name="Interest bill"/>
+      <value code="N" name="Normal bill"/>
+      <value code="O" name="Information only - not used in calculations"/>
+      <value code="P" name="Prepaid"/>
+      <value code="R" name="Reconciliation bill"/>
+      <value code="W" name="Withdrawn bill - reverses a previous bill"/>
+    </element>
+
+    <element code="BUCT" max="10" min="1" name="Unit Cost Price (excluding VAT) before discount" repr="4decimal"/>
+    <element code="CADD01" max="35" min="1" name="Customer&apos;s Address Line 1" repr="mixed"/>
+    <element code="CADD02" max="35" min="1" name="Customer&apos;s Address Line 2" repr="mixed"/>
+    <element code="CADD03" max="35" min="1" name="Customer&apos;s Address Line 3" repr="mixed"/>
+    <element code="CADD04" max="35" min="1" name="Customer&apos;s Address Line 4" repr="mixed"/>
+    <element code="CADD05" max="8" min="1" name="Customer&apos;s Post Code" repr="mixed"/>
+    <element code="CCDE01" max="3" min="1" name="Consumption/Charge Indicator" repr="mixed"/>
+    <element code="CCDE02" max="13" min="1" name="EAN-13 Article Number" repr="numeric"/>
+    <element code="CCDE03" max="3" min="1" name="Supplier Code" repr="mixed"/>
+    <element code="CDSV" max="10" min="1" name="Credit Discount Value" repr="4decimal"/>
+    <element code="CEDT" max="6" min="1" name="Charge End Date" repr="numeric"/>
+    <element code="CIDN01" max="13" min="13" name="Customer&apos;s EAN Location Number" repr="numeric"/>
+    <element code="CIDN02" max="17" min="1" name="Customer&apos;s Identity Allocated by Supplier" repr="mixed"/>
+    <element code="CLAS" max="1" min="1" name="Order Classification" repr="mixed">
+      <value code="C" name="Campaign"/>
+      <value code="E" name="Easter"/>
+      <value code="N" name="New Release"/>
+      <value code="R" name="Request (special customer order for items not usually stocked)"/>
+      <value code="S" name="Stock (replenishment order)"/>
+      <value code="X" name="Christmas"/>
+    </element>
+
+    <element code="CLOC01" max="13" min="13" name="Customer&apos;s EAN Location Number" repr="numeric"/>
+    <element code="CLOC02" max="17" min="1" name="Customer&apos;s Own Location Code" repr="mixed"/>
+    <element code="CLOC03" max="17" min="1" name="Supplier&apos;s identification of Customer&apos;s Location" repr="mixed"/>
+    <element code="CLOE01" max="13" min="1" name="EAN Location Number" repr="numeric"/>
+    <element code="CLOE02" max="17" min="1" name="Customer&apos;s Own Code" repr="mixed"/>
+    <element code="CLOE03" max="17" min="1" name="Supplier&apos;s Identification" repr="mixed"/>
+    <element code="CLOS01" max="13" min="1" repr="numeric"/>
+    <element code="CLOS02" max="17" min="1" name="EAN Location Number" repr="mixed"/>
+    <element code="CLOS03" max="17" min="1" name="Customer&apos;s Own Code Supplier&apos;s Identification" repr="mixed"/>
+    <element code="CLSK01" max="15" min="1" name="Number of Closing Stock Order Units" repr="numeric"/>
+    <element code="CLSK02" max="10" min="1" name="Total Measure of Closing Stock" repr="3decimal"/>
+    <element code="CLSK03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="CLVM01" max="10" min="1" name="Calorific Value" repr="3decimal"/>
+    <element code="CLVM02" max="6" min="1" name="Calorific Value Unit of Measure" repr="mixed"/>
+    <element code="CNAM" max="40" min="1" name="Customer&apos;s Name" repr="mixed"/>
+    <element code="CNDT" max="6" min="1" name="Collection Note Date" repr="numeric"/>
+    <element code="CNNR" max="17" min="1" name="Collection Note Number" repr="mixed"/>
+    <element code="CONA01" max="10" min="1" name="Units Consumed" repr="3decimal"/>
+    <element code="CONA02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="CONA03" max="4" min="1" name="Negative Indicator" repr="mixed"/>
+    <element code="CONB01" max="10" min="1" name="Units Consumed" repr="3decimal"/>
+    <element code="CONB02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="CONB03" max="4" min="1" name="Negative Indicator" repr="mixed"/>
+    <element code="CONS01" max="10" min="1" name="Units Consumed" repr="3decimal"/>
+    <element code="CONS02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="CONS03" max="4" min="1" name="Negative Indicator" repr="mixed"/>
+    <element code="CORI01" max="13" min="1" name="EAN-13 Article Number" repr="numeric"/>
+    <element code="CORI02" max="30" min="1" name="Supplier&apos;s Code" repr="mixed"/>
+    <element code="CORI03" max="14" min="1" name="DUN-14 Code" repr="numeric"/>
+    <element code="CORI04" max="15" min="1" name="Customer&apos;s Own Brand EAN Number" repr="numeric"/>
+    <element code="CORI05" max="30" min="1" name="Customer&apos;s Item Code" repr="mixed"/>
+    <element code="CPPU" max="10" min="1" name="Price per Unit" repr="numeric"/>
+    <element code="CPRO01" max="15" min="1" name="Customer&apos;s Own Brand EAN Number" repr="numeric"/>
+    <element code="CPRO02" max="30" min="1" name="Customer&apos;s Item Code." repr="mixed"/>
+    <element code="CPRS01" max="15" min="1" name="Code Customer&apos;s Own Brand Number (EAN)" repr="numeric"/>
+    <element code="CPRS02" max="30" min="1" name="Customer&apos;s Item Code" repr="mixed"/>
+    <element code="CPSC" max="17" min="1" name="Current Price Schedule Reference" repr="mixed"/>
+    <element code="CRDT" max="6" min="1" name="Credit Note Date" repr="numeric"/>
+    <element code="CRLI" max="4" min="1" name="Credit Line Indicator" repr="mixed">
+      <value code="H" name="Handling Allowance"/>
+      <value code="R" name="Returns"/>
+    </element>
+
+    <element code="CRNR" max="17" min="1" name="Credit Note Number" repr="mixed"/>
+    <element code="CRRE01" max="2" min="1" name="ANA Credit Reason Code" repr="mixed"/>
+    <element code="CRRE02" max="2" min="1" name="Trading Partner&apos;s Own Code" repr="mixed"/>
+    <element code="CRRE03" max="40" min="1" name="Credit Reason Description" repr="mixed"/>
+    <element code="CSDI" max="1" min="1" name="Cash Settlement Discount Identifier" repr="mixed">
+      <value code="D" name="Item line eligible for cash settlement discount"/>
+      <value code="N" name="Item line not eligible for cash settlement discount"/>
+    </element>
+
+    <element code="CSDT" max="6" min="1" name="Charge Start Date" repr="numeric"/>
+    <element code="CSTI" max="1" min="1" name="Chargeable Storage Medium Indicator" repr="mixed"/>
+    <element code="CTNM" max="40" min="1" name="Contact Name" repr="mixed"/>
+    <element code="CTOT01" max="10" min="1" name="Total Charge for Charge Type" repr="2decimal"/>
+    <element code="CTOT02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="CUIN" max="3" min="1" name="Currency Indicator" repr="mixed">
+      <value code="ATS" name="Austria, Schillings"/>
+      <value code="BEC" name="Convertible Belgian Francs"/>
+      <value code="BEF" name="Belgium, Franc"/>
+      <value code="CHF" name="Switzerland, Franc"/>
+      <value code="DEM" name="Germany, Mark"/>
+      <value code="ESB" name="For Payments out of Spain"/>
+      <value code="ESP" name="Spain, Peseta"/>
+      <value code="FRF" name="France, Franc"/>
+      <value code="GBP" name="Great Britain, Pound"/>
+      <value code="IEP" name="Ireland, Punt"/>
+      <value code="ITL" name="Italy, Lira"/>
+      <value code="LUF" name="Luxembourg, Franc"/>
+      <value code="NLG" name="Netherlands, Gilder"/>
+      <value code="PTE" name="Portugal, Escudo"/>
+      <value code="USD" name="United States, Dollar"/>
+      <value code="USN" name="US Dollar, Next Day Funds"/>
+      <value code="USS" name="US Dollar, Same Day Funds"/>
+    </element>
+
+    <element code="DADD01" max="35" min="1" name="Delivery Address Line 1" repr="mixed"/>
+    <element code="DADD02" max="35" min="1" name="Delivery Address Line 2" repr="mixed"/>
+    <element code="DADD03" max="35" min="1" name="Delivery Address Line 3" repr="mixed"/>
+    <element code="DADD04" max="35" min="1" name="Delivery Address Line 4" repr="mixed"/>
+    <element code="DADD05" max="8" min="1" name="Delivery Post Code" repr="mixed"/>
+    <element code="DAPD01" max="6" min="1" name="Discount Applicability Start Date" repr="numeric"/>
+    <element code="DAPD02" max="6" min="1" name="Discount Applicability End Date" repr="numeric"/>
+    <element code="DARA01" max="6" min="1" name="Start Date" repr="numeric"/>
+    <element code="DARA02" max="6" min="1" name="End Date" repr="numeric"/>
+    <element code="DATE" max="6" min="6" name="Date relating to message" repr="numeric"/>
+    <element code="DELC" max="3" min="1" name="Delivery Condition" repr="mixed">
+      <value code="0" name="Delivered/Uplifted as instructed"/>
+      <value code="1" name="Delivery/Uplift Variance from prior transmitted instruction"/>
+      <value code="2" name="Completely Undelivered/Uncollected: transaction NOT"/>
+      <value code="3" name="Delivery/Uplift Variance, with no prior transmitted"/>
+      <value code="4" name="Completely Undelivered/Uncollected; transaction to"/>
+      <value code="A" name="Delivery picked and packed"/>
+      <value code="B" name="Delivery held at distribution centre"/>
+      <value code="C" name="Delivery despatched from distribution centre (paired"/>
+      <value code="D" name="Delivery arrived at local depot"/>
+      <value code="E" name="Delivery held at local depot"/>
+      <value code="F" name="Delivery despatched from local depot"/>
+      <value code="G" name="Delivery retained in local depot"/>
+      <value code="H" name="Negotiated delivery date confirmed"/>
+      <value code="J" name="Negotiated delivery date adjusted"/>
+      <value code="K" name="Uplift held in local depot (paired with TCDE of 0930)"/>
+      <value code="L" name="Uplift arrived at distribution centre (paired with TCDE of"/>
+      <value code="M" name="Proof of delivery"/>
+    </element>
+
+    <element code="DELN01" max="17" min="1" name="Delivery Note Number" repr="mixed"/>
+    <element code="DELN02" max="6" min="1" name="Date of Document" repr="numeric"/>
+    <element code="DELQ01" max="15" min="1" name="Number of Traded Units in Delivery" repr="numeric"/>
+    <element code="DELQ02" max="10" min="1" name="Total Measure of Delivery" repr="3decimal"/>
+    <element code="DELQ03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="DELT" max="1" min="1" name="Deliver To" repr="mixed"/>
+    <element code="DESF" max="1" min="1" name="Despatch From" repr="mixed"/>
+    <element code="DEVL" max="10" min="1" name="Delivery Volume" repr="3decimal"/>
+    <element code="DEWT01" max="10" min="1" name="Vehicle Tare Weight" repr="3decimal"/>
+    <element code="DEWT02" max="10" min="1" name="Total Goods Weight" repr="3decimal"/>
+    <element code="DIND01" max="1" min="1" name="Substitution Indicator" repr="mixed"/>
+    <element code="DIND02" max="1" min="1" name="Back Order Indicator" repr="mixed"/>
+    <element code="DINN" max="17" min="1" name="Delivery Instruction Number" repr="mixed"/>
+    <element code="DINS01" max="40" min="1" name="Delivery Instruction Narrative Line 1" repr="mixed"/>
+    <element code="DINS02" max="40" min="1" name="Delivery Instruction Narrative Line 2" repr="mixed"/>
+    <element code="DINS03" max="40" min="1" name="Delivery Instruction Narrative Line 3" repr="mixed"/>
+    <element code="DINS04" max="40" min="1" name="Delivery Instruction Narrative Line 4" repr="mixed"/>
+    <element code="DLED01" max="3" min="1" name="Working Days" repr="numeric"/>
+    <element code="DLED02" max="2" min="1" name="Hours" repr="numeric"/>
+    <element code="DLOC01" max="13" min="1" name="Supplier&apos;s Despatch EAN Location Number" repr="numeric"/>
+    <element code="DLOC02" max="17" min="1" name="Supplier&apos;s Own Location Code" repr="mixed"/>
+    <element code="DNAC01" max="4" min="1" name="Code Table Number" repr="numeric"/>
+    <element code="DNAC02" max="3" min="1" name="Code Value" repr="mixed"/>
+    <element code="DNAM" max="40" min="1" name="Delivery to Name" repr="mixed"/>
+    <element code="DNDT" max="6" min="1" name="Debit Note Date" repr="numeric"/>
+    <element code="DNNR" max="17" min="1" name="Debit Note Number" repr="mixed"/>
+    <element code="DQGD01" max="15" min="1" name="Traded Units From" repr="numeric"/>
+    <element code="DQGD02" max="10" min="1" name="Total Measure From" repr="3decimal"/>
+    <element code="DQGD03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="DQGD04" max="15" min="1" name="Traded Units To" repr="numeric"/>
+    <element code="DQGD05" max="10" min="1" name="Total Measure To" repr="3decimal"/>
+    <element code="DQGD06" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="DRLI" max="4" min="1" name="Debit Line Indicator" repr="mixed">
+      <value code="H" name="Handling Allowance"/>
+      <value code="R" name="Returns"/>
+    </element>
+
+    <element code="DSCP" max="3" min="1" name="Discount Percentage" repr="3decimal"/>
+    <element code="DSCV" max="10" min="1" name="Discount Value" repr="4decimal"/>
+    <element code="DTYP" max="3" min="1" name="Discount Type" repr="mixed">
+      <value code="A" name="Special Allowance"/>
+      <value code="B" name="Basic"/>
+      <value code="Q" name="Quantity"/>
+      <value code="V" name="Value"/>
+    </element>
+
+    <element code="DUAC01" max="3" min="1" name="Reason for Variance" repr="mixed"/>
+    <element code="DUAC02" max="1" min="1" name="Delivery Confirmation Action" repr="mixed"/>
+    <element code="DVED" max="6" min="1" name="Delivery Period End Date" repr="numeric"/>
+    <element code="DVGD01" max="10" min="1" name="From" repr="4decimal"/>
+    <element code="DVGD02" max="10" min="1" name="To" repr="4decimal"/>
+    <element code="ECOD" max="4" min="1" name="Exception Code" repr="mixed"/>
+    <element code="EDAT" max="6" min="1" name="Earliest Delivery Date" repr="numeric"/>
+    <element code="ELOC01" max="13" min="1" name="EAN Location Number" repr="numeric"/>
+    <element code="ELOC02" max="17" min="1" name="Own Location Code" repr="mixed"/>
+    <element code="ELOC03" max="17" min="1" name="Suppliers id." repr="mixed"/>
+    <element code="ETFT" max="1" min="1" name="Electronic Transmission From/To" repr="mixed"/>
+    <element code="ETXT" max="35" min="1" name="Exception Text" repr="mixed"/>
+    <element code="EUDT" max="6" min="1" name="Earliest Uplift Date" repr="numeric"/>
+    <element code="EVLA" max="10" min="1" name="Extended Sub-Total Amount (before settlement discount has been applied)" repr="2decimal"/>
+    <element code="EVLT" max="10" min="1" name="Total Extended Amount (before settlement discount has been applied)" repr="2decimal"/>
+    <element code="EXLV" max="10" min="1" name="Nett Credit Value (before VAT)" repr="4decimal"/>
+    <element code="FASE" max="10" min="1" name="File Total Amount (before VAT and settlement discount)" repr="2decimal"/>
+    <element code="FASI" max="10" min="1" name="File Total Amount (before VAT but after settlement discount applied)" repr="2decimal"/>
+    <element code="FASU01" max="10" min="1" name="Bill File Total Amount before VAT" repr="2decimal"/>
+    <element code="FASU02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="FBAB01" max="10" min="1" name="Forward" repr="2decimal"/>
+    <element code="FBAB02" max="4" min="1" name="File Total Balance Brought Forward Credit Indicator" repr="mixed"/>
+    <element code="FLDT" max="6" min="6" name="File Creation Date" repr="numeric"/>
+    <element code="FLGN" max="4" min="1" name="File Generation Number" repr="numeric"/>
+    <element code="FLID" max="6" min="1" name="File (Reel) Identification" repr="mixed"/>
+    <element code="FLVN" max="4" min="1" name="File Version Number" repr="numeric"/>
+    <element code="FPSE" max="10" min="1" name="File Total Payable (before settlement discount)" repr="2decimal"/>
+    <element code="FPSI" max="10" min="1" name="File Total Payable (after settlement discount has been applied)" repr="2decimal"/>
+    <element code="FPSU01" max="10" min="1" name="VAT Bill File Total Payable including" repr="2decimal"/>
+    <element code="FPSU02" max="4" min="1" name="VAT Credit Indicator" repr="mixed"/>
+    <element code="FROM01" max="14" min="1" name="Transmission Sender Code" repr="mixed"/>
+    <element code="FROM02" max="35" min="1" name="Transmission Sender Name" repr="mixed"/>
+    <element code="FTAK" max="10" min="1" name="File Total Number of Acknowledgements" repr="numeric"/>
+    <element code="FTAR" max="10" min="1" name="File Total of Availability REPORTs" repr="numeric"/>
+    <element code="FTCO" max="10" min="1" name="File Total of Confirmations" repr="numeric"/>
+    <element code="FTDE" max="10" min="1" name="File Total Number of Deliveries" repr="numeric"/>
+    <element code="FTNA" max="10" min="1" name="File Total Number of Adjustments" repr="numeric"/>
+    <element code="FTNC" max="10" min="1" name="File Total Number of Credit Advice Messages" repr="numeric"/>
+    <element code="FTND" max="10" min="1" name="File Total Number of Debit Advice Messages" repr="numeric"/>
+    <element code="FTNE" max="10" min="1" name="File Total Number of Exception Condition Messages" repr="numeric"/>
+    <element code="FTNI" max="10" min="1" name="File Total Number of Invoice Messages" repr="numeric"/>
+    <element code="FTNP" max="10" min="1" name="File Total Number of Payment Messages" repr="numeric"/>
+    <element code="FTNS" max="10" min="1" name="File Total Number of Snapshots" repr="numeric"/>
+    <element code="FTOP01" max="10" min="1" name="File Total of Payment Details" repr="2decimal"/>
+    <element code="FTOP02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="FTOR" max="10" min="1" name="File Total Number of Orders" repr="numeric"/>
+    <element code="FTPC" max="10" min="1" name="File Total Number of Picking Instructions" repr="numeric"/>
+    <element code="FTSR" max="10" min="1" name="File Total Detail Messages" repr="numeric"/>
+    <element code="FTUP" max="10" min="1" name="File Total Number of Uplifts" repr="numeric"/>
+    <element code="FVAT" max="10" min="1" name="File Total VAT Amount" repr="2decimal"/>
+    <element code="GNAR01" max="40" min="1" name="General Narrative Line 1" repr="mixed"/>
+    <element code="GNAR02" max="40" min="1" name="General Narrative Line 2" repr="mixed"/>
+    <element code="GNAR03" max="40" min="1" name="General Narrative Line 3" repr="mixed"/>
+    <element code="GNAR04" max="40" min="1" name="General Narrative Line 4" repr="mixed"/>
+    <element code="GTYP" max="1" min="1" name="Graduation Type" repr="mixed"/>
+    <element code="IADD01" max="35" min="1" name="Invoice to Address Line 1" repr="mixed"/>
+    <element code="IADD02" max="35" min="1" name="Invoice to Address Line 2" repr="mixed"/>
+    <element code="IADD03" max="35" min="1" name="Invoice to Address Line 3" repr="mixed"/>
+    <element code="IADD04" max="35" min="1" name="Invoice to Address Line 4" repr="mixed"/>
+    <element code="IADD05" max="8" min="1" name="Post Code" repr="mixed"/>
+    <element code="IDID" max="15" min="1" name="EAN/ISSN Number" repr="numeric"/>
+    <element code="IGPI" max="4" min="1" name="Item Group Identifier" repr="mixed">
+      <value code="G" name="Group"/>
+      <value code="I" name="Item"/>
+    </element>
+
+    <element code="ILOC01" max="13" min="1" name="EAN Location Number" repr="numeric"/>
+    <element code="ILOC02" max="17" min="1" name="Customer&apos;s Invoice Location Code" repr="mixed"/>
+    <element code="INLO01" max="13" min="1" name="Invoice System EAN Location Number" repr="numeric"/>
+    <element code="INLO02" max="17" min="1" name="Invoice System Supplier&apos;s Own Code" repr="mixed"/>
+    <element code="INRF01" max="17" min="1" name="Customer&apos;s Instruction Number" repr="mixed"/>
+    <element code="INRF02" max="17" min="1" name="Supplier&apos;s Instruction Number" repr="mixed"/>
+    <element code="INRF03" max="6" min="1" name="Date Instruction placed by Customer" repr="numeric"/>
+    <element code="INRF04" max="6" min="1" name="Date Instruction received by Supplier" repr="numeric"/>
+    <element code="INSD" max="6" min="1" name="Installation Date" repr="numeric"/>
+    <element code="INVN" max="17" min="1" name="Invoice Number" repr="mixed"/>
+    <element code="INVT" max="1" min="1" name="Invoice To" repr="mixed"/>
+    <element code="ITRA01" max="13" min="1" name="EAN Location number" repr="numeric"/>
+    <element code="ITRA02" max="17" min="1" name="Customer&apos;s Code for Transmission Recipient" repr="mixed"/>
+    <element code="IVDT" desc="?Format:  YYMMDD?" max="6" min="1" name="Date of Invoice" repr="numeric"/>
+    <element code="IVED" max="6" min="1" name="Invoice Period End Date" repr="numeric"/>
+    <element code="JORF" max="17" min="1" name="Journey Reference" repr="mixed"/>
+    <element code="LACK" max="10" min="1" name="Lines Acknowledgement" repr="numeric"/>
+    <element code="LADD01" max="35" min="1" name="Location Address Line 1" repr="mixed"/>
+    <element code="LADD02" max="35" min="1" name="Location Address Line 2" repr="mixed"/>
+    <element code="LADD03" max="35" min="1" name="Location Address Line 3" repr="mixed"/>
+    <element code="LADD04" max="35" min="1" name="Location Address Line 4" repr="mixed"/>
+    <element code="LADD05" max="8" min="1" name="Location Post Code" repr="mixed"/>
+    <element code="LCON" max="10" min="1" name="Lines Confirmed" repr="numeric"/>
+    <element code="LDAT" max="6" min="1" name="Latest Delivery Date" repr="numeric"/>
+    <element code="LDEL" max="10" min="1" name="Lines Delivered" repr="numeric"/>
+    <element code="LEVC01" max="1" min="1" name="Level Code" repr="mixed"/>
+    <element code="LEVC02" max="1" min="1" name="Authorisation" repr="mixed"/>
+    <element code="LEXC" max="10" min="1" name="Extended Line Cost (excluding VAT)" repr="4decimal"/>
+    <element code="LIDA" max="10" min="1" name="Line Document Amount Payable" repr="2decimal"/>
+    <element code="LIDD" max="10" min="1" name="Line Document Discount Taken" repr="2decimal"/>
+    <element code="LIDR01" max="17" min="1" name="Line Document Number" repr="mixed"/>
+    <element code="LIDR02" max="6" min="6" name="Line Document Date" repr="numeric"/>
+    <element code="LIDT" max="10" min="1" name="Line Document Total (excluding VAT and Discount)" repr="2decimal"/>
+    <element code="LIDV" max="10" min="1" name="Line Document VAT" repr="2decimal"/>
+    <element code="LINE" max="2" min="2" name="Statement/Remittance Line Code" repr="mixed">
+      <value code="01" name="Credit Balance Brought Forward"/>
+      <value code="02" name="Debit Balance Brought Forward"/>
+      <value code="03" name="Credit Balance Carried Forward"/>
+      <value code="04" name="Debit Balance Carried Forward"/>
+      <value code="05" name="Invoice"/>
+      <value code="06" name="Credit Note"/>
+      <value code="07" name="Debit Note"/>
+      <value code="08" name="On-Account Payment"/>
+      <value code="09" name="Deposit"/>
+      <value code="10" name="Direct Debit Notification"/>
+      <value code="11" name="Payment"/>
+      <value code="12" name="Invoice Cancellation"/>
+      <value code="13" name="Credit Note Cancellation"/>
+      <value code="14" name="Debit Note Cancellation"/>
+      <value code="15" name="Rebate"/>
+      <value code="16" name="Rebate Cancellation"/>
+      <value code="17" name="Debit Journal"/>
+      <value code="18" name="Credit Journal"/>
+      <value code="19" name="Cash Payment (Debit)"/>
+      <value code="20" name="Cash Payment (Credit)"/>
+      <value code="21" name="Settlement Discount Payment (Debit)"/>
+      <value code="22" name="Settlement Discount Payment (Credit)"/>
+      <value code="23" name="Total Amount Owing"/>
+    </element>
+
+    <element code="LNAM" max="40" min="1" name="Location Name" repr="mixed"/>
+    <element code="LOCA" max="3" min="1" name="Location Activity Indicator" repr="mixed">
+      <value code="1" name="Location is unable to return information"/>
+      <value code="2" name="Location is temporarily closed (eg. holidays)"/>
+      <value code="3" name="Location has changed its identity"/>
+      <value code="4" name="Location has ceased trading"/>
+    </element>
+
+    <element code="LOCD" max="10" min="1" name="Number of Locations for Delivery" repr="numeric"/>
+    <element code="LORD" max="10" min="1" name="Lines Ordered" repr="numeric"/>
+    <element code="LPAL" max="15" min="1" name="Layers per Storage Medium" repr="numeric"/>
+    <element code="LTEL" max="15" min="1" name="Location Telephone Number" repr="numeric"/>
+    <element code="LTLX" max="15" min="1" name="Location Telex Number" repr="numeric"/>
+    <element code="LUDT" max="6" min="1" name="Latest Uplift Date" repr="numeric"/>
+    <element code="LUPL" max="10" min="1" name="Lines Uplifted" repr="numeric"/>
+    <element code="LVLA" max="10" min="1" name="Line Sub-Total Amount (before settlement discount)" repr="2decimal"/>
+    <element code="LVLT" max="10" min="1" name="Lines Total Amount (before settlement discount has been applied)" repr="2decimal"/>
+    <element code="MADN" max="2" min="1" name="Distribution Identifier" repr="mixed">
+      <value code="10" name="Eastern Electricity"/>
+      <value code="11" name="East Midlands Electricity"/>
+      <value code="12" name="London Electricity"/>
+      <value code="13" name="Manweb"/>
+      <value code="14" name="Midlands Electricity"/>
+      <value code="15" name="Northern Electricity"/>
+      <value code="16" name="NORWEB"/>
+      <value code="17" name="Scottish Hydro-Electric"/>
+      <value code="18" name="Scottish Power"/>
+      <value code="19" name="SEEBOARD"/>
+      <value code="20" name="Southern electric"/>
+      <value code="21" name="SWALEC"/>
+      <value code="22" name="South Western Electricity"/>
+      <value code="23" name="Yorkshire Electricity"/>
+      <value code="DISTRIBUTION" name="BUSINESS CODE used in data element MADN in segment MAN in"/>
+      <value code="NB" name="The Code list range 200-299 has been reserved for the book"/>
+      <value code="TR" name="TRANSCO"/>
+    </element>
+
+    <element code="MADN01" max="10" min="1" name="Unique Reference Number" repr="mixed"/>
+    <element code="MADN02" max="1" min="1" name="Check Digit" repr="numeric"/>
+    <element code="MADN03" max="2" min="1" name="Profile Type (class)" repr="numeric"/>
+    <element code="MADN04" max="3" min="1" name="Meter/time switch details" repr="numeric"/>
+    <element code="MADN05" max="3" min="1" name="Line Loss factor (LLF)" repr="numeric"/>
+    <element code="MCAT" max="3" min="1" name="Modifier Category" repr="mixed"/>
+    <element code="MCDE" max="3" min="1" name="Modifier Code" repr="mixed"/>
+    <element code="MCDV" max="10" min="1" name="Monthly Charge Deferred Value" repr="2decimal"/>
+    <element code="MEDT01" max="6" min="1" name="Date of Message" repr="numeric"/>
+    <element code="MEDT02" max="6" min="1" name="Time of Message" repr="numeric"/>
+    <element code="METO01" max="13" min="1" name="EAN Location Number of Department" repr="numeric"/>
+    <element code="METO02" max="40" min="1" name="of Person Title of Person" repr="mixed"/>
+    <element code="METO03" max="40" min="1" name="Name of Department of Person" repr="mixed"/>
+    <element code="MIXI" max="1" min="1" name="Mixed VAT Rate Product Indicator" repr="numeric"/>
+    <element code="MLOC" max="40" min="1" name="Meter Location" repr="mixed"/>
+    <element code="MOQY01" max="15" min="1" name="Minimum Ordering Quantity" repr="numeric"/>
+    <element code="MOQY02" max="15" min="1" name="Maximum Ordering Quantity" repr="numeric"/>
+    <element code="MOQY03" max="10" min="1" name="Ordering Measure" repr="3decimal"/>
+    <element code="MOQY04" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="MOQY05" max="6" min="1" name="Ordering Multiple" repr="mixed"/>
+    <element code="MOVL01" max="10" min="1" name="Minimum Ordering Value" repr="4decimal"/>
+    <element code="MOVL02" max="10" min="1" name="Maximum Ordering Value" repr="4decimal"/>
+    <element code="MSAD01" max="17" min="1" name="Sub-address Code" repr="mixed"/>
+    <element code="MSAD02" max="40" min="1" name="Sub-address Line" repr="mixed"/>
+    <element code="MSPR01" max="10" min="1" name="Manufacturer&apos;s Recommended Selling" repr="4decimal"/>
+    <element code="MSPR02" max="10" min="1" name="Price" repr="4decimal"/>
+    <element code="MSPR03" max="10" min="1" name="Marked Price Split Pack Price" repr="4decimal"/>
+    <element code="MSRF" max="12" min="1" name="Message Reference" repr="numeric"/>
+    <element code="MTNR" max="35" min="1" name="Meter Serial Number" repr="mixed"/>
+    <element code="MVAL01" max="10" min="1" name="Modifier Value" repr="3decimal"/>
+    <element code="MVAL02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="NCST" max="10" min="1" name="Number of Total Segments" repr="numeric"/>
+    <element code="NDIG" max="1" min="1" name="Number of Digits" repr="numeric"/>
+    <element code="NDRP" max="3" min="1" name="Reading Period" repr="numeric"/>
+    <element code="NDVT" max="3" min="1" name="Number of Days&apos; VAT" repr="numeric"/>
+    <element code="NMRS" max="3" min="1" name="Negotiated Minimum Remaining Shelf Life" repr="numeric"/>
+    <element code="NMST" max="5" min="1" name="Number of Messages in Transmission" repr="numeric"/>
+    <element code="NODU" max="15" min="1" name="Number of Delivery or Uplift Units ??" repr="numeric"/>
+    <element code="NOLR" max="10" min="1" name="Number of Location Records" repr="numeric"/>
+    <element code="NOPA" max="10" min="1" name="Number of Availability REPORTs" repr="numeric"/>
+    <element code="NOPP" max="10" min="1" name="Number of Product Lines Picked for this Order" repr="numeric"/>
+    <element code="NOPR" max="10" min="1" name="Number of Product References" repr="numeric"/>
+    <element code="NOSG" max="10" min="1" name="Number of Segments in Message" repr="numeric"/>
+    <element code="NOTX" max="10" min="1" name="Number of Text Segments" repr="numeric"/>
+    <element code="NRIL" max="10" min="1" name="Number of Item Lines" repr="numeric"/>
+    <element code="NSTA" max="1" min="1" name="New Status" repr="mixed"/>
+    <element code="NSTL" max="10" min="1" name="Number of Total Segments" repr="numeric"/>
+    <element code="NUCT01" max="10" min="1" name="Units Billed" repr="3decimal"/>
+    <element code="NUCT02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="NUCT03" max="4" min="1" name="Negative Indicator" repr="mixed"/>
+    <element code="OLOC01" max="13" min="1" name="Order Office EAN Location Number" repr="numeric"/>
+    <element code="OLOC02" max="17" min="1" name="Customer&apos;s Code for Order Office" repr="mixed"/>
+    <element code="OOAD01" max="35" min="1" name="Order Office Address Line 1" repr="mixed"/>
+    <element code="OOAD02" max="35" min="1" name="Order Office Address Line 2" repr="mixed"/>
+    <element code="OOAD03" max="35" min="1" name="Order Office Address Line 3" repr="mixed"/>
+    <element code="OOAD04" max="35" min="1" name="Order Office Address Line 4" repr="mixed"/>
+    <element code="OOAD05" max="8" min="1" name="Post Code" repr="mixed"/>
+    <element code="OQTY01" max="15" min="1" name="Number of Traded Units Ordered" repr="numeric"/>
+    <element code="OQTY02" max="10" min="1" name="Total Measure Ordered" repr="3decimal"/>
+    <element code="OQTY03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="ORCD" max="1" min="1" name="Order Code" repr="mixed">
+      <value code="A" name="Order Amendment"/>
+      <value code="B" name="Branch Delivery Order"/>
+      <value code="C" name="Cancelled Order"/>
+      <value code="D" name="Home Delivery Order"/>
+      <value code="E" name="Exception to Proposed Order"/>
+      <value code="F" name="Confirmation Order"/>
+      <value code="G" name="Standing Order"/>
+      <value code="H" name="Order for Retained Approval Goods"/>
+      <value code="K" name="Confirmation of Cancelled Order"/>
+      <value code="L" name="Lines Cancelled in Amended Order"/>
+      <value code="N" name="Not to follow"/>
+      <value code="O" name="Call Off Order"/>
+      <value code="P" name="Proposed Order"/>
+      <value code="R" name="Re-Scheduled Order"/>
+      <value code="S" name="Order for Goods on Approval or Inspection"/>
+      <value code="T" name="To follow"/>
+      <value code="W" name="Order Chaser"/>
+      <value code="X" name="Addition to Existing Order"/>
+    </element>
+
+    <element code="ORDF" max="1" min="1" name="Order From" repr="mixed"/>
+    <element code="ORNO01" max="17" min="1" name="Customer&apos;s Order Number" repr="mixed"/>
+    <element code="ORNO02" max="17" min="1" name="Supplier&apos;s Order Number" repr="mixed"/>
+    <element code="ORNO03" max="6" min="1" name="Date Order Placed by Customer" repr="numeric"/>
+    <element code="ORNO04" max="6" min="1" name="Date Order Received by Supplier" repr="numeric"/>
+    <element code="OUBA01" max="10" min="1" name="Oustanding Balance" repr="3decimal"/>
+    <element code="OUBA02" max="6" min="1" name="Balance Date" repr="numeric"/>
+    <element code="OUCT01" max="10" min="1" name="Cost Price" repr="4decimal"/>
+    <element code="OUCT02" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="OUTY" max="2" min="1" name="Type of Outlet Code" repr="mixed"/>
+    <element code="PADT" max="6" min="1" name="Prepayment Date" repr="numeric"/>
+    <element code="PAPD01" max="6" min="1" name="Start Date" repr="numeric"/>
+    <element code="PAPD02" max="6" min="1" name="End Date" repr="numeric"/>
+    <element code="PAYB" max="10" min="1" name="Balance of Outstanding Prepayments Received" repr="2decimal"/>
+    <element code="PAYD01" max="6" min="1" name="Payment Date" repr="numeric"/>
+    <element code="PAYD02" max="3" min="1" name="Settlement Discount Percentage" repr="3decimal"/>
+    <element code="PAYD03" max="3" min="1" repr="numeric"/>
+    <element code="PAYM" max="6" min="1" name="Payment Method" repr="mixed"/>
+    <element code="PAYT" max="40" min="1" name="Terms of Payment" repr="mixed"/>
+    <element code="PAYY01" max="3" min="1" name="Number of days" repr="numeric"/>
+    <element code="PAYY02" max="3" min="1" name="Settlement Discount" repr="3decimal"/>
+    <element code="PAYY03" max="3" min="1" name="Percentage Settlement Code" repr="mixed"/>
+    <element code="PBID" max="6" min="1" name="Previous Bill Date" repr="numeric"/>
+    <element code="PIND" max="4" min="1" name="Special Price Indicator" repr="mixed">
+      <value code="E" name="Export"/>
+      <value code="F" name="Free"/>
+      <value code="P" name="Promotion"/>
+    </element>
+
+    <element code="PLND01" max="17" min="1" name="Suppliers Price List" repr="mixed"/>
+    <element code="PLND02" max="17" min="1" name="Customers Price List" repr="mixed"/>
+    <element code="PMNT" max="1" min="1" name="Payment To" repr="mixed"/>
+    <element code="PNDP01" max="3" min="1" name="Zero VAT Rate" repr="3decimal"/>
+    <element code="PODN01" max="17" min="1" name="Proof of Delivery Number" repr="mixed"/>
+    <element code="PODN02" max="6" min="1" name="Date Goods Delivered to Customer" repr="numeric"/>
+    <element code="POUN01" max="17" min="1" name="Proof of Uplift Number" repr="mixed"/>
+    <element code="POUN02" max="6" min="1" name="Date Goods Uplifted from Customer" repr="numeric"/>
+    <element code="PPAM01" max="10" min="1" name="Prepayment Amount" repr="2decimal"/>
+    <element code="PPAM02" max="4" min="1" name="Credit Line Indicator" repr="mixed"/>
+    <element code="PQGD01" max="15" min="1" name="Traded Units From" repr="numeric"/>
+    <element code="PQGD02" max="10" min="1" name="Measure From" repr="3decimal"/>
+    <element code="PQGD03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="PQGD04" max="15" min="1" name="Traded Units To" repr="numeric"/>
+    <element code="PQGD05" max="10" min="1" name="Total Measure To" repr="3decimal"/>
+    <element code="PQGD06" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="PRCD" max="1" min="1" name="Transmission Priority Code" repr="mixed">
+      <value code="A" name="Urgent"/>
+      <value code="B" name="Normal"/>
+      <value code="C" name="Low"/>
+    </element>
+
+    <element code="PRDT" max="6" min="1" name="Present Read Date" repr="numeric"/>
+    <element code="PREF" max="17" min="1" name="Picking Sheet Reference Number" repr="mixed"/>
+    <element code="PRPF" max="1" min="1" name="Product Profile" repr="mixed"/>
+    <element code="PRRD01" max="15" min="1" name="Present Reading" repr="numeric"/>
+    <element code="PRRD02" max="4" min="1" name="Type" repr="mixed"/>
+    <element code="PRRD03" max="15" min="1" name="Previous Reading" repr="numeric"/>
+    <element code="PRRD04" max="4" min="1" name="Type" repr="mixed"/>
+    <element code="PRRF01" max="1" min="1" name="Related message indicator" repr="mixed"/>
+    <element code="PRRF02" max="17" min="1" name="Primary Reference" repr="mixed"/>
+    <element code="PRST" max="1" min="1" name="Product Status" repr="mixed"/>
+    <element code="PTOT01" max="10" min="1" name="Total of Payment Details" repr="2decimal"/>
+    <element code="PTOT02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="PVDT" max="6" min="1" name="Previous Read Date" repr="numeric"/>
+    <element code="PVGD01" max="10" min="1" name="From" repr="4decimal"/>
+    <element code="PVGD02" max="10" min="1" name="To" repr="4decimal"/>
+    <element code="QADJ01" max="15" min="1" name="Number of Traded Units Adjusted" repr="numeric"/>
+    <element code="QADJ02" max="10" min="1" name="Total Measure Adjusted" repr="3decimal"/>
+    <element code="QADJ03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="QPER01" max="15" min="1" name="Total Traded Units" repr="numeric"/>
+    <element code="QPER02" max="10" min="1" name="Total Variable Units" repr="3decimal"/>
+    <element code="QPER03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="QPER04" max="10" min="1" name="Total Financial Units" repr="2decimal"/>
+    <element code="QPER05" max="3" min="1" name="Currency Indicator PLANNING REPORT TRAILER" repr="mixed"/>
+    <element code="QPRO01" max="15" min="1" name="Number of Order Units Produced" repr="numeric"/>
+    <element code="QPRO02" max="10" min="1" name="Total Measure Produced this Period" repr="3decimal"/>
+    <element code="QPRO03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="QTYC01" max="15" min="1" name="Number of Traded Units Credited" repr="numeric"/>
+    <element code="QTYC02" max="10" min="1" name="Total Measure Credited" repr="3decimal"/>
+    <element code="QTYC03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="QTYI01" max="15" min="1" name="Number of Traded Units Invoiced" repr="numeric"/>
+    <element code="QTYI02" max="10" min="1" name="Total Measure Invoiced" repr="3decimal"/>
+    <element code="QTYI03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="QTYP01" max="15" min="1" name="Number of Traded Units to be Picked" repr="numeric"/>
+    <element code="QTYP02" max="10" min="1" name="Total Measure to be Picked" repr="3decimal"/>
+    <element code="QTYP03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="QTYR01" max="15" min="1" name="Number of Traded Units Returned" repr="numeric"/>
+    <element code="QTYR02" max="10" min="1" name="Total Measure Returned" repr="3decimal"/>
+    <element code="QTYR03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="QUTF01" max="15" min="1" name="Number of Order Units" repr="numeric"/>
+    <element code="QUTF02" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="QUTF03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="QYCA" max="10" min="1" name="Discount Reclaimed for Credit Quantity" repr="2decimal"/>
+    <element code="QYCT" max="10" min="1" name="Total Discount Reclaimed for Credit Quantity" repr="2decimal"/>
+    <element code="QYDA" max="10" min="1" name="Discount Amount for Invoice Quantity" repr="2decimal"/>
+    <element code="QYDT" max="10" min="1" name="Total Discount Amount for Invoice Quantity" repr="2decimal"/>
+    <element code="RADJ" max="2" min="1" name="Reason for Adjustment" repr="mixed">
+      <value code="01" name="POD Input Error"/>
+      <value code="02" name="Short or Over Delivery"/>
+      <value code="03" name="Item Not Recorded on POD"/>
+      <value code="04" name="Stock Take Adjustment"/>
+      <value code="05" name="Other Reason"/>
+      <value code="06" name="Damages on Receipt from Client"/>
+      <value code="07" name="Delivery Damage"/>
+      <value code="08" name="Damage on Transfer from Other Depot"/>
+      <value code="09" name="Uplift of Damaged Stock"/>
+      <value code="10" name="Warehouse Damage"/>
+      <value code="11" name="Adjustment from Damaged to Prime"/>
+      <value code="12" name="Written Off"/>
+      <value code="13" name="Damages Returned to Client"/>
+      <value code="14" name="Intake/Transfer Input Error"/>
+      <value code="15" name="Returns Input Error"/>
+      <value code="16" name="Damage to Prime, Receipt from Client"/>
+      <value code="17" name="Damage to Prime, Damaged during Delivery"/>
+      <value code="18" name="Damage to Prime, Damaged during Transfer"/>
+      <value code="19" name="Damage to Prime, Uplifted Damages"/>
+      <value code="20" name="Damage to Prime, Damaged in Warehouse"/>
+      <value code="21" name="Out of Date Stock"/>
+      <value code="22" name="On Client Request"/>
+      <value code="23" name="Damage to Prime, Out of Date Stock"/>
+      <value code="24" name="Damage to Prime, On Client Request"/>
+    </element>
+
+    <element code="RATM01" max="4" min="1" name="Earliest Time" repr="numeric"/>
+    <element code="RATM02" max="4" min="1" name="Latest Time" repr="numeric"/>
+    <element code="RCRF" max="14" min="1" name="Recipient&apos;s Transmission Reference" repr="mixed"/>
+    <element code="RDAT" max="6" min="1" name="Required Delivery Date" repr="numeric"/>
+    <element code="REFF01" max="17" min="1" name="Supplier&apos;s Reference" repr="mixed"/>
+    <element code="REFF02" max="17" min="1" name="Customer&apos;s Reference" repr="mixed"/>
+    <element code="REFP01" max="1" min="1" name="Summary Period" repr="mixed"/>
+    <element code="REFP02" max="2" min="1" name="Report Period Number" repr="numeric"/>
+    <element code="REFP03" max="6" min="1" name="Period End Date" repr="numeric"/>
+    <element code="REGC" max="17" min="1" name="Customer&apos;s Region Code" repr="mixed"/>
+    <element code="REGS" max="17" min="1" name="Supplier&apos;s Region Code" repr="mixed"/>
+    <element code="REID01" max="13" min="1" name="Recipient&apos;s EAN Location Number" repr="numeric"/>
+    <element code="REID02" max="17" min="1" name="Recipient&apos;s Own Identity Code" repr="mixed"/>
+    <element code="REPE" max="3" min="1" name="Rental Period" repr="mixed"/>
+    <element code="REPT" max="3" min="1" name="Report Type" repr="mixed"/>
+    <element code="REPU" max="3" min="1" name="Report Function Indicator" repr="mixed">
+      <value code="AFC" name="Actual forecast"/>
+      <value code="BFC" name="Base forecast"/>
+      <value code="CON" name="Consumption"/>
+      <value code="CST" name="Costs"/>
+      <value code="DEL" name="Deliveries (Received)"/>
+      <value code="DES" name="Despatches (Sent)"/>
+      <value code="EXP" name="Expenditure"/>
+      <value code="ORD" name="Orders"/>
+      <value code="OTH" name="Other"/>
+      <value code="PRD" name="Production"/>
+      <value code="PUP" name="Promotional Uplift"/>
+      <value code="REV" name="Revenue"/>
+      <value code="RTN" name="Returns"/>
+      <value code="SAL" name="Sales"/>
+      <value code="STC" name="Stock Cover"/>
+      <value code="STK" name="Stock"/>
+      <value code="SUP" name="Seasonal Uplift"/>
+      <value code="YTS" name="Year to Date Sales"/>
+    </element>
+
+    <element code="RFLV" max="3" min="1" name="Reason for Lower/Zero VAT Rate" repr="mixed"/>
+    <element code="RPED" max="6" min="1" name="Report Period End Date" repr="numeric"/>
+    <element code="RPSD" max="6" min="1" name="Report Period Start Date" repr="numeric"/>
+    <element code="RQTY01" max="15" min="1" name="Number of Traded Units Required" repr="numeric"/>
+    <element code="RQTY02" max="10" min="1" name="Total Measure Required" repr="3decimal"/>
+    <element code="RQTY03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="RSGA" max="14" min="1" name="STX SNRF Reconciliation Field" repr="mixed"/>
+    <element code="RSGB" max="14" min="1" name="STX Receiver Reconciliation Field" repr="mixed"/>
+    <element code="RSTI" max="1" min="1" name="Returnable Storage Medium Indicator" repr="mixed"/>
+    <element code="RTEX01" max="3" min="1" name="First Registered Application Code" repr="mixed"/>
+    <element code="RTEX02" max="40" min="1" name="Application Text" repr="mixed"/>
+    <element code="RTEX03" max="3" min="1" name="Second Registered Application Code" repr="mixed"/>
+    <element code="RTEX04" max="40" min="1" name="Application Text" repr="mixed"/>
+    <element code="RTEX05" max="3" min="1" name="Third Registered Application Code" repr="mixed"/>
+    <element code="RTEX06" max="40" min="1" name="Application Text" repr="mixed"/>
+    <element code="RTEX07" max="3" min="1" name="Fourth Registered Application Code" repr="mixed"/>
+    <element code="RTEX08" max="40" min="1" name="Application Text" repr="mixed"/>
+    <element code="RTRS01" max="6" min="1" name="Date of First Entry" repr="numeric"/>
+    <element code="RTRS02" max="3" min="1" name="Report Period Base" repr="mixed"/>
+    <element code="RTRS03" max="3" min="1" name="Number of Report Segments per Row" repr="numeric"/>
+    <element code="RTRS04" max="6" min="1" name="Date at end of period" repr="numeric"/>
+    <element code="RTRS05" max="3" min="1" name="Number of Periods in a Base Cycle" repr="numeric"/>
+    <element code="SACS" max="13" min="1" name="Supplier&apos;s EAN Article Number for Substituted Consumer (Retail) Unit" repr="numeric"/>
+    <element code="SACU" max="13" min="1" name="Supplier&apos;s EAN Number for the Designated Consumer Unit" repr="numeric"/>
+    <element code="SADD01" max="35" min="1" name="Supplier&apos;s Address Line 1" repr="mixed"/>
+    <element code="SADD02" max="35" min="1" name="Supplier&apos;s Address Line 2" repr="mixed"/>
+    <element code="SADD03" max="35" min="1" name="Supplier&apos;s Address Line 3" repr="mixed"/>
+    <element code="SADD04" max="35" min="1" name="Supplier&apos;s Address Line 4" repr="mixed"/>
+    <element code="SADD05" max="8" min="1" name="Supplier&apos;s Post Code" repr="mixed"/>
+    <element code="SAJD" max="6" min="1" name="Stock Adjustment Date" repr="numeric"/>
+    <element code="SAJN" max="17" min="1" name="Stock Adjustment Reference Number" repr="mixed"/>
+    <element code="SBPR01" max="10" min="1" name="Starting Price" repr="4decimal"/>
+    <element code="SBPR02" max="10" min="1" name="Nett price" repr="4decimal"/>
+    <element code="SCAR" max="40" min="1" name="Name of Carrier" repr="mixed"/>
+    <element code="SCRF01" max="17" min="1" name="Specification Number" repr="mixed"/>
+    <element code="SCRF02" max="17" min="1" name="Contract Number" repr="mixed"/>
+    <element code="SDCD" max="10" min="1" name="Statement/Remittance Discount Totals" repr="2decimal"/>
+    <element code="SDIN" max="1" min="1" name="Split Delivery Indicator" repr="mixed"/>
+    <element code="SEDA" max="10" min="1" name="Sub-Total Settlement Discount Amount" repr="2decimal"/>
+    <element code="SEDT" max="10" min="1" name="Total Settlement Amount" repr="2decimal"/>
+    <element code="SEID01" max="13" min="1" name="Sender&apos;s EAN Location Number" repr="numeric"/>
+    <element code="SEID02" max="17" min="1" name="Sender&apos;s Own Identity Code" repr="mixed"/>
+    <element code="SEQA" max="10" min="1" name="First Level Sequence Number" repr="numeric"/>
+    <element code="SEQB" max="10" min="1" name="Second Level Sequence Number" repr="numeric"/>
+    <element code="SEQC" max="10" min="1" name="Third Level Sequence Number" repr="numeric"/>
+    <element code="SEQD" max="10" min="1" name="Fourth Level Sequence Number" repr="numeric"/>
+    <element code="SESH" max="18" min="1" name="Serial Shipping Container Code" repr="numeric"/>
+    <element code="SETC" max="10" min="1" name="Settlement Discount Totals" repr="2decimal"/>
+    <element code="SIDN01" max="13" min="13" name="Supplier&apos;s EAN Location Number" repr="numeric"/>
+    <element code="SIDN02" max="17" min="1" name="Suppliers&apos;s Identity Allocated by Customer" repr="mixed"/>
+    <element code="SLAJ" max="10" min="1" name="Stock Lines in this Adjustment" repr="numeric"/>
+    <element code="SLOC01" max="13" min="1" name="EAN Location Number" repr="numeric"/>
+    <element code="SLOC02" max="17" min="1" name="Customer&apos;s Statement Location Code" repr="mixed"/>
+    <element code="SLSN" max="10" min="1" name="Stock Lines in this Snapshot" repr="numeric"/>
+    <element code="SMCO" max="3" min="1" name="Storage Medium Code" repr="mixed">
+      <value code="AE" name="Aerosol"/>
+      <value code="AM" name="Ampoule, non-protected"/>
+      <value code="AP" name="Ampoule, protected"/>
+      <value code="AT" name="Atomizer"/>
+      <value code="BA" name="Barrel"/>
+      <value code="BB" name="Bobbin"/>
+      <value code="BC" name="Bottle crate, bottle rack"/>
+      <value code="BD" name="Board"/>
+      <value code="BE" name="Bundle"/>
+      <value code="BF" name="Balloon, non-protected"/>
+      <value code="BG" name="Bag"/>
+      <value code="BH" name="Bunch"/>
+      <value code="BI" name="Bin"/>
+      <value code="BJ" name="Bucket"/>
+      <value code="BL" name="Bale, compressed"/>
+      <value code="BN" name="Bale, non-compressed"/>
+      <value code="BO" name="Bottle, non-protected, cylindrical"/>
+      <value code="BP" name="Balloon, protected"/>
+      <value code="BQ" name="Bottle, protected cylindrical"/>
+      <value code="BR" name="Bar"/>
+      <value code="BS" name="Bottle, non-protected, bulbous"/>
+      <value code="BT" name="Bolt"/>
+      <value code="BU" name="Butt"/>
+      <value code="BV" name="Bottle, protected, bulbous"/>
+      <value code="BX" name="Box"/>
+      <value code="BY" name="Board, in bundle/bunch/truss"/>
+      <value code="BZ" name="Bars, in bundle/bunch/truss"/>
+      <value code="CA" name="Can, rectangular"/>
+      <value code="CB" name="Beer crate"/>
+      <value code="CC" name="Churn"/>
+      <value code="CE" name="Creel"/>
+      <value code="CG" name="Cage"/>
+      <value code="CH" name="Chest"/>
+      <value code="CI" name="Canister"/>
+      <value code="CJ" name="Coffin"/>
+      <value code="CK" name="Cask"/>
+      <value code="CL" name="Coil"/>
+      <value code="CN" name="Container"/>
+      <value code="CO" name="Carboy, non-protected"/>
+      <value code="CP" name="Carboy, protected"/>
+      <value code="CR" name="Crate"/>
+      <value code="CS" name="Case"/>
+      <value code="CT" name="Carton"/>
+      <value code="CU" name="Cup"/>
+      <value code="CV" name="Cover"/>
+      <value code="CX" name="Can, cylindrical"/>
+      <value code="CY" name="Cylinder"/>
+      <value code="CZ" name="Canvas"/>
+      <value code="DJ" name="Demijohn, non-protected"/>
+      <value code="DP" name="Demijohn, protected"/>
+      <value code="DR" name="Drum"/>
+      <value code="EN" name="Envelope"/>
+      <value code="FC" name="Fruit crate"/>
+      <value code="FD" name="Framed crate"/>
+      <value code="FI" name="Firkin"/>
+      <value code="FL" name="Flask"/>
+      <value code="FO" name="Footlocker"/>
+      <value code="FP" name="Film pack"/>
+      <value code="FR" name="Frame"/>
+      <value code="GB" name="Gas bottle"/>
+      <value code="GZ" name="Girders, in bundle/bunch/truss"/>
+      <value code="HG" name="Hogshead"/>
+      <value code="HR" name="Hamper"/>
+      <value code="IN" name="Ingot"/>
+      <value code="IZ" name="Ingots, in bundle/bunch/truss"/>
+      <value code="WB" name="Wicker bottle"/>
+      <value code="JC" name="Jerrican, rectangular"/>
+      <value code="JG" name="Jug"/>
+      <value code="JR" name="Jar"/>
+      <value code="JT" name="Jutebag"/>
+      <value code="JY" name="Jerrican, cylindrical"/>
+      <value code="KG" name="Keg"/>
+      <value code="LA" name="Layer"/>
+      <value code="LG" name="Log"/>
+      <value code="LZ" name="Logs, in bundle/bunch/truss"/>
+      <value code="MB" name="Multiply bag"/>
+      <value code="MC" name="Milk crate"/>
+      <value code="MS" name="Multi wall sack"/>
+      <value code="MT" name="Mat"/>
+      <value code="MX" name="Match box"/>
+      <value code="NE" name="Unpacked or unpackaged"/>
+      <value code="NS" name="Nest"/>
+      <value code="NT" name="Net"/>
+      <value code="PC" name="Parcel"/>
+      <value code="PE" name="Pallet"/>
+      <value code="PG" name="Plate"/>
+      <value code="PH" name="Pitcher"/>
+      <value code="PI" name="Pipe"/>
+      <value code="PK" name="Package"/>
+      <value code="PL" name="Pail"/>
+      <value code="PN" name="Plank"/>
+      <value code="PO" name="Pouch"/>
+      <value code="PT" name="Pot"/>
+      <value code="PU" name="Tray pack"/>
+      <value code="PY" name="Plates, in bundle/bunch/truss"/>
+      <value code="PZ" name="Planks, in bundle/bunch/truss"/>
+      <value code="RD" name="Rod"/>
+      <value code="RG" name="Ring"/>
+      <value code="RL" name="Reel"/>
+      <value code="RO" name="Roll"/>
+      <value code="RT" name="Rednet"/>
+      <value code="RZ" name="Rods, in bundle/bunch/truss"/>
+      <value code="SA" name="Sack"/>
+      <value code="SC" name="Shallow crate"/>
+      <value code="SD" name="Spindle"/>
+      <value code="SE" name="Sea-chest"/>
+      <value code="SG" name="Stillage"/>
+      <value code="SH" name="Sachet"/>
+      <value code="SK" name="Skeleton case"/>
+      <value code="SL" name="Slipsheet"/>
+      <value code="SM" name="Sheet metal"/>
+      <value code="ST" name="Sheet"/>
+      <value code="SU" name="Suitcase"/>
+      <value code="SW" name="Shrink wrapped"/>
+      <value code="SZ" name="Sheets, in bundle/bunch/truss"/>
+      <value code="TB" name="Tub"/>
+      <value code="TC" name="Tea-chest"/>
+      <value code="TD" name="Tube, collapsible"/>
+      <value code="TK" name="Tank, rectangular"/>
+      <value code="TN" name="Tin"/>
+      <value code="TO" name="Tun"/>
+      <value code="TR" name="Trunk"/>
+      <value code="TS" name="Truss"/>
+      <value code="TU" name="Tube"/>
+      <value code="TY" name="Tank, cylindrical"/>
+      <value code="TZ" name="Tubes, in bundle/bunch/truss"/>
+      <value code="VA" name="Vat"/>
+      <value code="VG" name="Bulk, gas (at 1031 mbar and 15 C)"/>
+      <value code="VI" name="Vial"/>
+      <value code="VL" name="Bulk, liquid"/>
+      <value code="VO" name="Bulk, solid, large particles (&apos;nodules&apos;)"/>
+      <value code="VP" name="Vacuum packed"/>
+      <value code="VQ" name="Bulk, liquefied gas (at abnormal temperature/pressure)"/>
+      <value code="VR" name="Bulk, solid, granular particles (&apos;grains&apos;)"/>
+      <value code="VY" name="Bulk, solid, fine particles (&apos;powders&apos;)"/>
+    </element>
+
+    <element code="SNAM" max="40" min="1" name="Supplier&apos;s Name" repr="mixed"/>
+    <element code="SNIC" max="14" min="1" name="Supplier&apos;s Network I/d code" repr="mixed"/>
+    <element code="SNRF" max="14" min="1" name="Sender&apos;s Transmission Reference" repr="mixed"/>
+    <element code="SPRO01" max="13" min="1" name="EAN-13 Article Number for Traded Unit" repr="numeric"/>
+    <element code="SPRO02" max="30" min="1" name="Supplier&apos;s Code for Traded Unit" repr="mixed"/>
+    <element code="SPRO03" max="14" min="1" name="DUN-14 Code for Traded Unit" repr="numeric"/>
+    <element code="SPRS01" max="13" min="1" name="EAN-13 Article Number for the" repr="numeric"/>
+    <element code="SPRS02" max="30" min="1" name="Traded Unit" repr="mixed"/>
+    <element code="SPRS03" max="14" min="1" name="Supplier&apos;s Code for the Traded Unit Dun-14 Code for the Traded Unit" repr="numeric"/>
+    <element code="SQTY01" max="15" min="1" name="Number of Traded Units Held" repr="numeric"/>
+    <element code="SQTY02" max="10" min="1" name="Total Measure Held" repr="3decimal"/>
+    <element code="SQTY03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="SRAP" max="10" min="1" name="Statement/Remittance Amount Payable" repr="2decimal"/>
+    <element code="SRDT" max="10" min="1" name="Statement/Remittance Document Totals" repr="2decimal"/>
+    <element code="SREF" max="17" min="1" name="Secondary Reference Number" repr="mixed"/>
+    <element code="SRLC" max="10" min="1" name="Statement/Remittance Line Count" repr="numeric"/>
+    <element code="SRPR01" max="17" min="1" name="Reporting Group" repr="mixed"/>
+    <element code="SRPR02" max="15" min="1" name="Reporting Sequence" repr="numeric"/>
+    <element code="SRSP" max="10" min="1" name="Statutory Retail Selling Price (including VAT)" repr="4decimal"/>
+    <element code="SRVT" max="10" min="1" name="Statement/Remittance VAT Totals" repr="2decimal"/>
+    <element code="SSCC" max="2" min="1" name="Snapshot Category Code" repr="mixed">
+      <value code="01" name="Below Re-order Level"/>
+      <value code="02" name="Available Stock"/>
+      <value code="03" name="Physical Stock"/>
+      <value code="04" name="Book Stock"/>
+      <value code="05" name="Floor Stock"/>
+      <value code="06" name="Unplanned Stock"/>
+      <value code="07" name="Planned Stock"/>
+      <value code="08" name="Stock committed for today&apos;s despatch"/>
+      <value code="09" name="Stock committed for tomorrow&apos;s despatch"/>
+    </element>
+
+    <element code="SSRN" max="17" min="1" name="Snapshot Reference Number" repr="mixed"/>
+    <element code="SSTC" max="1" min="1" name="Stock Status Code" repr="mixed">
+      <value code="1" name="Prime"/>
+      <value code="2" name="Damaged"/>
+      <value code="3" name="Out of Date"/>
+      <value code="4" name="Quarantined"/>
+      <value code="5" name="Written Off"/>
+    </element>
+
+    <element code="SSUB" max="10" min="1" name="Sub-Total Subsidy" repr="2decimal"/>
+    <element code="STAT" max="1" min="1" name="Statement To" repr="mixed"/>
+    <element code="STDS01" max="4" min="1" name="Identifier" repr="mixed"/>
+    <element code="STDS02" max="1" min="1" name="Version" repr="numeric"/>
+    <element code="STLD" max="10" min="1" name="Data Lines" repr="numeric"/>
+    <element code="STLN" max="10" min="1" name="Number of Locations Reported" repr="numeric"/>
+    <element code="STOI" max="40" min="1" name="Storage Information" repr="mixed"/>
+    <element code="STPR01" max="10" min="1" name="Starting Price" repr="4decimal"/>
+    <element code="STPR02" max="10" min="1" name="Nett Price" repr="4decimal"/>
+    <element code="STPT" max="10" min="1" name="Number of Products Reported" repr="numeric"/>
+    <element code="SUBA" max="10" min="1" name="Subsidy Amount" repr="4decimal"/>
+    <element code="SUMO01" max="6" min="1" name="Start Date" repr="numeric"/>
+    <element code="SUMO02" max="6" min="1" name="End Date" repr="numeric"/>
+    <element code="SURA" max="10" min="1" name="Surcharge Amount" repr="2decimal"/>
+    <element code="SURT" max="10" min="1" name="Total Surcharge Amount" repr="2decimal"/>
+    <element code="SVID01" max="6" min="1" name="Service Code" repr="mixed"/>
+    <element code="SVID02" max="8" min="1" name="User Code" repr="mixed"/>
+    <element code="TBTL01" max="10" min="1" name="Total Bill Amount Payable" repr="2decimal"/>
+    <element code="TBTL02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="TCDE" max="4" min="4" name="Transaction Code" repr="numeric">
+      <value code="0100" name="Complete transmission of Product Information File"/>
+      <value code="0101" name="Update transmission of Product Information File with"/>
+      <value code="0102" name="Complete transmission of Product Information File"/>
+      <value code="0103" name="Update transmission of Product Information File with"/>
+      <value code="0150" name="Complete transmission of Price Information File from"/>
+      <value code="0151" name="Update transmission of Price Information File from"/>
+      <value code="0152" name="Complete transmission of Price Information File sent from"/>
+      <value code="0153" name="Update transmission of Price Information File sent from"/>
+      <value code="0200" name="Complete transmission of Customer Information File"/>
+      <value code="0201" name="Update transmission of Customer Information File"/>
+      <value code="0205" name="Complete transmission of Location Information File"/>
+      <value code="0206" name="Update transmission of Location Information File"/>
+      <value code="0210" name="Complete transmission of Retailer Standing Database File"/>
+      <value code="0211" name="Update transmission of Retailer Standing Database File"/>
+      <value code="0215" name="Complete transmission of Retailer Database Report"/>
+      <value code="0216" name="Update transmission of Retailer Database Report"/>
+      <value code="0350" name="Proposed Orders - planned orders which will"/>
+      <value code="0355" name="Order for goods on approval/inspection - order for"/>
+      <value code="0360" name="Exceptions to Proposed Orders - changes to a"/>
+      <value code="0365" name="Planning Orders - follow Proposed Orders and will"/>
+      <value code="0400" name="Cancelled Orders - used to cancel outstanding"/>
+      <value code="0405" name="Confirmation of Cancelled Orders - confirms that"/>
+      <value code="0410" name="Export Order - order placed on UK supplier for delivery"/>
+      <value code="0420" name="Standing Order - an order for regular supplies, valid over a"/>
+      <value code="0430" name="New Orders - new order for goods and/or services"/>
+      <value code="0435" name="Order for retained approval goods - retrospective"/>
+      <value code="0440" name="Order Amendment - contains changes to an outstanding"/>
+      <value code="0445" name="Order Chaser - used to chase delivery of an outstanding order"/>
+      <value code="0450" name="Copy Orders - a copy of an order previously sent by"/>
+      <value code="0460" name="Confirmation of Order by Ordering Company - used for"/>
+      <value code="0470" name="Mixed Order Types - the file contains a mixture of"/>
+      <value code="0475" name="Re-Scheduled Orders - used to change the delivery"/>
+      <value code="0480" name="Call-Off Orders - request for delivery against a"/>
+      <value code="0485" name="Addition to Existing Orders, Existing Requirements"/>
+      <value code="0490" name="Order Commitment - a contract to supply, not an"/>
+      <value code="0500" name="Complete transmission of Hot Card File"/>
+      <value code="0501" name="Update transmission of Hot Card File"/>
+      <value code="0600" name="Delivery - a notification of delivery against an"/>
+      <value code="0610" name="Consignment Note - sent by the supplier to the"/>
+      <value code="0620" name="Instruction to Deliver - a request for a delivery to"/>
+      <value code="0630" name="Planned Delivery - used to report the status of a"/>
+      <value code="0640" name="Delivery Adjustment - a notification of changes to a"/>
+      <value code="0650" name="Balance - used to notify details of a part delivery"/>
+      <value code="0660" name="Proposed Delivery - advance notice of an impending"/>
+      <value code="0670" name="Confirmation of Delivery - confirms the goods and"/>
+      <value code="0680" name="Confirmation of Despatch - confirms the goods and"/>
+      <value code="0690" name="Confirmation of Delivery Status Report - confirms"/>
+      <value code="0695" name="Warehouse Receipt - notification that goods have"/>
+      <value code="0700" name="Invoices Only - commercial document (sales invoice)"/>
+      <value code="0701" name="Self Billed Invoices - commercial invoice raised by"/>
+      <value code="0702" name="Retrospective Self-Billed Invoice - commercial"/>
+      <value code="0705" name="Factored Invoice - commercial invoice sent by a"/>
+      <value code="0707" name="Assigned Debt Invoice. Used by sellers to send an"/>
+      <value code="0709" name="Copy Invoice - not for VAT purposes. Raised when"/>
+      <value code="0710" name="Credit Claims (News trade) - claim for credit"/>
+      <value code="0711" name="Sales Report - not final claim for credit. Report"/>
+      <value code="0715" name="Utility Bill - commercial invoice for metered"/>
+      <value code="0716" name="Copy Bill - not for VAT purposes. Copy of a utility"/>
+      <value code="0717" name="Utility Credit Note - credit notes only"/>
+      <value code="0720" name="Debit Notes Only - notification of a sum or sums"/>
+      <value code="0740" name="Credit Notes Only - notification of a sum or sums to"/>
+      <value code="0741" name="Self Billed Credit Notes - a credit note raised by"/>
+      <value code="0742" name="Retrospective Self-Billed Credit Note - credit note"/>
+      <value code="0749" name="Copy Credit Note - not for VAT purposes. Copy of a"/>
+      <value code="0750" name="Provisional invoice, not valid for tax purposes. A periodic"/>
+      <value code="0810" name="Electronic Funds Transaction"/>
+      <value code="0820" name="Statement Details Only - list of credits and debits"/>
+      <value code="0830" name="Remittance Details Only - details of the items"/>
+      <value code="0835" name="Payment Order - instruction on a bank to make a"/>
+      <value code="0840" name="Debit Advice - notification given by the bank to the"/>
+      <value code="0845" name="Credit Advice - notification given by the bank to"/>
+      <value code="0850" name="Exception - report from the bank to the payer that a"/>
+      <value code="0900" name="Uplift Notification - notification of a an uplift"/>
+      <value code="0910" name="Planned Uplift - advance notification of an uplift"/>
+      <value code="0920" name="Uplift Confirmation - confirmation of the items and"/>
+      <value code="0930" name="Confirmation of Uplift Status Report - report of the"/>
+      <value code="1000" name="Picking Instructions Only - instructions on what to"/>
+      <value code="1010" name="Picking Instructions Amendments - change to a"/>
+      <value code="2000" name="Availability Report Only - report of actual or"/>
+      <value code="2100" name="Stock Snapshot Only - report of current stock"/>
+      <value code="2200" name="Stock Adjustment Only - notification of adjustments"/>
+      <value code="2300" name="Product Planning Report - planning report on"/>
+      <value code="2305" name="Location Planning Report - report for locations"/>
+      <value code="3110" name="Acknowledgement that an Order, with line details as"/>
+      <value code="3120" name="Acknowledgement, including expected delivery, for"/>
+      <value code="3130" name="Acknowledgement, including expected delivery, for"/>
+      <value code="3140" name="Acknowledgement providing expected delivery"/>
+      <value code="3150" name="Acknowledgement changing details which have"/>
+      <value code="3200" name="Claims Acknowledgement (News trade) - response to a"/>
+      <value code="6000" name="Equipment Movement Confirmation - confirms the"/>
+      <value code="6001" name="Pallet Exchange Note - notification that pallets"/>
+      <value code="6002" name="Pallet Control Voucher - control document issued"/>
+      <value code="6003" name="Pallet Issue Note - notification that fresh pallets"/>
+      <value code="6004" name="Pallet Return Note - notification that pallets have"/>
+      <value code="6005" name="Pallet Transfer Note - record of, or request for"/>
+      <value code="6006" name="Pallet Query Note - request for information on the"/>
+      <value code="6007" name="Pallet Return Advice Note - notification that"/>
+      <value code="6008" name="Pallet Ex Factory Movement - record of pallet"/>
+      <value code="6009" name="Pallet Collection Request - request for pallets to"/>
+      <value code="6010" name="Load Collection Request - request for goods to be"/>
+      <value code="9000" name="Issues (News trade) - master file showing details of"/>
+      <value code="9005" name="Supply and Returns (News trade) - report of the"/>
+      <value code="9010" name="Dye Order - order for special textile dying and"/>
+      <value code="9011" name="Return Dye Instruction - accompanies the returned"/>
+      <value code="9020" name="Complete transmission of Price and Availability"/>
+      <value code="9021" name="Update transmission of Price and Availability Update"/>
+    </element>
+
+    <element code="TCOD01" max="6" min="1" name="Tariff Code" repr="mixed"/>
+    <element code="TCOD02" max="40" min="1" name="Tariff Description" repr="mixed"/>
+    <element code="TDES01" max="40" min="1" name="Traded Unit Description Line 1" repr="mixed"/>
+    <element code="TDES02" max="40" min="1" name="Traded Unit Description Line 2" repr="mixed"/>
+    <element code="TEXT" max="50" min="1" name="Text" repr="mixed"/>
+    <element code="TFAC" max="1" min="1" name="To Follow Acceptability" repr="mixed"/>
+    <element code="TFIN" max="1" min="1" name="To Follow Indicator" repr="mixed"/>
+    <element code="TLOC01" max="13" min="1" name="Supplier&apos;s EAN Location Number" repr="numeric"/>
+    <element code="TLOC02" max="17" min="1" name="Supplier&apos;s Own Location Code" repr="mixed"/>
+    <element code="TMAX" max="3" min="1" name="Maximum Storage Temperature" repr="numeric"/>
+    <element code="TMIN" max="3" min="1" name="Minimum Storage Temperature" repr="numeric"/>
+    <element code="TMOD01" max="6" min="1" name="Tariff Code Modifier 1" repr="mixed"/>
+    <element code="TMOD02" max="6" min="1" name="Tariff Code Modifier 2" repr="mixed"/>
+    <element code="TMOD03" max="6" min="1" name="Tariff Code Modifier 3" repr="mixed"/>
+    <element code="TMOD04" max="6" min="1" name="Tariff Code Modifier 4" repr="mixed"/>
+    <element code="TNAC" max="1" min="1" name="Temporarily Not Available Code" repr="numeric"/>
+    <element code="TOTL" max="10" min="1" name="Total of Details Lines" repr="numeric"/>
+    <element code="TOTV" max="10" min="1" name="Total of File Value" repr="2decimal"/>
+    <element code="TPKG" max="40" min="1" name="Type of Packaging" repr="mixed"/>
+    <element code="TPSE" max="10" min="1" name="Total Payable (before settlement discount)" repr="2decimal"/>
+    <element code="TPSI" max="10" min="1" name="Total Payable (after settlement discount)" repr="2decimal"/>
+    <element code="TPST" max="3" min="1" name="Transaction Planning Status" repr="mixed">
+      <value code="A" name="New Delivery/Uplift"/>
+      <value code="B" name="Delivery/Uplift Adjustment"/>
+      <value code="C" name="Delivery/Uplift Cancellation"/>
+      <value code="D" name="Delivery/Uplift to be negotiated"/>
+    </element>
+
+    <element code="TRDT01" max="6" min="1" name="Transmission" repr="numeric"/>
+    <element code="TRDT02" max="6" min="1" name="Date Time" repr="numeric"/>
+    <element code="TSUB" max="10" min="1" name="Total Subsidy Amount" repr="2decimal"/>
+    <element code="TSUP" max="1" min="1" name="VAT - Type of Supply" repr="mixed">
+      <value code="A" name="Ordinary sale"/>
+      <value code="B" name="Hire purchase, conditional sale, credit sale or similar loan"/>
+      <value code="C" name="Loan"/>
+      <value code="D" name="Exchange"/>
+      <value code="E" name="Hire, lease or rental"/>
+      <value code="F" name="Process (making goods from someone else&apos;s materials)"/>
+      <value code="G" name="Sales on Commission (eg. by an Auctioneer)"/>
+      <value code="H" name="Sale or Return, or similar terms"/>
+    </element>
+
+    <element code="TTYP" max="12" min="1" name="Transaction Type" repr="mixed">
+      <value code="ASS-INV" name="Assigned Debt Invoice (TCDE"/>
+      <value code="CA" name="Confirmation of Delivery;"/>
+      <value code="CANCEL-ORDER" name="Cancelled Orders (TCDE 0400)"/>
+      <value code="CB" name="Confirmation of Delivery;"/>
+      <value code="CC" name="Confirmation of Delivery;"/>
+      <value code="CD" name="Confirmation Proposed"/>
+      <value code="CE" name="Confirmation Proposed"/>
+      <value code="COMPLETE-CUS" name="Complete Customer Information"/>
+      <value code="COMPLETE-PRI" name="Complete Price Information"/>
+      <value code="COMPLETE-PRO" name="Complete Product Information"/>
+      <value code="CONF-DELIV" name="Confirmation of Delivery (TCDE 0670)"/>
+      <value code="CONF-DESP" name="Confirmation of Despatch (TCDE"/>
+      <value code="CONF-ORDERS" name="Confirmation of Order by Ordering"/>
+      <value code="CONF-STATUS" name="Confirmation of Delivery Status"/>
+      <value code="CREADV" name="Credit Advice (TCDE 0845)"/>
+      <value code="CREDIT-NOTES" name="Credit Notes Only (TCDE 0740)"/>
+      <value code="DA" name="Instruction to Deliver;"/>
+      <value code="DB" name="Instruction to Deliver;"/>
+      <value code="DC" name="Instruction to Deliver;"/>
+      <value code="DD" name="Proposed Delivery; Receipt"/>
+      <value code="DE" name="Proposed Delivery; Internal"/>
+      <value code="DEBIT-NOTES" name="Debit Notes Only (TCDE 0720)"/>
+      <value code="DELIVERIES" name="Delivery Notification (TCDE 0600)"/>
+      <value code="DELIVERY-ADJ" name="Delivery Adjustments (TCDE"/>
+      <value code="DLADV" name="Debit Advice (TCDE 0840)"/>
+      <value code="EMC" name="Equipment Movement"/>
+      <value code="EXCEPT-ORDER" name="Exception to Proposed Orders"/>
+      <value code="EXCEPTION" name="Exception Conditions (TCDE"/>
+      <value code="INVOICES" name="Invoices Only (TCDE 0700)"/>
+      <value code="ISS-NOTE" name="Pallet Issue Note (TCDE 6003)"/>
+      <value code="NEW-ORDERS" name="New Orders (TCDE 0430)"/>
+      <value code="PAYORD" name="Payment Order (TCDE 0835)"/>
+      <value code="PCR-NOTE" name="Pallet Collection Request"/>
+      <value code="PCV-NOTE" name="Pallet Control Voucher (TCDE"/>
+      <value code="PEN-NOTE" name="Pallet Exchange Note (TCDE"/>
+      <value code="PROP-ORDERS" name="Proposed Orders (TCDE 0350)"/>
+      <value code="QNE-NOTE" name="Pallet Query Note (TCDE 6006)"/>
+      <value code="RAN-NOTE" name="Pallet Return Advice Note"/>
+      <value code="REMITTANCE" name="Remittance Details Only (TCDE 0830)"/>
+      <value code="RET-NOTE" name="Pallet Return Note (TCDE 6004)"/>
+      <value code="STATEMENT" name="Statement Details Only (TCDE"/>
+      <value code="TRF-NOTE" name="Pallet Transfer Note (TCDE"/>
+      <value code="UPDATE-CUS" name="Update to existing Customer"/>
+      <value code="UPDATE-PRI" name="Update to existing Price"/>
+      <value code="UPDATE-PRO" name="Update to existing Product"/>
+      <value code="WHRECEIPT" name="Warehouse Receipt (TCDE 0695)"/>
+      <value code="XFM-NOTE" name="Pallet Ex Factory Movement"/>
+    </element>
+
+    <element code="TVAT" max="10" min="1" name="Total VAT Amount Payable" repr="2decimal"/>
+    <element code="TVLC" max="13" min="1" name="Total Value of Credit Advice Messages" repr="2decimal"/>
+    <element code="TVLD" max="13" min="1" name="Total Value of Debit Advice Messages" repr="2decimal"/>
+    <element code="TVLP" max="13" min="1" name="Total Value of Payment Messages" repr="2decimal"/>
+    <element code="TXDT" desc="?Format:  YYMMDD?" max="6" min="1" name="Tax-point Date" repr="numeric"/>
+    <element code="TYPC" max="6" min="1" name="Type of Change" repr="mixed">
+      <value code="001" name="ADD"/>
+      <value code="002" name="AMEND"/>
+      <value code="003" name="DELETE"/>
+      <value code="004" name="REPORT"/>
+      <value code="005" name="REFRESH (complete report including some"/>
+      <value code="006" name="REACTIVATE"/>
+      <value code="007" name="DEACTIVATE"/>
+    </element>
+
+    <element code="TYPE01" max="6" min="6" name="Type" repr="mixed"/>
+    <element code="TYPE02" max="1" min="1" name="Version Number" repr="numeric"/>
+    <element code="UCON01" max="13" min="1" name="EAN-13 Article Number" repr="numeric"/>
+    <element code="UCON02" max="30" min="1" name="Supplier&apos;s Code" repr="mixed"/>
+    <element code="UCON03" max="14" min="1" name="DUN-14 Code" repr="numeric"/>
+    <element code="UCON04" max="15" min="1" name="Customer&apos;s Own Brand EAN Number" repr="numeric"/>
+    <element code="UCON05" max="30" min="1" name="Customer&apos;s Item Code" repr="mixed"/>
+    <element code="UCRB" max="10" min="1" name="Unit Credit Value Before Discount and VAT" repr="4decimal"/>
+    <element code="UCRV01" max="10" min="1" name="Credit Value (before VAT)" repr="4decimal"/>
+    <element code="UCRV02" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="UCSI01" max="10" min="1" name="Total Charge including VAT" repr="2decimal"/>
+    <element code="UCSI02" max="4" min="1" name="Credit Line Indicator" repr="mixed"/>
+    <element code="UGST01" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="UGST02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="UGWT01" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="UGWT02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="UHST01" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="UHST02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="UHYT01" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="UHYT02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="UINS01" max="40" min="1" name="Uplift Instruction Narrative Line 1" repr="mixed"/>
+    <element code="UINS02" max="40" min="1" name="Uplift Instruction Narrative Line 2" repr="mixed"/>
+    <element code="UINS03" max="40" min="1" name="Uplift Instruction Narrative Line 3" repr="mixed"/>
+    <element code="UINS04" max="40" min="1" name="Uplift Instruction Narrative Line 4" repr="mixed"/>
+    <element code="ULAY" max="15" min="1" name="Traded Unit Quantity per Layer" repr="numeric"/>
+    <element code="ULST01" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="ULST02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="ULTH01" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="ULTH02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="UNOR01" max="15" min="1" name="Consumer Units in Traded Unit" repr="numeric"/>
+    <element code="UNOR02" max="10" min="1" name="Ordering Measure" repr="3decimal"/>
+    <element code="UNOR03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="UNTO01" max="14" min="1" name="Transmission Recipient Code" repr="mixed"/>
+    <element code="UNTO02" max="35" min="1" name="Transmission Recipient Name" repr="mixed"/>
+    <element code="UPAL" max="15" min="1" name="Traded Unit Quantity per Storage Medium" repr="numeric"/>
+    <element code="UPLC" max="3" min="1" name="Uplift Condition" repr="mixed">
+      <value code="0" name="Delivered/Uplifted as instructed"/>
+      <value code="1" name="Delivery/Uplift Variance from prior transmitted instruction"/>
+      <value code="2" name="Completely Undelivered/Uncollected: transaction NOT"/>
+      <value code="3" name="Delivery/Uplift Variance, with no prior transmitted"/>
+      <value code="4" name="Completely Undelivered/Uncollected; transaction to"/>
+      <value code="A" name="Delivery picked and packed"/>
+      <value code="B" name="Delivery held at distribution centre"/>
+      <value code="C" name="Delivery despatched from distribution centre (paired"/>
+      <value code="D" name="Delivery arrived at local depot"/>
+      <value code="E" name="Delivery held at local depot"/>
+      <value code="F" name="Delivery despatched from local depot"/>
+      <value code="G" name="Delivery retained in local depot"/>
+      <value code="H" name="Negotiated delivery date confirmed"/>
+      <value code="J" name="Negotiated delivery date adjusted"/>
+      <value code="K" name="Uplift held in local depot (paired with TCDE of 0930)"/>
+      <value code="L" name="Uplift arrived at distribution centre (paired with TCDE of"/>
+      <value code="M" name="Proof of delivery"/>
+    </element>
+
+    <element code="UPLN01" max="17" min="1" name="Uplift Note Number" repr="mixed"/>
+    <element code="UPLN02" max="6" min="1" name="Date of Uplift Note" repr="numeric"/>
+    <element code="UPLQ01" max="15" min="1" name="Number of Traded Units in Uplift" repr="numeric"/>
+    <element code="UPLQ02" max="10" min="1" name="Total Uplift Measure" repr="3decimal"/>
+    <element code="UPLQ03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+    <element code="UPSI01" max="10" min="1" name="File Total for VAT Category (including VAT)" repr="2decimal"/>
+    <element code="UPSI02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="UPVL" max="10" min="1" name="Uplift Volume" repr="3decimal"/>
+    <element code="UPWT01" max="10" min="1" name="Vehicle Tare Weight" repr="3decimal"/>
+    <element code="UPWT02" max="10" min="1" name="Total Goods Weight" repr="3decimal"/>
+    <element code="USDI01" max="10" min="1" name="File Total for VAT Category (before VAT)" repr="2decimal"/>
+    <element code="USDI02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="UTVA01" max="10" min="1" name="Bill Total VAT Amount Payable" repr="2decimal"/>
+    <element code="UTVA02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="UVAT01" max="10" min="1" name="Bill File Total VAT Amount" repr="2decimal"/>
+    <element code="UVAT02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="UVLA01" max="10" min="1" name="VAT Total Charge Before VAT" repr="2decimal"/>
+    <element code="UVLA02" max="4" min="1" name="Credit Line Indicator" repr="mixed"/>
+    <element code="UVLT01" max="10" min="1" name="VAT" repr="2decimal"/>
+    <element code="UVLT02" max="4" min="1" name="Total Charge Before VAT Credit Indicator" repr="mixed"/>
+    <element code="UVOL01" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="UVOL02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="UVST01" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="UVST02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="UVTT01" max="10" min="1" name="VAT Amount Payable" repr="2decimal"/>
+    <element code="UVTT02" max="4" min="1" name="Credit Line Indicator" repr="mixed"/>
+    <element code="UWDT01" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="UWDT02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="UWST01" max="10" min="1" name="Total Measure" repr="3decimal"/>
+    <element code="UWST02" max="6" min="1" name="Unit of Measure" repr="mixed"/>
+    <element code="VATA" max="10" min="1" name="VAT Amount Payable" repr="2decimal"/>
+    <element code="VATC" max="1" min="1" name="VAT Rate Category Code" repr="mixed">
+      <value code="A" name="Mixed VAT rate item"/>
+      <value code="B" name="Standard rate in withdrawn bill"/>
+      <value code="C" name="Original VAT liability on copy invoices sent to"/>
+      <value code="D" name="Insurance Premium Tax"/>
+      <value code="E" name="Export item"/>
+      <value code="F" name="Free export item, VAT charged"/>
+      <value code="G" name="Free export item, VAT not charged"/>
+      <value code="H" name="Higher rate"/>
+      <value code="I" name="Import item"/>
+      <value code="J" name="Higher rated free goods, VAT charged"/>
+      <value code="K" name="Higher rated free goods, VAT not charged"/>
+      <value code="L" name="Lower rate"/>
+      <value code="M" name="Lower rate in withdrawn bill"/>
+      <value code="N" name="Input Tax paid but not reclaimable"/>
+      <value code="O" name="Services outside the scope of VAT"/>
+      <value code="P" name="Credit Line payments which will be due to the Policy"/>
+      <value code="Q" name="Zero rate in withdrawn bill"/>
+      <value code="R" name="Reconciliation - Invoice raised for VAT only"/>
+      <value code="S" name="Standard rate"/>
+      <value code="T" name="Standard rated free goods, VAT charged"/>
+      <value code="U" name="Exemption from VAT in withdrawn bill"/>
+      <value code="V" name="Standard rated free goods, VAT not charged"/>
+      <value code="W" name="Intracompany transfer - Companies must have same VAT number"/>
+      <value code="X" name="Exemption from VAT"/>
+      <value code="Z" name="Zero rate"/>
+    </element>
+
+    <element code="VATN01" max="9" min="9" name="Number Numeric VAT Registration Number" repr="numeric"/>
+    <element code="VATN02" max="17" min="1" name="Alphanumeric VAT Registration Number" repr="mixed"/>
+    <element code="VATP" max="3" min="1" name="VAT Rate Percentage" repr="3decimal"/>
+    <element code="VATR01" max="9" min="9" name="Customers Numeric VAT Reg. Number" repr="numeric"/>
+    <element code="VATR02" max="17" min="1" name="Customers Alphanumeric VAT Reg. Number" repr="mixed"/>
+    <element code="VDAA01" max="3" min="1" name="Account" repr="mixed"/>
+    <element code="VDAA02" max="6" min="1" name="VAT Declaration Code" repr="numeric"/>
+    <element code="VDAA03" max="10" min="1" name="Date of Bill Withdrawn" repr="2decimal"/>
+    <element code="VDAA04" max="17" min="1" name="VAT Total Amount on Bill" repr="mixed"/>
+    <element code="VDAA05" max="17" min="1" name="Withdrawn Amended Invoice Reference Premises Reference of Previous Bill" repr="mixed"/>
+    <element code="VLCA" max="10" min="1" name="Discount Reclaimed for Credit Value" repr="2decimal"/>
+    <element code="VLCT" max="10" min="1" name="Total Discount Reclaimed for Credit Value" repr="2decimal"/>
+    <element code="VLDA" max="10" min="1" name="Discount Amount for Invoice Value" repr="2decimal"/>
+    <element code="VLDT" max="10" min="1" name="Total Discount Amount for Invoice Value" repr="2decimal"/>
+    <element code="VPSE" max="10" min="1" name="File Sub-Total Payable (before settlement discount)" repr="2decimal"/>
+    <element code="VPSI" max="10" min="1" name="File Sub-Total Payable (after settlement discount)" repr="2decimal"/>
+    <element code="VRDT" max="40" min="1" name="Variant Details" repr="mixed"/>
+    <element code="VRMI" max="1" min="1" name="Variable Measure Indicator" repr="numeric"/>
+    <element code="VSDE" max="10" min="1" name="File Sub-Total Amount (before settlement discount)" repr="2decimal"/>
+    <element code="VSDI" max="10" min="1" name="File Sub-Total Amount (after settlement discount)" repr="2decimal"/>
+    <element code="VTCO" max="3" min="1" name="Variant Type Code" repr="mixed"/>
+    <element code="VTVC01" max="10" min="1" name="File Total VAT for VAT Category" repr="2decimal"/>
+    <element code="VTVC02" max="4" min="1" name="Credit Indicator" repr="mixed"/>
+    <element code="VVAT" max="10" min="1" name="File VAT Sub-Total" repr="2decimal"/>
+    <element code="XDAT" max="6" min="1" name="Expected Delivery Date" repr="numeric"/>
+    <element code="XQTY01" max="15" min="1" name="Number of Traded Units Expected" repr="numeric"/>
+    <element code="XQTY02" max="10" min="1" name="Total Measure Expected" repr="3decimal"/>
+    <element code="XQTY03" max="6" min="1" name="Measure Indicator" repr="mixed"/>
+  </elements>
+  <composites>
+    <composite code="AADJ" name="Actual Adjustment">
+      <elemref code="AADJ01" reqr="conditional"/>
+      <elemref code="AADJ02" reqr="conditional"/>
+    </composite>
+
+    <composite code="ACID" name="Account Identifier">
+      <elemref code="ACID01" reqr="mandatory"/>
+      <elemref code="ACID02" reqr="conditional"/>
+    </composite>
+
+    <composite code="ADJF" name="Adjustment Factor">
+      <elemref code="ADJF01" reqr="conditional"/>
+      <elemref code="ADJF02" reqr="mandatory"/>
+      <elemref code="ADJF03" reqr="conditional"/>
+      <elemref code="MADN01" reqr="mandatory"/>
+      <elemref code="MADN02" reqr="conditional"/>
+      <elemref code="MADN03" reqr="conditional"/>
+      <elemref code="MADN04" reqr="conditional"/>
+      <elemref code="MADN05" reqr="conditional"/>
+    </composite>
+
+    <composite code="AEXC" name="Area of Exception Condition">
+      <elemref code="AEXC01" reqr="mandatory"/>
+      <elemref code="AEXC02" reqr="conditional"/>
+    </composite>
+
+    <composite code="AQTY" name="Advised Quantity">
+      <elemref code="AQTY01" reqr="conditional"/>
+      <elemref code="AQTY02" reqr="conditional"/>
+      <elemref code="AQTY03" reqr="conditional"/>
+    </composite>
+
+    <composite code="AUCT" name="Unit Cost Price (excluding VAT)">
+      <elemref code="AUCT01" reqr="mandatory"/>
+      <elemref code="AUCT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="AUTR" name="Authentication Result">
+      <elemref code="AUTR01" reqr="mandatory"/>
+      <elemref code="AUTR02" reqr="conditional"/>
+      <elemref code="AUTR03" reqr="conditional"/>
+    </composite>
+
+    <composite code="BABF" name="Balance Brought Forward">
+      <elemref code="BABF01" reqr="mandatory"/>
+      <elemref code="BABF02" reqr="conditional"/>
+    </composite>
+
+    <composite code="CADD" name="Customer&apos;s Address">
+      <elemref code="CADD01" reqr="conditional"/>
+      <elemref code="CADD02" reqr="conditional"/>
+      <elemref code="CADD03" reqr="conditional"/>
+      <elemref code="CADD04" reqr="conditional"/>
+      <elemref code="CADD05" reqr="conditional"/>
+    </composite>
+
+    <composite code="CCDE" name="Charge Type Code">
+      <elemref code="CCDE01" reqr="conditional"/>
+      <elemref code="CCDE02" reqr="conditional"/>
+      <elemref code="CCDE03" reqr="conditional"/>
+    </composite>
+
+    <composite code="CIDN" name="Customer&apos;s Identity">
+      <elemref code="CIDN01" reqr="conditional"/>
+      <elemref code="CIDN02" reqr="conditional"/>
+    </composite>
+
+    <composite code="CLOC" name="Customer&apos;s Location">
+      <elemref code="CLOC01" reqr="conditional"/>
+      <elemref code="CLOC02" reqr="conditional"/>
+      <elemref code="CLOC03" reqr="conditional"/>
+    </composite>
+
+    <composite code="CLOE" name="End Customer&apos;s Location Identity">
+      <elemref code="CLOE01" reqr="conditional"/>
+      <elemref code="CLOE02" reqr="conditional"/>
+      <elemref code="CLOE03" reqr="conditional"/>
+    </composite>
+
+    <composite code="CLOS" name="Start Customer&apos;s Location Identity">
+      <elemref code="CLOS01" reqr="conditional"/>
+      <elemref code="CLOS02" reqr="conditional"/>
+      <elemref code="CLOS03" reqr="conditional"/>
+    </composite>
+
+    <composite code="CLSK" name="Closing Stock for the Period">
+      <elemref code="CLSK01" reqr="conditional"/>
+      <elemref code="CLSK02" reqr="conditional"/>
+      <elemref code="CLSK03" reqr="conditional"/>
+    </composite>
+
+    <composite code="CLVM" name="Calorific Value in Specified Units">
+      <elemref code="CLVM01" reqr="conditional"/>
+      <elemref code="CLVM02" reqr="mandatory"/>
+    </composite>
+
+    <composite code="CONA" name="Consumption (Adjusted Units)">
+      <elemref code="CONA01" reqr="mandatory"/>
+      <elemref code="CONA02" reqr="mandatory"/>
+      <elemref code="CONA03" reqr="conditional"/>
+    </composite>
+
+    <composite code="CONB" name="Consumption (Base Units)">
+      <elemref code="CONB01" reqr="mandatory"/>
+      <elemref code="CONB02" reqr="mandatory"/>
+      <elemref code="CONB03" reqr="conditional"/>
+    </composite>
+
+    <composite code="CONS" name="Consumption (Billing Units)">
+      <elemref code="CONS01" reqr="mandatory"/>
+      <elemref code="CONS02" reqr="mandatory"/>
+      <elemref code="CONS03" reqr="conditional"/>
+    </composite>
+
+    <composite code="CORI" name="Code for Replaced Item">
+      <elemref code="CORI01" reqr="conditional"/>
+      <elemref code="CORI02" reqr="conditional"/>
+      <elemref code="CORI03" reqr="conditional"/>
+      <elemref code="CORI04" reqr="conditional"/>
+      <elemref code="CORI05" reqr="conditional"/>
+    </composite>
+
+    <composite code="CPRO" name="Customer&apos;s Product Number">
+      <elemref code="CPRO01" reqr="conditional"/>
+      <elemref code="CPRO02" reqr="conditional"/>
+    </composite>
+
+    <composite code="CPRS" name="Customer&apos;s Substituted Product">
+      <elemref code="CPRS01" reqr="conditional"/>
+      <elemref code="CPRS02" reqr="conditional"/>
+    </composite>
+
+    <composite code="CRRE" name="Reason for Credit">
+      <elemref code="CRRE01" reqr="conditional"/>
+      <elemref code="CRRE02" reqr="conditional"/>
+      <elemref code="CRRE03" reqr="conditional"/>
+    </composite>
+
+    <composite code="CTOT" name="Total Charge for Charge Type">
+      <elemref code="CTOT01" reqr="mandatory"/>
+      <elemref code="CTOT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="DADD" name="Delivery to Address">
+      <elemref code="DADD01" reqr="conditional"/>
+      <elemref code="DADD02" reqr="conditional"/>
+      <elemref code="DADD03" reqr="conditional"/>
+      <elemref code="DADD04" reqr="conditional"/>
+      <elemref code="DADD05" reqr="conditional"/>
+    </composite>
+
+    <composite code="DAPD" name="Discount Applicability Dates">
+      <elemref code="DAPD01" reqr="mandatory"/>
+      <elemref code="DAPD02" reqr="conditional"/>
+    </composite>
+
+    <composite code="DARA" name="Date of Change">
+      <elemref code="DARA01" reqr="conditional"/>
+      <elemref code="DARA02" reqr="conditional"/>
+    </composite>
+
+    <composite code="DELN" name="Delivery Note Details">
+      <elemref code="DELN01" reqr="conditional"/>
+      <elemref code="DELN02" reqr="conditional"/>
+    </composite>
+
+    <composite code="DELQ" name="Delivery Quantity">
+      <elemref code="DELQ01" reqr="conditional"/>
+      <elemref code="DELQ02" reqr="conditional"/>
+      <elemref code="DELQ03" reqr="conditional"/>
+    </composite>
+
+    <composite code="DEWT" name="Delivery Weights">
+      <elemref code="DEWT01" reqr="conditional"/>
+      <elemref code="DEWT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="DIND" name="Delivery Indicators">
+      <elemref code="DIND01" reqr="conditional"/>
+      <elemref code="DIND02" reqr="conditional"/>
+    </composite>
+
+    <composite code="DINS" name="Delivery Instruction Narrative">
+      <elemref code="DINS01" reqr="conditional"/>
+      <elemref code="DINS02" reqr="conditional"/>
+      <elemref code="DINS03" reqr="conditional"/>
+      <elemref code="DINS04" reqr="conditional"/>
+    </composite>
+
+    <composite code="DLED" name="Delivery lead time">
+      <elemref code="DLED01" reqr="conditional"/>
+      <elemref code="DLED02" reqr="conditional"/>
+    </composite>
+
+    <composite code="DLOC" name="Despatch Location">
+      <elemref code="DLOC01" reqr="conditional"/>
+      <elemref code="DLOC02" reqr="conditional"/>
+    </composite>
+
+    <composite code="DNAC" name="Data Narrative Code">
+      <elemref code="DNAC01" reqr="conditional"/>
+      <elemref code="DNAC02" reqr="conditional"/>
+    </composite>
+
+    <composite code="DQGD" name="Quantity Graduations">
+      <elemref code="DQGD01" reqr="conditional"/>
+      <elemref code="DQGD02" reqr="conditional"/>
+      <elemref code="DQGD03" reqr="conditional"/>
+      <elemref code="DQGD04" reqr="conditional"/>
+      <elemref code="DQGD05" reqr="conditional"/>
+      <elemref code="DQGD06" reqr="conditional"/>
+    </composite>
+
+    <composite code="DUAC" name="Delivery/Uplift Action Details">
+      <elemref code="DUAC01" reqr="mandatory"/>
+      <elemref code="DUAC02" reqr="conditional"/>
+    </composite>
+
+    <composite code="DVGD" name="Value Graduations">
+      <elemref code="DVGD01" reqr="conditional"/>
+      <elemref code="DVGD02" reqr="conditional"/>
+    </composite>
+
+    <composite code="ELOC" name="Delivery to Location">
+      <elemref code="ELOC01" reqr="conditional"/>
+      <elemref code="ELOC02" reqr="conditional"/>
+      <elemref code="ELOC03" reqr="conditional"/>
+    </composite>
+
+    <composite code="FASU" name="Bill File Total Amount before VAT">
+      <elemref code="FASU01" reqr="mandatory"/>
+      <elemref code="FASU02" reqr="conditional"/>
+    </composite>
+
+    <composite code="FBAB" name="File Total Balance Brought">
+      <elemref code="FBAB01" reqr="mandatory"/>
+      <elemref code="FBAB02" reqr="conditional"/>
+    </composite>
+
+    <composite code="FPSU" name="Bill File Total Payable including">
+      <elemref code="FPSU01" reqr="mandatory"/>
+      <elemref code="FPSU02" reqr="conditional"/>
+    </composite>
+
+    <composite code="FROM" name="Identification of">
+      <elemref code="FROM01" reqr="conditional"/>
+      <elemref code="FROM02" reqr="conditional"/>
+    </composite>
+
+    <composite code="FTOP" name="File Total of Payment Details">
+      <elemref code="FTOP01" reqr="mandatory"/>
+      <elemref code="FTOP02" reqr="conditional"/>
+    </composite>
+
+    <composite code="GNAR" name="General Narrative">
+      <elemref code="GNAR01" reqr="conditional"/>
+      <elemref code="GNAR02" reqr="conditional"/>
+      <elemref code="GNAR03" reqr="conditional"/>
+      <elemref code="GNAR04" reqr="conditional"/>
+    </composite>
+
+    <composite code="IADD" name="Invoice to Address">
+      <elemref code="IADD01" reqr="conditional"/>
+      <elemref code="IADD02" reqr="conditional"/>
+      <elemref code="IADD03" reqr="conditional"/>
+      <elemref code="IADD04" reqr="conditional"/>
+      <elemref code="IADD05" reqr="conditional"/>
+    </composite>
+
+    <composite code="ILOC" name="Invoice Location">
+      <elemref code="ILOC01" reqr="conditional"/>
+      <elemref code="ILOC02" reqr="conditional"/>
+    </composite>
+
+    <composite code="INLO" name="Invoice System Location Details">
+      <elemref code="INLO01" reqr="conditional"/>
+      <elemref code="INLO02" reqr="conditional"/>
+    </composite>
+
+    <composite code="INRF" name="Instruction References">
+      <elemref code="INRF01" reqr="conditional"/>
+      <elemref code="INRF02" reqr="conditional"/>
+      <elemref code="INRF03" reqr="conditional"/>
+      <elemref code="INRF04" reqr="conditional"/>
+    </composite>
+
+    <composite code="ITRA" name="Invoice Transmission Recipient">
+      <elemref code="ITRA01" reqr="conditional"/>
+      <elemref code="ITRA02" reqr="conditional"/>
+    </composite>
+
+    <composite code="LADD" name="Location Address">
+      <elemref code="LADD01" reqr="mandatory"/>
+      <elemref code="LADD02" reqr="conditional"/>
+      <elemref code="LADD03" reqr="conditional"/>
+      <elemref code="LADD04" reqr="conditional"/>
+      <elemref code="LADD05" reqr="conditional"/>
+    </composite>
+
+    <composite code="LEVC" name="Level References">
+      <elemref code="LEVC01" reqr="mandatory"/>
+      <elemref code="LEVC02" reqr="mandatory"/>
+    </composite>
+
+    <composite code="LIDR" name="Line Document Reference">
+      <elemref code="LIDR01" reqr="conditional"/>
+      <elemref code="LIDR02" reqr="conditional"/>
+    </composite>
+
+    <composite code="MEDT" name="Message Date and Time">
+      <elemref code="MEDT01" reqr="mandatory"/>
+      <elemref code="MEDT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="METO" name="Message to">
+      <elemref code="METO01" reqr="conditional"/>
+      <elemref code="METO02" reqr="conditional"/>
+      <elemref code="METO03" reqr="conditional"/>
+    </composite>
+
+    <composite code="MOQY" name="Ordering Quantity">
+      <elemref code="MOQY01" reqr="conditional"/>
+      <elemref code="MOQY02" reqr="conditional"/>
+      <elemref code="MOQY03" reqr="conditional"/>
+      <elemref code="MOQY04" reqr="conditional"/>
+      <elemref code="MOQY05" reqr="conditional"/>
+    </composite>
+
+    <composite code="MOVL" name="Ordering Value">
+      <elemref code="MOVL01" reqr="conditional"/>
+      <elemref code="MOVL02" reqr="conditional"/>
+    </composite>
+
+    <composite code="MSAD" name="Meter Sub-address">
+      <elemref code="MSAD01" reqr="conditional"/>
+      <elemref code="MSAD02" reqr="conditional"/>
+    </composite>
+
+    <composite code="MSPR" name="Selling On Price">
+      <elemref code="MSPR01" reqr="conditional"/>
+      <elemref code="MSPR02" reqr="conditional"/>
+      <elemref code="MSPR03" reqr="conditional"/>
+    </composite>
+
+    <composite code="MSRF" name="Message Reference">
+    </composite>
+
+    <composite code="MVAL" name="Modifier Value">
+      <elemref code="MVAL01" reqr="mandatory"/>
+      <elemref code="MVAL02" reqr="conditional"/>
+    </composite>
+
+    <composite code="NUCT" name="Number of Units for Charge Type">
+      <elemref code="NUCT01" reqr="mandatory"/>
+      <elemref code="NUCT02" reqr="mandatory"/>
+      <elemref code="NUCT03" reqr="conditional"/>
+    </composite>
+
+    <composite code="OLOC" name="Order Office Location">
+      <elemref code="OLOC01" reqr="conditional"/>
+      <elemref code="OLOC02" reqr="conditional"/>
+    </composite>
+
+    <composite code="OOAD" name="Order Office Address">
+      <elemref code="OOAD01" reqr="conditional"/>
+      <elemref code="OOAD02" reqr="conditional"/>
+      <elemref code="OOAD03" reqr="conditional"/>
+      <elemref code="OOAD04" reqr="conditional"/>
+      <elemref code="OOAD05" reqr="conditional"/>
+    </composite>
+
+    <composite code="OQTY" name="Quantity Ordered">
+      <elemref code="OQTY01" reqr="conditional"/>
+      <elemref code="OQTY02" reqr="conditional"/>
+      <elemref code="OQTY03" reqr="conditional"/>
+    </composite>
+
+    <composite code="ORNO" name="Order Number and Date">
+      <elemref code="ORNO01" reqr="conditional"/>
+      <elemref code="ORNO02" reqr="conditional"/>
+      <elemref code="ORNO03" reqr="conditional"/>
+      <elemref code="ORNO04" reqr="conditional"/>
+    </composite>
+
+    <composite code="OUBA" name="Outstanding Balance">
+      <elemref code="OUBA01" reqr="conditional"/>
+      <elemref code="OUBA02" reqr="conditional"/>
+    </composite>
+
+    <composite code="OUCT" name="Ordering Unit Cost">
+      <elemref code="OUCT01" reqr="conditional"/>
+      <elemref code="OUCT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="PAPD" name="Price Applicability Dates">
+      <elemref code="PAPD01" reqr="mandatory"/>
+      <elemref code="PAPD02" reqr="conditional"/>
+    </composite>
+
+    <composite code="PAYD" name="Payment Date and Terms">
+      <elemref code="PAYD01" reqr="mandatory"/>
+      <elemref code="PAYD02" reqr="mandatory"/>
+    </composite>
+
+    <composite code="PAYY" name="Settlement Terms">
+      <elemref code="PAYY01" reqr="mandatory"/>
+      <elemref code="PAYY02" reqr="conditional"/>
+      <elemref code="PAYY03" reqr="conditional"/>
+    </composite>
+
+    <composite code="PLND" name="Price List Number">
+      <elemref code="PLND01" reqr="conditional"/>
+      <elemref code="PLND02" reqr="conditional"/>
+    </composite>
+
+    <composite code="PNDP" name="Percentage Qualifying for Lower /">
+      <elemref code="PNDP01" reqr="conditional"/>
+    </composite>
+
+    <composite code="PODN" name="Proof of Delivery Details">
+      <elemref code="PODN01" reqr="conditional"/>
+      <elemref code="PODN02" reqr="conditional"/>
+    </composite>
+
+    <composite code="POUN" name="Proof of Uplift Details">
+      <elemref code="POUN01" reqr="conditional"/>
+      <elemref code="POUN02" reqr="conditional"/>
+    </composite>
+
+    <composite code="PPAM" name="Prepayment Amount">
+      <elemref code="PPAM01" reqr="mandatory"/>
+      <elemref code="PPAM02" reqr="conditional"/>
+    </composite>
+
+    <composite code="PQGD" name="Quantity Graduations">
+      <elemref code="PQGD01" reqr="conditional"/>
+      <elemref code="PQGD02" reqr="conditional"/>
+      <elemref code="PQGD03" reqr="conditional"/>
+      <elemref code="PQGD04" reqr="conditional"/>
+      <elemref code="PQGD05" reqr="conditional"/>
+      <elemref code="PQGD06" reqr="conditional"/>
+    </composite>
+
+    <composite code="PRRD" name="Reading Data">
+      <elemref code="PRRD01" reqr="mandatory"/>
+      <elemref code="PRRD02" reqr="conditional"/>
+      <elemref code="PRRD03" reqr="mandatory"/>
+      <elemref code="PRRD04" reqr="conditional"/>
+    </composite>
+
+    <composite code="PRRF" name="Primary Reference">
+      <elemref code="PRRF01" reqr="mandatory"/>
+      <elemref code="PRRF02" reqr="mandatory"/>
+    </composite>
+
+    <composite code="PTOT" name="Total of Payment Details">
+      <elemref code="PTOT01" reqr="mandatory"/>
+      <elemref code="PTOT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="PVGD" name="Value Graduations">
+      <elemref code="PVGD01" reqr="conditional"/>
+      <elemref code="PVGD02" reqr="conditional"/>
+    </composite>
+
+    <composite code="QADJ" name="Quantity Adjusted">
+      <elemref code="QADJ01" reqr="conditional"/>
+      <elemref code="QADJ02" reqr="conditional"/>
+      <elemref code="QADJ03" reqr="conditional"/>
+    </composite>
+
+    <composite code="QPER" name="Quantity Data">
+      <elemref code="QPER01" reqr="conditional"/>
+      <elemref code="QPER02" reqr="conditional"/>
+      <elemref code="QPER03" reqr="conditional"/>
+      <elemref code="QPER04" reqr="conditional"/>
+      <elemref code="QPER05" reqr="conditional"/>
+    </composite>
+
+    <composite code="QPRO" name="Quantity Produced">
+      <elemref code="QPRO01" reqr="conditional"/>
+      <elemref code="QPRO02" reqr="conditional"/>
+      <elemref code="QPRO03" reqr="conditional"/>
+    </composite>
+
+    <composite code="QTYC" name="Quantity Credited">
+      <elemref code="QTYC01" reqr="conditional"/>
+      <elemref code="QTYC02" reqr="conditional"/>
+      <elemref code="QTYC03" reqr="conditional"/>
+    </composite>
+
+    <composite code="QTYI" name="Quantity Invoiced">
+      <elemref code="QTYI01" reqr="conditional"/>
+      <elemref code="QTYI02" reqr="conditional"/>
+      <elemref code="QTYI03" reqr="conditional"/>
+    </composite>
+
+    <composite code="QTYP" name="Quantity to be Picked">
+      <elemref code="QTYP01" reqr="conditional"/>
+      <elemref code="QTYP02" reqr="conditional"/>
+      <elemref code="QTYP03" reqr="conditional"/>
+    </composite>
+
+    <composite code="QTYR" name="Quantity Returned">
+      <elemref code="QTYR01" reqr="conditional"/>
+      <elemref code="QTYR02" reqr="conditional"/>
+      <elemref code="QTYR03" reqr="conditional"/>
+    </composite>
+
+    <composite code="QUTF" name="Quantity To-Follow or Cancelled">
+      <elemref code="QUTF01" reqr="conditional"/>
+      <elemref code="QUTF02" reqr="conditional"/>
+      <elemref code="QUTF03" reqr="conditional"/>
+    </composite>
+
+    <composite code="RATM" name="Required Arrival Time">
+      <elemref code="RATM01" reqr="conditional"/>
+      <elemref code="RATM02" reqr="conditional"/>
+    </composite>
+
+    <composite code="REFF" name="Account Identifier">
+      <elemref code="REFF01" reqr="conditional"/>
+      <elemref code="REFF02" reqr="conditional"/>
+    </composite>
+
+    <composite code="REFP" name="Period Reference">
+      <elemref code="REFP01" reqr="conditional"/>
+      <elemref code="REFP02" reqr="conditional"/>
+      <elemref code="REFP03" reqr="conditional"/>
+    </composite>
+
+    <composite code="REID" name="Recipient&apos;s Identity">
+      <elemref code="REID01" reqr="conditional"/>
+      <elemref code="REID02" reqr="conditional"/>
+    </composite>
+
+    <composite code="RQTY" name="Quantity Required">
+      <elemref code="RQTY01" reqr="conditional"/>
+      <elemref code="RQTY02" reqr="conditional"/>
+      <elemref code="RQTY03" reqr="conditional"/>
+    </composite>
+
+    <composite code="RTEX" name="Registered Text">
+      <elemref code="RTEX01" reqr="conditional"/>
+      <elemref code="RTEX02" reqr="conditional"/>
+      <elemref code="RTEX03" reqr="conditional"/>
+      <elemref code="RTEX04" reqr="conditional"/>
+      <elemref code="RTEX05" reqr="conditional"/>
+      <elemref code="RTEX06" reqr="conditional"/>
+      <elemref code="RTEX07" reqr="conditional"/>
+      <elemref code="RTEX08" reqr="conditional"/>
+    </composite>
+
+    <composite code="RTRS" name="Report Time Rules">
+      <elemref code="RTRS01" reqr="mandatory"/>
+      <elemref code="RTRS02" reqr="mandatory"/>
+      <elemref code="RTRS03" reqr="mandatory"/>
+      <elemref code="RTRS04" reqr="conditional"/>
+      <elemref code="RTRS05" reqr="conditional"/>
+    </composite>
+
+    <composite code="SADD" name="Supplier&apos;s Address">
+      <elemref code="SADD01" reqr="conditional"/>
+      <elemref code="SADD02" reqr="conditional"/>
+      <elemref code="SADD03" reqr="conditional"/>
+      <elemref code="SADD04" reqr="conditional"/>
+      <elemref code="SADD05" reqr="conditional"/>
+    </composite>
+
+    <composite code="SBPR" name="Split Box Price">
+      <elemref code="SBPR01" reqr="conditional"/>
+      <elemref code="SBPR02" reqr="conditional"/>
+    </composite>
+
+    <composite code="SCRF" name="Specification/Contract References">
+      <elemref code="SCRF01" reqr="conditional"/>
+      <elemref code="SCRF02" reqr="conditional"/>
+    </composite>
+
+    <composite code="SEID" name="Sender&apos;s Identity">
+      <elemref code="SEID01" reqr="conditional"/>
+      <elemref code="SEID02" reqr="conditional"/>
+    </composite>
+
+    <composite code="SIDN" name="Supplier&apos;s Identity">
+      <elemref code="SIDN01" reqr="conditional"/>
+      <elemref code="SIDN02" reqr="conditional"/>
+    </composite>
+
+    <composite code="SLOC" name="Statement Location">
+      <elemref code="SLOC01" reqr="conditional"/>
+      <elemref code="SLOC02" reqr="conditional"/>
+    </composite>
+
+    <composite code="SPRO" name="Supplier&apos;s Product Number">
+      <elemref code="SPRO01" reqr="conditional"/>
+      <elemref code="SPRO02" reqr="conditional"/>
+      <elemref code="SPRO03" reqr="conditional"/>
+    </composite>
+
+    <composite code="SPRS" name="Supplier&apos;s Substituted Product Number">
+      <elemref code="SPRS01" reqr="conditional"/>
+      <elemref code="SPRS02" reqr="conditional"/>
+      <elemref code="SPRS03" reqr="conditional"/>
+    </composite>
+
+    <composite code="SQTY" name="Quantity Held">
+      <elemref code="SQTY01" reqr="conditional"/>
+      <elemref code="SQTY02" reqr="conditional"/>
+      <elemref code="SQTY03" reqr="conditional"/>
+    </composite>
+
+    <composite code="SRPR" name="Supplier&apos;s Reporting Reference">
+      <elemref code="SRPR01" reqr="conditional"/>
+      <elemref code="SRPR02" reqr="conditional"/>
+    </composite>
+
+    <composite code="STDS" name="Syntax Rules Identifier">
+      <elemref code="STDS01" reqr="mandatory"/>
+      <elemref code="STDS02" reqr="mandatory"/>
+    </composite>
+
+    <composite code="STPR" name="Standard Price">
+      <elemref code="STPR01" reqr="conditional"/>
+      <elemref code="STPR02" reqr="conditional"/>
+    </composite>
+
+    <composite code="SUMO" name="Supply Period">
+      <elemref code="SUMO01" reqr="conditional"/>
+      <elemref code="SUMO02" reqr="conditional"/>
+    </composite>
+
+    <composite code="SVID" name="Service Identity">
+      <elemref code="SVID01" reqr="mandatory"/>
+      <elemref code="SVID02" reqr="mandatory"/>
+    </composite>
+
+    <composite code="TBTL" name="Total Bill Amount Payable">
+      <elemref code="TBTL01" reqr="mandatory"/>
+      <elemref code="TBTL02" reqr="conditional"/>
+    </composite>
+
+    <composite code="TCOD" name="Tariff Code">
+      <elemref code="TCOD01" reqr="conditional"/>
+      <elemref code="TCOD02" reqr="conditional"/>
+    </composite>
+
+    <composite code="TDES" name="Traded Unit Description">
+      <elemref code="TDES01" reqr="conditional"/>
+      <elemref code="TDES02" reqr="conditional"/>
+    </composite>
+
+    <composite code="TLOC" name="Trans-shipment Location">
+      <elemref code="TLOC01" reqr="conditional"/>
+      <elemref code="TLOC02" reqr="conditional"/>
+    </composite>
+
+    <composite code="TMOD" name="Tariff Code Modifier">
+      <elemref code="TMOD01" reqr="conditional"/>
+      <elemref code="TMOD02" reqr="conditional"/>
+      <elemref code="TMOD03" reqr="conditional"/>
+      <elemref code="TMOD04" reqr="conditional"/>
+    </composite>
+
+    <composite code="TRDT" name="Date and Time of">
+      <elemref code="TRDT01" reqr="mandatory"/>
+      <elemref code="TRDT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="TYPE" name="Type of Message">
+      <elemref code="TYPE01" reqr="mandatory"/>
+      <elemref code="TYPE02" reqr="mandatory"/>
+    </composite>
+
+    <composite code="UCON" name="Code for Unit Contained">
+      <elemref code="UCON01" reqr="conditional"/>
+      <elemref code="UCON02" reqr="conditional"/>
+      <elemref code="UCON03" reqr="conditional"/>
+      <elemref code="UCON04" reqr="conditional"/>
+      <elemref code="UCON05" reqr="conditional"/>
+    </composite>
+
+    <composite code="UCRV" name="Unit Credit Value (before VAT)">
+      <elemref code="UCRV01" reqr="mandatory"/>
+      <elemref code="UCRV02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UCSI" name="Total Charge for VAT Category including VAT">
+      <elemref code="UCSI01" reqr="mandatory"/>
+      <elemref code="UCSI02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UGST" name="Gross Weight of Storage Medium">
+      <elemref code="UGST01" reqr="conditional"/>
+      <elemref code="UGST02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UGWT" name="Gross Weight of Unit">
+      <elemref code="UGWT01" reqr="conditional"/>
+      <elemref code="UGWT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UHST" name="Height of storage medium">
+      <elemref code="UHST01" reqr="conditional"/>
+      <elemref code="UHST02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UHYT" name="Height of Unit">
+      <elemref code="UHYT01" reqr="conditional"/>
+      <elemref code="UHYT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UINS" name="Uplift Instruction Narrative">
+      <elemref code="UINS01" reqr="conditional"/>
+      <elemref code="UINS02" reqr="conditional"/>
+      <elemref code="UINS03" reqr="conditional"/>
+      <elemref code="UINS04" reqr="conditional"/>
+    </composite>
+
+    <composite code="ULST" name="Length of Storage Medium">
+      <elemref code="ULST02" reqr="conditional"/>
+      <elemref code="ULST01" reqr="conditional"/>
+    </composite>
+
+    <composite code="ULTH" name="Length of Unit">
+      <elemref code="ULTH01" reqr="conditional"/>
+      <elemref code="ULTH02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UNOR" name="Unit of Ordering">
+      <elemref code="UNOR01" reqr="conditional"/>
+      <elemref code="UNOR02" reqr="conditional"/>
+      <elemref code="UNOR03" reqr="conditional"/>
+    </composite>
+
+    <composite code="UNTO" name="Identification of">
+      <elemref code="UNTO01" reqr="conditional"/>
+      <elemref code="UNTO02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UPLN" name="Uplift Note Details">
+      <elemref code="UPLN01" reqr="conditional"/>
+      <elemref code="UPLN02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UPLQ" name="Uplift Quantity">
+      <elemref code="UPLQ01" reqr="conditional"/>
+      <elemref code="UPLQ02" reqr="conditional"/>
+      <elemref code="UPLQ03" reqr="conditional"/>
+    </composite>
+
+    <composite code="UPSI" name="File Total for VAT Category (including">
+      <elemref code="UPSI01" reqr="mandatory"/>
+      <elemref code="UPSI02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UPWT" name="Uplift Weights">
+      <elemref code="UPWT01" reqr="conditional"/>
+      <elemref code="UPWT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="USDI" name="File Total for VAT Category (before VAT)">
+      <elemref code="USDI01" reqr="mandatory"/>
+      <elemref code="USDI02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UTVA" name="Bill Total VAT Amount Payable">
+      <elemref code="UTVA01" reqr="mandatory"/>
+      <elemref code="UTVA02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UVAT" name="Bill File Total VAT Amount">
+      <elemref code="UVAT01" reqr="mandatory"/>
+      <elemref code="UVAT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UVLA" name="Total Charge for VAT Category Before">
+      <elemref code="UVLA01" reqr="mandatory"/>
+      <elemref code="UVLA02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UVLT" name="Total Charge for Premises Before">
+      <elemref code="UVLT01" reqr="mandatory"/>
+      <elemref code="UVLT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UVOL" name="Volume of Unit">
+      <elemref code="UVOL01" reqr="conditional"/>
+      <elemref code="UVOL02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UVST" name="Volume of Storage Medium">
+      <elemref code="UVST01" reqr="conditional"/>
+      <elemref code="UVST02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UVTT" name="VAT Amount Payable">
+      <elemref code="UVTT01" reqr="mandatory"/>
+      <elemref code="UVTT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UWDT" name="Width of Unit">
+      <elemref code="UWDT01" reqr="conditional"/>
+      <elemref code="UWDT02" reqr="conditional"/>
+    </composite>
+
+    <composite code="UWST" name="Width of Storage Medium">
+      <elemref code="UWST01" reqr="conditional"/>
+      <elemref code="UWST02" reqr="conditional"/>
+    </composite>
+
+    <composite code="VATN" name="Supplier&apos;s VAT Registration">
+      <elemref code="VATN01" reqr="conditional"/>
+      <elemref code="VATN02" reqr="conditional"/>
+    </composite>
+
+    <composite code="VATR" name="Customer&apos;s VAT Registration">
+      <elemref code="VATR01" reqr="conditional"/>
+      <elemref code="VATR02" reqr="conditional"/>
+    </composite>
+
+    <composite code="VDAA" name="VAT Declaration for Amended">
+      <elemref code="VDAA01" reqr="mandatory"/>
+      <elemref code="VDAA02" reqr="mandatory"/>
+      <elemref code="VDAA03" reqr="mandatory"/>
+      <elemref code="VDAA04" reqr="conditional"/>
+      <elemref code="VDAA05" reqr="conditional"/>
+    </composite>
+
+    <composite code="VTVC" name="File Total VAT for VAT Category">
+      <elemref code="VTVC01" reqr="mandatory"/>
+      <elemref code="VTVC02" reqr="conditional"/>
+    </composite>
+
+    <composite code="XQTY" name="Quantity Expected">
+      <elemref code="XQTY01" reqr="conditional"/>
+      <elemref code="XQTY02" reqr="conditional"/>
+      <elemref code="XQTY03" reqr="conditional"/>
+    </composite>
+
+  </composites>
+  <segments>
+    <segment code="ACD" name="AUDIT CONTROL DETAILS">
+      <elemref code="INLO" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="ADJ" desc="Only used when there needs to be more than one adjustment to the meter readings in CCD" name="ADDITIONAL ADJUSTMENTS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="ADJF" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="ADT" name="ADJUSTMENT FILE TOTALS">
+      <elemref code="FTNA" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="AFT" name="AVAILABILITY FILE TOTALS">
+      <elemref code="FTAR" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="AGD" name="ADVICE OF GOODS DESPATCHED">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="DELQ" reqr="conditional" type="composite"/>
+      <elemref code="DELN" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="ALD" name="ACKNOWLEDGEMENT LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="conditional" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="conditional" type="composite"/>
+      <elemref code="OQTY" reqr="mandatory" type="composite"/>
+      <elemref code="OUBA" reqr="conditional" type="composite"/>
+      <elemref code="AUCT" reqr="conditional" type="composite"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="SPRS" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="AOR" name="ACKNOWLEDGEMENT OF ORDER REFERENCES">
+      <elemref code="ORNO" reqr="mandatory" type="composite"/>
+      <elemref code="TCDE" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="APD" name="AMOUNT PAYABLE">
+      <elemref code="AMPY" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="AQD" name="EXPECTED DELIVERY DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="RDAT" reqr="conditional" type="simple"/>
+      <elemref code="RQTY" reqr="conditional" type="composite"/>
+      <elemref code="XDAT" reqr="conditional" type="simple"/>
+      <elemref code="XQTY" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="ARF" name="AVAILABILITY REFERENCES">
+      <elemref code="AREF" reqr="mandatory" type="simple"/>
+      <elemref code="RPSD" reqr="mandatory" type="simple"/>
+      <elemref code="RPED" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="ATR" name="AVAILABILITY TRAILER">
+      <elemref code="NOPA" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="AUT" name="AUTHENTICATION RESULT">
+      <elemref code="AUTR" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="AVD" name="AVAILABILITY LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="APIN" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="mandatory" type="composite"/>
+      <elemref code="CLSK" reqr="conditional" type="composite"/>
+      <elemref code="QPRO" reqr="conditional" type="composite"/>
+      <elemref code="DELQ" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="BCD" desc="Bill level references" name="BILL CONTROL DATA">
+      <elemref code="IVDT" reqr="mandatory" type="simple"/>
+      <elemref code="TXDT" reqr="mandatory" type="simple"/>
+      <elemref code="INVN" reqr="conditional" type="simple"/>
+      <elemref code="PBID" reqr="conditional" type="simple"/>
+      <elemref code="BIFR" reqr="conditional" type="simple"/>
+      <elemref code="BTCD" reqr="conditional" type="simple"/>
+      <elemref code="VDAA" reqr="conditional" type="composite"/>
+      <elemref code="SUMO" reqr="conditional" type="composite"/>
+      <elemref code="CLVM" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="BDT" name="BANK DETAILS">
+      <elemref code="BKIC" reqr="mandatory" type="simple"/>
+      <elemref code="BNAM" reqr="conditional" type="simple"/>
+      <elemref code="SVID" reqr="mandatory" type="composite"/>
+      <elemref code="BKIN" reqr="conditional" type="simple"/>
+      <elemref code="CUIN" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="BTL" desc="Bill level totals" name="BILL TRAILER">
+      <elemref code="PTOT" reqr="conditional" type="composite"/>
+      <elemref code="UVLT" reqr="mandatory" type="composite"/>
+      <elemref code="UTVA" reqr="mandatory" type="composite"/>
+      <elemref code="BABF" reqr="conditional" type="composite"/>
+      <elemref code="TBTL" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="CBK" name="CUSTOMER&apos;S BANK DETAILS">
+      <elemref code="BBID" reqr="mandatory" type="simple"/>
+      <elemref code="ACID" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="CCD" desc="Meter readings and charges" name="CONSUMPTION/CHARGE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="CCDE" reqr="mandatory" type="composite"/>
+      <elemref code="TCOD" reqr="conditional" type="composite"/>
+      <elemref code="TMOD" reqr="conditional" type="composite"/>
+      <elemref code="MTNR" reqr="conditional" type="simple"/>
+      <elemref code="MLOC" reqr="conditional" type="simple"/>
+      <elemref code="PRDT" reqr="conditional" type="simple"/>
+      <elemref code="PVDT" reqr="conditional" type="simple"/>
+      <elemref code="NDRP" reqr="conditional" type="simple"/>
+      <elemref code="PRRD" reqr="conditional" type="composite"/>
+      <elemref code="CONS" reqr="conditional" type="composite"/>
+      <elemref code="CONB" reqr="conditional" type="composite"/>
+      <elemref code="ADJF" reqr="conditional" type="composite"/>
+      <elemref code="CONA" reqr="conditional" type="composite"/>
+      <elemref code="BPRI" reqr="conditional" type="simple"/>
+      <elemref code="NUCT" reqr="conditional" type="composite"/>
+      <elemref code="CSDT" reqr="conditional" type="simple"/>
+      <elemref code="CEDT" reqr="conditional" type="simple"/>
+      <elemref code="CPPU" reqr="conditional" type="simple"/>
+      <elemref code="CTOT" reqr="conditional" type="composite"/>
+      <elemref code="TSUP" reqr="conditional" type="simple"/>
+      <elemref code="VATC" reqr="conditional" type="simple"/>
+      <elemref code="VATP" reqr="conditional" type="simple"/>
+      <elemref code="MSAD" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="CDA" desc="Contract level references" name="CONTRACT DATA">
+      <elemref code="CPSC" reqr="conditional" type="simple"/>
+      <elemref code="ORNO" reqr="conditional" type="composite"/>
+      <elemref code="INSD" reqr="conditional" type="simple"/>
+      <elemref code="REPE" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="CDT" name="CUSTOMER DETAILS">
+      <elemref code="CIDN" reqr="mandatory" type="composite"/>
+      <elemref code="CNAM" reqr="conditional" type="simple"/>
+      <elemref code="CADD" reqr="conditional" type="composite"/>
+      <elemref code="VATR" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="CFT" name="CUSTOMER INFORMATION FILE TOTALS">
+      <elemref code="NOLR" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="CIA" name="COMPLEX INVOICE LINE ADJUSTMENTS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="DTYP" reqr="mandatory" type="simple"/>
+      <elemref code="AOCI" reqr="mandatory" type="simple"/>
+      <elemref code="ACCR" reqr="mandatory" type="simple"/>
+      <elemref code="AADJ" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="CLD" name="CREDIT NOTE LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="conditional" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="conditional" type="composite"/>
+      <elemref code="QTYC" reqr="mandatory" type="composite"/>
+      <elemref code="UCRV" reqr="mandatory" type="composite"/>
+      <elemref code="EXLV" reqr="mandatory" type="simple"/>
+      <elemref code="VATC" reqr="mandatory" type="simple"/>
+      <elemref code="VATP" reqr="mandatory" type="simple"/>
+      <elemref code="CRRE" reqr="mandatory" type="composite"/>
+      <elemref code="MIXI" reqr="conditional" type="simple"/>
+      <elemref code="DRLI" reqr="conditional" type="simple"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="UCRB" reqr="conditional" type="simple"/>
+      <elemref code="CDSV" reqr="conditional" type="simple"/>
+      <elemref code="IGPI" reqr="conditional" type="simple"/>
+      <elemref code="SCRF" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="CLO" name="CUSTOMER&apos;S LOCATION">
+      <elemref code="CLOC" reqr="mandatory" type="composite"/>
+      <elemref code="CNAM" reqr="conditional" type="simple"/>
+      <elemref code="CADD" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="CLP" name="CUSTOMER&apos;S LOCATION REFERENCES">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="CLOS" reqr="conditional" type="composite"/>
+      <elemref code="CLOE" reqr="conditional" type="composite"/>
+      <elemref code="REGS" reqr="conditional" type="simple"/>
+      <elemref code="REGC" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="CLR" name="CUSTOMER&apos;S LOCATION REFERENCES">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="CLOS" reqr="conditional" type="composite"/>
+      <elemref code="CLOE" reqr="conditional" type="composite"/>
+      <elemref code="REGS" reqr="conditional" type="simple"/>
+      <elemref code="REGC" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="COD" name="COMPLEX ORDER LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="conditional" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="conditional" type="composite"/>
+      <elemref code="OQTY" reqr="mandatory" type="composite"/>
+      <elemref code="OUCT" reqr="conditional" type="composite"/>
+      <elemref code="PIND" reqr="conditional" type="simple"/>
+      <elemref code="TFIN" reqr="conditional" type="simple"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="SCRF" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="COT" name="CONFIRMATION FILE TOTALS">
+      <elemref code="FTCO" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="CPT" name="COMMUNICATING PARTNERS">
+      <elemref code="SEID" reqr="mandatory" type="composite"/>
+      <elemref code="REID" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="CRF" name="CREDIT NOTE REFERENCES">
+      <elemref code="CRNR" reqr="mandatory" type="simple"/>
+      <elemref code="CRDT" reqr="mandatory" type="simple"/>
+      <elemref code="TXDT" reqr="mandatory" type="simple"/>
+      <elemref code="DNNR" reqr="conditional" type="simple"/>
+      <elemref code="DNDT" reqr="conditional" type="simple"/>
+      <elemref code="CNNR" reqr="conditional" type="simple"/>
+      <elemref code="CNDT" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="CST" desc="All values are in pounds" name="VAT RATE CREDIT SUB-TRAILER">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="VATC" reqr="mandatory" type="simple"/>
+      <elemref code="VATP" reqr="mandatory" type="simple"/>
+      <elemref code="NRIL" reqr="mandatory" type="simple"/>
+      <elemref code="LVLA" reqr="mandatory" type="simple"/>
+      <elemref code="QYCA" reqr="conditional" type="simple"/>
+      <elemref code="VLCA" reqr="conditional" type="simple"/>
+      <elemref code="EVLA" reqr="mandatory" type="simple"/>
+      <elemref code="SEDA" reqr="conditional" type="simple"/>
+      <elemref code="ASDA" reqr="mandatory" type="simple"/>
+      <elemref code="VATA" reqr="mandatory" type="simple"/>
+      <elemref code="APSE" reqr="conditional" type="simple"/>
+      <elemref code="APSI" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="CTR" name="CREDIT NOTE TRAILER">
+      <elemref code="NCST" reqr="mandatory" type="simple"/>
+      <elemref code="LVLT" reqr="mandatory" type="simple"/>
+      <elemref code="QYCT" reqr="conditional" type="simple"/>
+      <elemref code="VLCT" reqr="conditional" type="simple"/>
+      <elemref code="EVLT" reqr="mandatory" type="simple"/>
+      <elemref code="SEDT" reqr="conditional" type="simple"/>
+      <elemref code="ASDT" reqr="mandatory" type="simple"/>
+      <elemref code="TVAT" reqr="mandatory" type="simple"/>
+      <elemref code="TPSE" reqr="conditional" type="simple"/>
+      <elemref code="TPSI" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="DCD" desc="This segment normally only used if DELC = 1 or 3.  If DELC = 1, list ALL lines at variance from the original instruction.  If DELC = 3, list ALL lines. Alternatively, every line may be listed even for a complete delivery.  In this situation, DELC will have a value of 0, and Reason for Variance a value of AA = No Variance" name="DELIVERY CONFIRMATION DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="mandatory" type="composite"/>
+      <elemref code="DELQ" reqr="mandatory" type="composite"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="SSTC" reqr="conditional" type="simple"/>
+      <elemref code="DUAC" reqr="conditional" type="composite"/>
+      <elemref code="AQTY" reqr="conditional" type="composite"/>
+      <elemref code="SREF" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="DCT" name="DELIVERY CONFIRMATION TRAILER">
+      <elemref code="LCON" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="DEF" name="DEFERRED CHARGES">
+      <elemref code="MCDV" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="DEL" name="DELIVERY REFERENCE">
+      <elemref code="DELN" reqr="mandatory" type="composite"/>
+      <elemref code="NODU" reqr="conditional" type="simple"/>
+      <elemref code="SCAR" reqr="conditional" type="simple"/>
+      <elemref code="DEWT" reqr="conditional" type="composite"/>
+      <elemref code="DEVL" reqr="conditional" type="simple"/>
+      <elemref code="EDAT" reqr="conditional" type="simple"/>
+      <elemref code="LDAT" reqr="conditional" type="simple"/>
+      <elemref code="RATM" reqr="conditional" type="composite"/>
+      <elemref code="DINS" reqr="conditional" type="composite"/>
+      <elemref code="DLOC" reqr="conditional" type="composite"/>
+      <elemref code="TLOC" reqr="conditional" type="composite"/>
+      <elemref code="JORF" reqr="conditional" type="simple"/>
+      <elemref code="TPST" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="DFT" name="FILE TOTALS - DELIVERIES">
+      <elemref code="FTDE" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="DIN" name="DELIVERY INSTRUCTIONS">
+      <elemref code="EDAT" reqr="conditional" type="simple"/>
+      <elemref code="LDAT" reqr="conditional" type="simple"/>
+      <elemref code="RATM" reqr="conditional" type="composite"/>
+      <elemref code="DINS" reqr="conditional" type="composite"/>
+      <elemref code="DINN" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="DLD" name="DELIVERY LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="mandatory" type="composite"/>
+      <elemref code="DELQ" reqr="mandatory" type="composite"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="SSTC" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="DLS" name="DELIVERY LINE SUPPLEMENTARY DATA">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="TFIN" reqr="conditional" type="simple"/>
+      <elemref code="QUTF" reqr="conditional" type="composite"/>
+      <elemref code="SPRS" reqr="conditional" type="composite"/>
+      <elemref code="SACS" reqr="conditional" type="simple"/>
+      <elemref code="CPRS" reqr="conditional" type="composite"/>
+      <elemref code="PIND" reqr="conditional" type="simple"/>
+      <elemref code="CRLI" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="DNA" name="DATA NARRATIVE">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="DNAC" reqr="conditional" type="composite"/>
+      <elemref code="RTEX" reqr="conditional" type="composite"/>
+      <elemref code="GNAR" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="DNB" name="DATA NARRATIVE">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="DNAC" reqr="conditional" type="composite"/>
+      <elemref code="RTEX" reqr="conditional" type="composite"/>
+      <elemref code="GNAR" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="DNC" name="DATA NARRATIVE">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="DNAC" reqr="conditional" type="composite"/>
+      <elemref code="RTEX" reqr="conditional" type="composite"/>
+      <elemref code="GNAR" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="DND" name="DATA NARRATIVE">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="SEQD" reqr="mandatory" type="simple"/>
+      <elemref code="DNAC" reqr="conditional" type="composite"/>
+      <elemref code="RTEX" reqr="conditional" type="composite"/>
+      <elemref code="GNAR" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="DNS" name="DELIVERY NOTE SUPPLEMENTARY DATA">
+      <elemref code="DIND" reqr="conditional" type="composite"/>
+      <elemref code="SDIN" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="DPI" desc="Repeat for each pallet received" name="DELIVERED PALLET IDENTITY">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SESH" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="DSC" name="DISCOUNT HEADER">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="DAPD" reqr="mandatory" type="composite"/>
+      <elemref code="DTYP" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="DSD" name="DISCOUNT DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="SEQD" reqr="mandatory" type="simple"/>
+      <elemref code="DQGD" reqr="conditional" type="composite"/>
+      <elemref code="DVGD" reqr="conditional" type="composite"/>
+      <elemref code="ADJT" reqr="mandatory" type="simple"/>
+      <elemref code="AOCI" reqr="mandatory" type="simple"/>
+      <elemref code="ACCR" reqr="mandatory" type="simple"/>
+      <elemref code="AADJ" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="DST" name="DELIVERY STATUS">
+      <elemref code="DELC" reqr="mandatory" type="simple"/>
+      <elemref code="DUAC" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="DTR" name="DELIVERY TRAILER">
+      <elemref code="LDEL" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="END" name="END OF TRANSMISSION">
+      <elemref code="NMST" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="EXC" desc="Repeatable for each exception condition to be reported" name="EXCEPTION CONDITIONS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="AEXC" reqr="conditional" type="composite"/>
+      <elemref code="ECOD" reqr="mandatory" type="simple"/>
+      <elemref code="ETXT" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="FDT" name="FILE PERIOD DATES">
+      <elemref code="IVED" reqr="conditional" type="simple"/>
+      <elemref code="DVED" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="FIL" name="FILE DETAILS">
+      <elemref code="FLGN" reqr="mandatory" type="simple"/>
+      <elemref code="FLVN" reqr="mandatory" type="simple"/>
+      <elemref code="FLDT" reqr="mandatory" type="simple"/>
+      <elemref code="FLID" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="GFT" name="GENERAL COMMUNICATIONS FILE TOTALS">
+      <elemref code="NOTX" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="ILD" name="INVOICE LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="conditional" type="composite"/>
+      <elemref code="QTYI" reqr="mandatory" type="composite"/>
+      <elemref code="AUCT" reqr="mandatory" type="composite"/>
+      <elemref code="LEXC" reqr="mandatory" type="simple"/>
+      <elemref code="VATC" reqr="mandatory" type="simple"/>
+      <elemref code="VATP" reqr="mandatory" type="simple"/>
+      <elemref code="MIXI" reqr="conditional" type="simple"/>
+      <elemref code="CRLI" reqr="conditional" type="simple"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="MSPR" reqr="conditional" type="composite"/>
+      <elemref code="SRSP" reqr="conditional" type="simple"/>
+      <elemref code="BUCT" reqr="conditional" type="simple"/>
+      <elemref code="DSCV" reqr="conditional" type="simple"/>
+      <elemref code="DSCP" reqr="conditional" type="simple"/>
+      <elemref code="SUBA" reqr="conditional" type="simple"/>
+      <elemref code="PIND" reqr="conditional" type="simple"/>
+      <elemref code="IGPI" reqr="conditional" type="simple"/>
+      <elemref code="CSDI" reqr="conditional" type="simple"/>
+      <elemref code="TSUP" reqr="conditional" type="simple"/>
+      <elemref code="SCRF" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="INT" name="INVOICE TO">
+      <elemref code="ILOC" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="IRF" name="INVOICE REFERENCES">
+      <elemref code="INVN" reqr="mandatory" type="simple"/>
+      <elemref code="IVDT" reqr="mandatory" type="simple"/>
+      <elemref code="TXDT" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="ITD" name="INVOICE TO LOCATION">
+      <elemref code="ILOC" reqr="conditional" type="composite"/>
+      <elemref code="CTNM" reqr="conditional" type="simple"/>
+      <elemref code="IADD" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="KFT" name="ACKNOWLEDGEMENT OF FILE TOTALS">
+      <elemref code="FTAK" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="KTR" name="ACKNOWLEDGEMENT TRAILER">
+      <elemref code="LACK" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="LFT" name="PLANNING REPORT MESSAGES">
+      <elemref code="FTSR" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="LMI" name="MISCELLANEOUS INFORMATION">
+      <elemref code="BINN" reqr="conditional" type="simple"/>
+      <elemref code="TFAC" reqr="conditional" type="simple"/>
+      <elemref code="DINS" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="LTY" name="LOCATION TYPE">
+      <elemref code="ORDF" reqr="mandatory" type="simple"/>
+      <elemref code="DELT" reqr="mandatory" type="simple"/>
+      <elemref code="INVT" reqr="mandatory" type="simple"/>
+      <elemref code="STAT" reqr="mandatory" type="simple"/>
+      <elemref code="DESF" reqr="mandatory" type="simple"/>
+      <elemref code="PMNT" reqr="mandatory" type="simple"/>
+      <elemref code="ETFT" reqr="mandatory" type="simple"/>
+      <elemref code="REGC" reqr="conditional" type="simple"/>
+      <elemref code="OUTY" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="MAN" desc="Used to show the Meter Administration Number.  For electricity sector this is the Meter Point Administration Number (MPAN).  For the gas sector this is the Meter point reference number (MNUMBER)." name="METER ADMINISTRATION NUMBER">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="MADN" reqr="mandatory" type="simple"/>
+      <elemref code="MTNR" reqr="conditional" type="simple"/>
+      <elemref code="NDIG" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="MED" name="MESSAGE DETAILS">
+      <elemref code="METO" reqr="mandatory" type="composite"/>
+      <elemref code="MEDT" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="MHD" name="MESSAGE HEADER">
+      <elemref code="MSRF" reqr="mandatory" type="simple"/>
+      <elemref code="TYPE" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="MOD" desc="Used to show the factors/values modifying the base price when calculating the price charged" name="CHARGE MODIFIERS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="MCAT" reqr="conditional" type="simple"/>
+      <elemref code="MCDE" reqr="conditional" type="simple"/>
+      <elemref code="MVAL" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="MTR" name="MESSAGE TRAILER">
+      <elemref code="NOSG" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="NAM" name="LOCATION NAME AND ADDRESS">
+      <elemref code="LNAM" reqr="mandatory" type="simple"/>
+      <elemref code="LADD" reqr="mandatory" type="composite"/>
+      <elemref code="LTEL" reqr="conditional" type="simple"/>
+      <elemref code="LTLX" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="NOI" name="NATURE OF INFORMATION">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="TYPC" reqr="mandatory" type="simple"/>
+      <elemref code="DARA" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="ODD" name="ORDER AND DELIVERY REFERENCES">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="ORNO" reqr="mandatory" type="composite"/>
+      <elemref code="DELN" reqr="mandatory" type="composite"/>
+      <elemref code="NODU" reqr="conditional" type="simple"/>
+      <elemref code="DEWT" reqr="conditional" type="composite"/>
+      <elemref code="PODN" reqr="conditional" type="composite"/>
+      <elemref code="SCAR" reqr="conditional" type="simple"/>
+      <elemref code="DLOC" reqr="conditional" type="composite"/>
+      <elemref code="TLOC" reqr="conditional" type="composite"/>
+      <elemref code="JORF" reqr="conditional" type="simple"/>
+      <elemref code="SCRF" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="OFT" name="ORDER FILE TOTALS">
+      <elemref code="FTOR" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="OIR" name="ORIGINAL INVOICE REFERENCES">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="INVN" reqr="conditional" type="simple"/>
+      <elemref code="IVDT" reqr="conditional" type="simple"/>
+      <elemref code="TXDT" reqr="conditional" type="simple"/>
+      <elemref code="ORNO" reqr="conditional" type="composite"/>
+      <elemref code="SCRF" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="OLD" name="ORDER LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="mandatory" type="composite"/>
+      <elemref code="OQTY" reqr="mandatory" type="composite"/>
+      <elemref code="OUCT" reqr="conditional" type="composite"/>
+      <elemref code="PIND" reqr="conditional" type="simple"/>
+      <elemref code="TFIN" reqr="conditional" type="simple"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="SCRF" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="OOL" name="ORDER OFFICE LOCATION">
+      <elemref code="OLOC" reqr="conditional" type="composite"/>
+      <elemref code="CTNM" reqr="conditional" type="simple"/>
+      <elemref code="OOAD" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="ORD" name="ORDER REFERENCES">
+      <elemref code="ORNO" reqr="mandatory" type="composite"/>
+      <elemref code="CLAS" reqr="conditional" type="simple"/>
+      <elemref code="ORCD" reqr="conditional" type="simple"/>
+      <elemref code="SCRF" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="ORF" name="ORDER REFERENCES - DELIVERIES">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="ORNO" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="OTR" name="ORDER TRAILER">
+      <elemref code="LORD" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="PAT" name="PLANNED AVAILABILITY">
+      <elemref code="NOPA" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="PDN" name="PRODUCT DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="conditional" type="composite"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="IDID" reqr="conditional" type="simple"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="PDS" name="PRODUCT DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="conditional" type="composite"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="IDID" reqr="conditional" type="simple"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="PDT" name="FILE TOTALS">
+      <elemref code="NOPR" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="PFT" name="PICKING FILE TOTALS">
+      <elemref code="FTPC" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="PIC" name="PICKING INSTRUCTIONS DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="CLOC" reqr="mandatory" type="composite"/>
+      <elemref code="CNAM" reqr="conditional" type="simple"/>
+      <elemref code="CADD" reqr="conditional" type="composite"/>
+      <elemref code="QTYP" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="PID" desc="Repeat for each pallet delivered" name="PALLET IDENTITY">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="SESH" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="PLD" name="PICKING LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="mandatory" type="composite"/>
+      <elemref code="PREF" reqr="conditional" type="simple"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="PLO" name="OUTLET LOCATION DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="CLOC" reqr="mandatory" type="composite"/>
+      <elemref code="CNAM" reqr="conditional" type="simple"/>
+      <elemref code="CADD" reqr="conditional" type="composite"/>
+      <elemref code="LOCA" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="PLR" name="PRICE LIST REFERENCES">
+      <elemref code="PLND" reqr="mandatory" type="composite"/>
+      <elemref code="DARA" reqr="conditional" type="composite"/>
+      <elemref code="SCRF" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="PPT" name="PLANNING REPORT MESSAGES">
+      <elemref code="FTSR" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="PRD" name="PRODUCT DESCRIPTION">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="MSPR" reqr="conditional" type="composite"/>
+      <elemref code="VRMI" reqr="conditional" type="simple"/>
+      <elemref code="TNAC" reqr="conditional" type="simple"/>
+      <elemref code="DLED" reqr="conditional" type="composite"/>
+      <elemref code="MOQY" reqr="conditional" type="composite"/>
+      <elemref code="MOVL" reqr="conditional" type="composite"/>
+      <elemref code="SRPR" reqr="conditional" type="composite"/>
+      <elemref code="PRST" reqr="conditional" type="simple"/>
+      <elemref code="SCRF" reqr="conditional" type="composite"/>
+      <elemref code="VATC" reqr="conditional" type="simple"/>
+      <elemref code="DARA" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="PRI" name="PRICE HEADER">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="PAPD" reqr="mandatory" type="composite"/>
+      <elemref code="GTYP" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="PRN" name="PRODUCT REFERENCES">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="LEVC" reqr="mandatory" type="composite"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="mandatory" type="composite"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="UCON" reqr="conditional" type="composite"/>
+      <elemref code="CORI" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="PRP" name="PRICE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="SEQD" reqr="mandatory" type="simple"/>
+      <elemref code="PQGD" reqr="conditional" type="composite"/>
+      <elemref code="PVGD" reqr="conditional" type="composite"/>
+      <elemref code="STPR" reqr="mandatory" type="composite"/>
+      <elemref code="SBPR" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="PRT" name="PRICE FILE TOTALS">
+      <elemref code="NOPR" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="PRU" name="PRODUCT DIMENSIONS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="UGWT" reqr="conditional" type="composite"/>
+      <elemref code="ULTH" reqr="conditional" type="composite"/>
+      <elemref code="UWDT" reqr="conditional" type="composite"/>
+      <elemref code="UHYT" reqr="conditional" type="composite"/>
+      <elemref code="UVOL" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="PRV" desc="Only used when VAT affected e.g. where different rates of VAT apply to the prepayment and the current charges" name="PREPAYMENT RECEIVED (VAT INCLUSIVE)">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="PPAM" reqr="mandatory" type="composite"/>
+      <elemref code="PADT" reqr="mandatory" type="simple"/>
+      <elemref code="PAYB" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="PTR" name="PICKING TRAILER">
+      <elemref code="NOPP" reqr="mandatory" type="simple"/>
+      <elemref code="LOCD" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="PVD" name="PRODUCT VARIANT DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="VTCO" reqr="mandatory" type="simple"/>
+      <elemref code="VRDT" reqr="mandatory" type="simple"/>
+      <elemref code="OQTY" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="PYC" desc="This corresponds to the PYD segment used in the Payment Message Set" name="PAYMENT DETAILS">
+      <elemref code="PRRF" reqr="mandatory" type="composite"/>
+      <elemref code="DATE" reqr="mandatory" type="simple"/>
+      <elemref code="SNIC" reqr="mandatory" type="simple"/>
+      <elemref code="PAYM" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="PYD" name="PAYMENT DETAILS">
+      <elemref code="PRRF" reqr="mandatory" type="composite"/>
+      <elemref code="DATE" reqr="mandatory" type="simple"/>
+      <elemref code="SNIC" reqr="mandatory" type="simple"/>
+      <elemref code="PAYM" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="PYT" desc="This segment is used to specify the settlement terms which apply to the original invoice.  The most favourable must be used for the VAT calculation" name="SETTLEMENT TERMS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="PAYT" reqr="conditional" type="simple"/>
+      <elemref code="PAYD" reqr="conditional" type="composite"/>
+      <elemref code="PAYY" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="RCD" name="RETURNS CONFIRMATION DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="mandatory" type="composite"/>
+      <elemref code="QTYR" reqr="mandatory" type="composite"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="SSTC" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="RDQ" name="REQUIRED DELIVERY DATES">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="RDAT" reqr="conditional" type="simple"/>
+      <elemref code="RQTY" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="REF" desc="File level references" name="ACCOUNT REFERENCE NUMBER">
+      <elemref code="REFF" reqr="conditional" type="composite"/>
+      <elemref code="SCRF" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="RFD" desc="Used to refer transactions to reports, eg. order numbers/dates to orders in a period" name="REPORT REFERENCES AND DATES">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="SEQD" reqr="mandatory" type="simple"/>
+      <elemref code="ORNO" reqr="mandatory" type="composite"/>
+      <elemref code="RDAT" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="RNB" name="DATA NARRATIVE (RETURNS)">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="DNAC" reqr="conditional" type="composite"/>
+      <elemref code="RTEX" reqr="conditional" type="composite"/>
+      <elemref code="GNAR" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="RPI" desc="Repeat for each pallet returned" name="RETURNED PALLET IDENTITY">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SESH" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="RSG" name="MESSAGE HEADER">
+      <elemref code="RSGA" reqr="mandatory" type="simple"/>
+      <elemref code="RSGB" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="RST" name="STATEMENT/REMITTANCE FILE TOTALS">
+      <elemref code="TOTL" reqr="mandatory" type="simple"/>
+      <elemref code="TOTV" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="SAD" name="STOCK ADJUSTMENT DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="QADJ" reqr="mandatory" type="composite"/>
+      <elemref code="RADJ" reqr="mandatory" type="simple"/>
+      <elemref code="AUTH" reqr="conditional" type="simple"/>
+      <elemref code="SSTC" reqr="mandatory" type="simple"/>
+      <elemref code="NSTA" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="SAR" name="STOCK ADJUSTMENT REFERENCES">
+      <elemref code="SAJN" reqr="mandatory" type="simple"/>
+      <elemref code="SAJD" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="SAT" name="STOCK ADJUSTMENT TRAILER">
+      <elemref code="SLAJ" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="SBK" name="SUPPLIER&apos;S BANK DETAILS">
+      <elemref code="BBID" reqr="mandatory" type="simple"/>
+      <elemref code="ACID" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="SDT" name="SUPPLIER DETAILS">
+      <elemref code="SIDN" reqr="mandatory" type="composite"/>
+      <elemref code="SNAM" reqr="conditional" type="simple"/>
+      <elemref code="SADD" reqr="conditional" type="composite"/>
+      <elemref code="VATN" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="SFC" desc="Control totals of location time period" name="TIME BASE CONTROL TOTALS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="REFP" reqr="mandatory" type="composite"/>
+      <elemref code="QPER" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="SFL" name="PLANNING REPORT TRAILER">
+      <elemref code="STLD" reqr="conditional" type="simple"/>
+      <elemref code="STLN" reqr="conditional" type="simple"/>
+      <elemref code="STPT" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="SFP" name="PLANNING REPORT DATA">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="REFP" reqr="mandatory" type="composite"/>
+      <elemref code="QPER" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="SFR" name="PLANNING REPORT RULES">
+      <elemref code="RTRS" reqr="mandatory" type="composite"/>
+      <elemref code="REPT" reqr="mandatory" type="simple"/>
+      <elemref code="REPU" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="SFS" desc="This segment is used only if data for more than one function for a period is to be repeated" name="FUNCTION DATA SEGMENT">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="SEQD" reqr="mandatory" type="simple"/>
+      <elemref code="REPU" reqr="mandatory" type="simple"/>
+      <elemref code="QPER" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="SFX" desc="This segment is used only if data for more than one function for a period is to be reported" name="FUNCTION DATA SEGMENT">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="REPU" reqr="mandatory" type="simple"/>
+      <elemref code="QPER" reqr="mandatory" type="composite"/>
+      <elemref code="STLD" reqr="conditional" type="simple"/>
+      <elemref code="STLN" reqr="conditional" type="simple"/>
+      <elemref code="STPT" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="SLD" name="STOCK LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SSTC" reqr="mandatory" type="simple"/>
+      <elemref code="SQTY" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="SLO" name="UNIT LOCATION">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="CLOC" reqr="mandatory" type="composite"/>
+      <elemref code="CNAM" reqr="conditional" type="simple"/>
+      <elemref code="CADD" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="SNT" name="SNAPSHOT FILE TOTALS">
+      <elemref code="FTNS" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="SRD" name="STATEMENT/REMITTANCE LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="CLOC" reqr="mandatory" type="composite"/>
+      <elemref code="LINE" reqr="conditional" type="simple"/>
+      <elemref code="LIDR" reqr="mandatory" type="composite"/>
+      <elemref code="LIDA" reqr="mandatory" type="simple"/>
+      <elemref code="LIDT" reqr="conditional" type="simple"/>
+      <elemref code="LIDV" reqr="conditional" type="simple"/>
+      <elemref code="LIDD" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="SRF" name="STOCK REFERENCE">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="SRT" name="STATEMENT/REMITTANCE MESSAGE TOTALS">
+      <elemref code="SRLC" reqr="mandatory" type="simple"/>
+      <elemref code="SRAP" reqr="mandatory" type="simple"/>
+      <elemref code="SRDT" reqr="conditional" type="simple"/>
+      <elemref code="SRVT" reqr="conditional" type="simple"/>
+      <elemref code="SDCD" reqr="conditional" type="simple"/>
+      <elemref code="SETC" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="SSR" name="SNAPSHOT REFERENCES">
+      <elemref code="SSRN" reqr="mandatory" type="simple"/>
+      <elemref code="MEDT" reqr="mandatory" type="composite"/>
+      <elemref code="SSCC" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="SST" name="SNAPSHOT TRAILER">
+      <elemref code="SLSN" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="STD" name="STORAGE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SEQC" reqr="mandatory" type="simple"/>
+      <elemref code="SMCO" reqr="conditional" type="simple"/>
+      <elemref code="UPAL" reqr="conditional" type="simple"/>
+      <elemref code="ULAY" reqr="conditional" type="simple"/>
+      <elemref code="LPAL" reqr="conditional" type="simple"/>
+      <elemref code="UGST" reqr="conditional" type="composite"/>
+      <elemref code="ULST" reqr="conditional" type="composite"/>
+      <elemref code="UWST" reqr="conditional" type="composite"/>
+      <elemref code="UHST" reqr="conditional" type="composite"/>
+      <elemref code="UVST" reqr="conditional" type="composite"/>
+      <elemref code="RSTI" reqr="conditional" type="simple"/>
+      <elemref code="CSTI" reqr="conditional" type="simple"/>
+      <elemref code="NMRS" reqr="conditional" type="simple"/>
+      <elemref code="TPKG" reqr="conditional" type="simple"/>
+      <elemref code="STOI" reqr="conditional" type="simple"/>
+      <elemref code="TMAX" reqr="conditional" type="simple"/>
+      <elemref code="TMIN" reqr="conditional" type="simple"/>
+      <elemref code="PRPF" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="STL" desc="All values are in pounds" name="VAT RATE INVOICE SUB-TRAILER">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="VATC" reqr="mandatory" type="simple"/>
+      <elemref code="VATP" reqr="mandatory" type="simple"/>
+      <elemref code="NRIL" reqr="mandatory" type="simple"/>
+      <elemref code="LVLA" reqr="mandatory" type="simple"/>
+      <elemref code="QYDA" reqr="conditional" type="simple"/>
+      <elemref code="VLDA" reqr="conditional" type="simple"/>
+      <elemref code="SURA" reqr="conditional" type="simple"/>
+      <elemref code="SSUB" reqr="conditional" type="simple"/>
+      <elemref code="EVLA" reqr="mandatory" type="simple"/>
+      <elemref code="SEDA" reqr="conditional" type="simple"/>
+      <elemref code="ASDA" reqr="mandatory" type="simple"/>
+      <elemref code="VATA" reqr="mandatory" type="simple"/>
+      <elemref code="APSE" reqr="conditional" type="simple"/>
+      <elemref code="APSI" reqr="mandatory" type="simple"/>
+      <elemref code="NSTL" reqr="mandatory" type="simple"/>
+      <elemref code="LVLT" reqr="mandatory" type="simple"/>
+      <elemref code="QYDT" reqr="conditional" type="simple"/>
+      <elemref code="VLDT" reqr="conditional" type="simple"/>
+      <elemref code="SURT" reqr="conditional" type="simple"/>
+      <elemref code="TSUB" reqr="conditional" type="simple"/>
+      <elemref code="EVLT" reqr="mandatory" type="simple"/>
+      <elemref code="SEDT" reqr="conditional" type="simple"/>
+      <elemref code="ASDT" reqr="mandatory" type="simple"/>
+      <elemref code="TVAT" reqr="mandatory" type="simple"/>
+      <elemref code="TPSE" reqr="conditional" type="simple"/>
+      <elemref code="TPSI" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="STT" name="STATEMENT TO">
+      <elemref code="SLOC" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="STX" name="START OF TRANSMISSION">
+      <elemref code="STDS" reqr="mandatory" type="composite"/>
+      <elemref code="FROM" reqr="mandatory" type="composite"/>
+      <elemref code="UNTO" reqr="mandatory" type="composite"/>
+      <elemref code="TRDT" reqr="mandatory" type="composite"/>
+      <elemref code="SNRF" reqr="mandatory" type="simple"/>
+      <elemref code="RCRF" reqr="conditional" type="simple"/>
+      <elemref code="APRF" reqr="conditional" type="simple"/>
+      <elemref code="PRCD" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="TCM" name="CREDIT ADVICE MESSAGE TOTALS">
+      <elemref code="FTNC" reqr="mandatory" type="simple"/>
+      <elemref code="TVLC" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="TDM" name="DEBIT ADVICE MESSAGE TOTALS">
+      <elemref code="FTND" reqr="mandatory" type="simple"/>
+      <elemref code="TVLD" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="TEM" name="EXCEPTION CONDITION MESSAGE FILE TOTALS">
+      <elemref code="FTNE" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="TLR" name="INVOICE TRAILER">
+      <elemref code="NSTL" reqr="mandatory" type="simple"/>
+      <elemref code="LVLT" reqr="mandatory" type="simple"/>
+      <elemref code="QYDT" reqr="conditional" type="simple"/>
+      <elemref code="VLDT" reqr="conditional" type="simple"/>
+      <elemref code="SURT" reqr="conditional" type="simple"/>
+      <elemref code="TSUB" reqr="conditional" type="simple"/>
+      <elemref code="EVLT" reqr="mandatory" type="simple"/>
+      <elemref code="SEDT" reqr="conditional" type="simple"/>
+      <elemref code="ASDT" reqr="mandatory" type="simple"/>
+      <elemref code="TVAT" reqr="mandatory" type="simple"/>
+      <elemref code="TPSE" reqr="conditional" type="simple"/>
+      <elemref code="TPSI" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="TOT" name="FILE TOTALS">
+      <elemref code="FASE" reqr="mandatory" type="simple"/>
+      <elemref code="FASI" reqr="mandatory" type="simple"/>
+      <elemref code="FVAT" reqr="mandatory" type="simple"/>
+      <elemref code="FPSE" reqr="conditional" type="simple"/>
+      <elemref code="FPSI" reqr="mandatory" type="simple"/>
+      <elemref code="FTNI" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="TPM" name="PAYMENT MESSAGE TOTALS">
+      <elemref code="FTNP" reqr="mandatory" type="simple"/>
+      <elemref code="TVLP" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="TRA" name="TRANSMISSION TO">
+      <elemref code="ITRA" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="TTL" desc="File level totals" name="UTILITY BILL FILE TOTALS">
+      <elemref code="FASU" reqr="mandatory" type="composite"/>
+      <elemref code="UVAT" reqr="mandatory" type="composite"/>
+      <elemref code="FTOP" reqr="conditional" type="composite"/>
+      <elemref code="FBAB" reqr="conditional" type="composite"/>
+      <elemref code="FPSU" reqr="mandatory" type="composite"/>
+      <elemref code="FTNI" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="TXT" name="TEXT">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="TEXT" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="TYP" name="TRANSACTION TYPE DETAILS">
+      <elemref code="TCDE" reqr="mandatory" type="simple"/>
+      <elemref code="TTYP" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="UCD" desc="This segment only used if UPLC = 1 or 3.  If UPLC = 1, list ALL lines at variance from the original instructions.  If UPLC = 3, list ALL lines" name="UPLIFT CONFIRMATION DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="mandatory" type="composite"/>
+      <elemref code="UPLQ" reqr="mandatory" type="composite"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="SSTC" reqr="conditional" type="simple"/>
+      <elemref code="DUAC" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="UCT" name="UPLIFT CONFIRMATION TRAILER">
+      <elemref code="LCON" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="UDD" name="UPLIFT REFERENCES">
+      <elemref code="INRF" reqr="mandatory" type="composite"/>
+      <elemref code="UPLN" reqr="mandatory" type="composite"/>
+      <elemref code="NODU" reqr="conditional" type="simple"/>
+      <elemref code="UPWT" reqr="conditional" type="composite"/>
+      <elemref code="POUN" reqr="conditional" type="composite"/>
+      <elemref code="SCAR" reqr="conditional" type="simple"/>
+      <elemref code="DLOC" reqr="conditional" type="composite"/>
+      <elemref code="TLOC" reqr="conditional" type="composite"/>
+      <elemref code="JORF" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="UFT" name="UPLIFT FILE TOTALS">
+      <elemref code="FTUP" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="ULD" name="UPLIFT LINE DETAILS">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="SEQB" reqr="mandatory" type="simple"/>
+      <elemref code="SPRO" reqr="mandatory" type="composite"/>
+      <elemref code="SACU" reqr="conditional" type="simple"/>
+      <elemref code="CPRO" reqr="conditional" type="composite"/>
+      <elemref code="UNOR" reqr="mandatory" type="composite"/>
+      <elemref code="UPLQ" reqr="mandatory" type="composite"/>
+      <elemref code="TDES" reqr="conditional" type="composite"/>
+      <elemref code="SSTC" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="UPL" name="UPLIFT REFERENCES">
+      <elemref code="UPLN" reqr="mandatory" type="composite"/>
+      <elemref code="NODU" reqr="conditional" type="simple"/>
+      <elemref code="SCAR" reqr="conditional" type="simple"/>
+      <elemref code="UPWT" reqr="conditional" type="composite"/>
+      <elemref code="UPVL" reqr="conditional" type="simple"/>
+      <elemref code="EUDT" reqr="conditional" type="simple"/>
+      <elemref code="LUDT" reqr="conditional" type="simple"/>
+      <elemref code="UINS" reqr="conditional" type="composite"/>
+      <elemref code="DLOC" reqr="conditional" type="composite"/>
+      <elemref code="TLOC" reqr="conditional" type="composite"/>
+      <elemref code="JORF" reqr="conditional" type="simple"/>
+      <elemref code="TPST" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="UPS" name="UPLIFT SUPPLEMENTARY DATA">
+      <elemref code="RATM" reqr="conditional" type="composite"/>
+      <elemref code="ELOC" reqr="conditional" type="composite"/>
+      <elemref code="DNAM" reqr="conditional" type="simple"/>
+      <elemref code="DADD" reqr="conditional" type="composite"/>
+      <elemref code="EDAT" reqr="conditional" type="simple"/>
+      <elemref code="LDAT" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="URF" desc="Only used where an original instruction was given resulting in the Uplift(s)" name="UPLIFT INSTRUCTION REFERENCES">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="INRF" reqr="mandatory" type="composite"/>
+    </segment>
+
+    <segment code="UST" name="UPLIFT STATUS">
+      <elemref code="UPLC" reqr="mandatory" type="simple"/>
+      <elemref code="DUAC" reqr="conditional" type="composite"/>
+    </segment>
+
+    <segment code="UTR" name="UPLIFT TRAILER">
+      <elemref code="LUPL" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="VAT" desc="Repeats for each VAT rate applied in the bill" name="VALUE ADDED TAX">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="NDVT" reqr="conditional" type="simple"/>
+      <elemref code="PNDP" reqr="conditional" type="composite"/>
+      <elemref code="VATC" reqr="mandatory" type="simple"/>
+      <elemref code="VATP" reqr="mandatory" type="simple"/>
+      <elemref code="UVLA" reqr="mandatory" type="composite"/>
+      <elemref code="UVTT" reqr="mandatory" type="composite"/>
+      <elemref code="UCSI" reqr="mandatory" type="composite"/>
+      <elemref code="NRIL" reqr="conditional" type="simple"/>
+      <elemref code="RFLV" reqr="conditional" type="simple"/>
+    </segment>
+
+    <segment code="VRS" name="VAT RATE SUMMARY">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="VATC" reqr="mandatory" type="simple"/>
+      <elemref code="VATP" reqr="mandatory" type="simple"/>
+      <elemref code="VSDE" reqr="mandatory" type="simple"/>
+      <elemref code="VSDI" reqr="mandatory" type="simple"/>
+      <elemref code="VVAT" reqr="mandatory" type="simple"/>
+      <elemref code="VPSE" reqr="conditional" type="simple"/>
+      <elemref code="VPSI" reqr="mandatory" type="simple"/>
+    </segment>
+
+    <segment code="VTS" desc="VAT summary for each VAT rate applied in the file" name="VAT RATE SUMMARY">
+      <elemref code="SEQA" reqr="mandatory" type="simple"/>
+      <elemref code="VATC" reqr="mandatory" type="simple"/>
+      <elemref code="VATP" reqr="mandatory" type="simple"/>
+      <elemref code="USDI" reqr="mandatory" type="composite"/>
+      <elemref code="VTVC" reqr="mandatory" type="composite"/>
+      <elemref code="UPSI" reqr="mandatory" type="composite"/>
+    </segment>
+
+  </segments>
+  <transactions>
+
+    <!--
+    FF01.doc   - THE PRODUCT INFORMATION FILE
+    FF03D.doc  - THE CUSTOMER INFORMATION FILE
+    FF04D.doc  - THE ORDER FILE
+    FF05D.doc  - THE PICKING INSTRUCTIONS FILE
+    FF06D.doc  - THE DELIVERY NOTIFICATION FILE
+    FF07E.doc  - DELIVERY CONFIRMATION FILE
+    FF08D.doc  - THE INVOICE FILE
+    FF09D.doc  - THE CREDIT NOTE FILE
+    
+    FF011D.doc - THE UPLIFT INSTRUCTION FILE
+    FF012D.doc - THE UPLIFT CONFIRMATION FILE
+    FF013D.doc - THE STOCK SNAPSHOT FILE
+    FF014D.doc - THE STOCK ADJUSTMENT FILE
+    FF015D.doc - THE AVAILABILITY REPORT FILE
+    FF015D.doc - THE GENERAL COMMUNICATIONS FILE
+    FF017D.doc - THE COMPLEX ORDER FILE
+    FF018D.doc - THE ACKNOWLEDGEMENT OF ORDER FILE
+    FF019D.doc - PRODUCT PLANNING REPORT FILE
+    
+    FF020D.doc - THE PAYMENT ORDER FILE
+    FF021D.doc - THE DEBIT ADVICE FILE
+    FF022D.doc - THE CREDIT ADVICE FILE
+    FF023D.doc - THE EXCEPTION CONDITION FILE
+    FF025D.doc - LOCATION PLANNING REPORT FILE
+    FF026E.doc - THE UTILITY BILL FILE
+    -->
+
+
+
+    <!-- THE INVOICE FILE - FF08D.doc -->
+    <transaction code="INVFIL">
+      <segref code="MHD" reqr="mandatory" reps="1"/>
+      <segref code="TYP" reqr="mandatory" reps="1"/>
+      <segref code="SDT" reqr="mandatory" reps="1"/>
+      <segref code="CDT" reqr="mandatory" reps="1"/>
+      <segref code="DNA" reqr="conditional" reps="999999"/>
+      <segref code="FIL" reqr="mandatory" reps="1"/>
+      <segref code="FDT" reqr="conditional" reps="1"/>
+      <segref code="ACD" reqr="conditional" reps="1"/>
+      <segref code="MTR" reqr="mandatory" reps="1"/>
+    </transaction>
+    <transaction code="INVOIC">
+      <segref code="MHD" reqr="mandatory" reps="1"/>
+      <segref code="CLO" reqr="mandatory" reps="1"/>
+      <segref code="IRF" reqr="mandatory" reps="1"/>
+      <segref code="PYT" reqr="mandatory" reps="999999"/>
+      <segref code="DNA" reqr="conditional" reps="999999"/> 
+      <loop code="ODD" reqr="mandatory" reps="999999">
+	<segref code="ODD" reqr="mandatory" reps="1"/>
+	<loop code="ILD" reqr="mandatory" reps="999999">
+	  <segref code="ILD" reqr="mandatory" reps="1"/>
+	  <segref code="CIA" reqr="conditional" reps="999999"/>
+	  <segref code="DNC" reqr="conditional" reps="999999"/>
+	</loop>
+      </loop>
+      <segref code="STL" reqr="mandatory" reps="999999"/>
+      <segref code="TLR" reqr="mandatory" reps="1"/>
+      <segref code="MTR" reqr="mandatory" reps="1"/>
+    </transaction>
+    <transaction code="VATTLR">
+      <segref code="MHD" reqr="mandatory" reps="1"/>
+      <segref code="VRS" reqr="mandatory" reps="999999"/>
+      <segref code="MTR" reqr="mandatory" reps="1"/>
+    </transaction>
+    <transaction code="INVTLR">
+      <segref code="MHD" reqr="mandatory" reps="1"/>
+      <segref code="TOT" reqr="mandatory" reps="1"/>
+      <segref code="MTR" reqr="mandatory" reps="1"/>
+    </transaction>
+
+
+
+    <!-- THE ORDER FILE - FF04D.doc -->
+    <transaction code="ORDHDR">
+      <segref code="MHD" reqr="mandatory" reps="1"/>
+      <segref code="TYP" reqr="mandatory" reps="1"/>	
+      <segref code="SDT" reqr="mandatory" reps="1"/>	
+      <segref code="CDT" reqr="mandatory" reps="1"/>	
+      <segref code="DNA" reqr="conditional" reps="1"/>	
+      <segref code="FIL" reqr="mandatory" reps="1"/>	
+      <segref code="MTR" reqr="mandatory" reps="1"/>	
+    </transaction>
+    <transaction code="ORDERS">
+      <segref code="MHD" reqr="mandatory" reps="1"/>
+      <segref code="CLO" reqr="mandatory" reps="1"/>
+      <segref code="ORD" reqr="mandatory" reps="1"/>
+      <segref code="DIN" reqr="conditional" reps="1"/>
+      <!-- not quite sure how tradacoms is meant to nest things -->
+      <loop code="DNA" reqr="conditional" reps="999999">
+	<segref code="DNA" reqr="mandatory" reps="999999"/>
+      </loop>
+      <loop code="OLD" reqr="mandatory" reps="999999">
+	<segref code="OLD" reqr="mandatory" reps="1"/>
+	<segref code="DNB" reqr="conditional" reps="999999"/>
+      </loop>
+      <segref code="OTR" reqr="mandatory" reps="1"/>
+      <segref code="MTR" reqr="mandatory" reps="1"/>
+    </transaction>
+    <transaction code="ORDTLR">
+      <segref code="MHD" reqr="mandatory" reps="1"/>
+      <segref code="OFT" reqr="mandatory" reps="1"/>
+      <segref code="MTR" reqr="mandatory" reps="1"/>
+    </transaction>
+
+
+
+    <!-- THE STATEMENT/REMITTANCE DETAILS FILE - FF10D.doc -->
+    <transaction code="SRMHDR">
+      <segref code="MHD" reqr="mandatory" reps="1"/>
+      <segref code="TYP" reqr="mandatory" reps="1"/>
+      <segref code="SDT" reqr="mandatory" reps="1"/>
+      <segref code="CDT" reqr="mandatory" reps="1"/>
+      <segref code="DNA" reqr="conditional" reps="999999"/>
+      <segref code="FIL" reqr="mandatory" reps="1"/>
+      <segref code="MTR" reqr="mandatory" reps="1"/>
+    </transaction>
+    <transaction code="SRMINF">
+      <segref code="MHD" reqr="mandatory" reps="1"/>
+      <loop code="SRD" reqr="mandatory" reps="999999">
+	<segref code="SRD" reqr="mandatory" reps="1"/>
+	<segref code="DNB" reqr="conditional" reps="999999"/>
+      </loop>
+      <segref code="SRT" reqr="mandatory" reps="1"/>
+      <segref code="PYC" reqr="conditional" reps="1"/>
+      <segref code="MTR" reqr="mandatory" reps="1"/>
+    </transaction>
+    <transaction code="SRMTLR">
+      <segref code="MHD" reqr="mandatory" reps="1"/>
+      <segref code="RST" reqr="mandatory" reps="1"/>
+      <segref code="MTR" reqr="mandatory" reps="1"/>
+    </transaction>
+    
+  </transactions>
+</tsg>

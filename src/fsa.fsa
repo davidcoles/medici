@@ -1,0 +1,370 @@
+#
+#  The MEDICI Electronic Data Interchange Library
+#  Copyright (C) 2002  David Coles
+#  
+#  This library is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU Lesser General Public
+#  License as published by the Free Software Foundation; either
+#  version 2.1 of the License, or (at your option) any later version.
+#  
+#  This library is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#  Lesser General Public License for more details.
+#  
+#  You should have received a copy of the GNU Lesser General Public
+#  License along with this library; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+# This code is absolute gibberish. But it does seem to work.
+# Mostly it's just horrid nested #defines - one day I'll document it ;)
+
+# Basically it defines a state machine to tokenise an edi stream
+
+
+@CCODE	#include <stdio.h>
+
+@CCODE	#include "internal.h"
+
+
+@CCODE #define	Done	return 1
+@CCODE #define	Ok	return 0
+@CCODE #define Error(e)	edi_tokeniser_handle_error(Tokeniser,e); return -1
+
+
+@CCODE	#define Tokeniser	((edi_tokeniser_t *) self)
+
+@CCODE	#define Type(t)		if(Tokeniser->itype_handler) \
+@CCODE				  Tokeniser->itype_handler \
+@CCODE				  (Tokeniser->user_data, t);
+
+@CCODE	#define Token		((edi_token_t *) &(Tokeniser->token))
+@CCODE	#define Advice		((edi_advice_t *) &(Tokeniser->advice))
+
+@CCODE	#define MyTA		EDI_TOKEN_APPEND (Token, SYMBOL, 1)
+@CCODE	#define MyRI		EDI_TOKEN_APPEND (Token, SYMBOL, 0)
+
+@CCODE	#define DoTA		if(MyTA)edi_tokeniser_handle_token(Tokeniser,0)
+@CCODE	#define DoRI		if(MyRI)edi_tokeniser_handle_token(Tokeniser,0)
+
+@CCODE	#define	DoTT(tt)	Token->type = tt
+@CCODE  #define IsSE		Token->is_se = 1;
+@CCODE	#define	DoHT		edi_tokeniser_handle_token(Tokeniser, 1)
+@CCODE	#define DoES		DoHT; DoTA; DoTT(EDI_TES); DoHT
+@CCODE	#define DoSS		IsSE; DoHT; DoTA; DoTT(EDI_TSS); DoHT
+@CCODE	#define DoST		DoHT; DoTA; DoTT(EDI_TST); if(DoHT) Done
+@CCODE	#define DoTS		DoTT(EDI_TTG); DoHT; DoTA; DoTT(EDI_TTS); DoHT
+@CCODE	#define DoSA		DoTT(EDI_TSA); DoHT; Advice->has_ssa = 1;
+
+# a space indicates that "RELEASE INDICATOR" is not used (StRI)
+# StRS is the "Reserved for future use" character
+
+@CCODE	#define StSS	edi_advice_set_ss(Advice, 1, 		SYMBOL);
+@CCODE	#define StES	edi_advice_set_es(Advice, 1, 		SYMBOL);
+@CCODE	#define StDN	edi_advice_set_dn(Advice, 1, 		SYMBOL);
+@CCODE	#define StRI	edi_advice_set_ri(Advice, SYMBOL!=' ',	SYMBOL);
+@CCODE	#define StRS	edi_advice_set_rs(Advice, 0, 		SYMBOL);
+@CCODE	#define StST	edi_advice_set_st(Advice, 1, 		SYMBOL);
+
+# iso9735.txt:
+# >   Information separator IS 4 segment terminator
+# >   Information separator IS 3 data element separator
+# >   Information separator IS 1 component data element separator
+# IS 1 = ASCII_US
+# IS 2 = ASCII_RS
+# IS 3 = ASCII_GS
+# IS 4 = ASCII_FS
+
+@CCODE #define EDIFACTA	edi_advice_set_ss (Advice, 1, ASCII_COLON); \
+@CCODE			edi_advice_set_es (Advice, 1, ASCII_PLUS); \
+@CCODE			edi_advice_set_ts (Advice, 1, ASCII_PLUS); \
+@CCODE			edi_advice_set_dn (Advice, 1, ASCII_COMMA); \
+@CCODE			edi_advice_set_ri (Advice, 1, ASCII_QUESTIONMARK); \
+@CCODE			edi_advice_set_st (Advice, 1, ASCII_APOSTROPHE);
+
+@CCODE #define EDIFACTB	edi_advice_set_st (Advice, 1, ASCII_FS); \
+@CCODE			edi_advice_set_es (Advice, 1, ASCII_GS); \
+@CCODE			edi_advice_set_ss (Advice, 1, ASCII_US); \
+@CCODE			edi_advice_set_ri (Advice, 0, ASCII_NUL);
+
+@CCODE #define UNGTDI	edi_advice_set_ss (Advice, 1, ASCII_COLON); \
+@CCODE			edi_advice_set_es (Advice, 1, ASCII_PLUS); \
+@CCODE			edi_advice_set_ts (Advice, 1, ASCII_EQUALS); \
+@CCODE			edi_advice_set_ri (Advice, 1, ASCII_QUESTIONMARK); \
+@CCODE			edi_advice_set_st (Advice, 1, ASCII_APOSTROPHE);
+
+
+@CCODE #define IMP	edi_advice_set_ss (Advice, 1, ASCII_HYPHEN); \
+@CCODE			edi_advice_set_es (Advice, 1, ASCII_SOLIDUS); \
+@CCODE			edi_advice_set_ts (Advice, 1, ASCII_SOLIDUS); \
+@CCODE			edi_advice_set_ri (Advice, 1, ASCII_QUESTIONMARK); \
+@CCODE			edi_advice_set_st (Advice, 1, ASCII_CR);
+
+
+
+
+#STATE  EVENT   TRANS   ACTION
+START   U	UN2	DoTA; Ok;
+START   S	STX2	DoTA; Ok;
+START   I	ISA2    DoTA; Ok;
+START	F	FHL2	DoTA; Ok;
+
+#STATE  EVENT   TRANS   ACTION
+FHL1	F	FHL2	DoTA; Ok;
+FHL2	H	FHL3	DoTA; Ok;
+FHL3	L	FHL4	DoTA; IMP; Type(EDI_IMP); Ok;
+FHL4	ES	IMPEL	DoTS; Ok;
+
+
+IMPTAG	DEFAULT	IMPTAG	DoTA; Ok;
+IMPTAG	ES	IMPEL	DoTS; Ok;
+
+IMPEL	DEFAULT	IMPEL	DoTA; Ok;
+IMPEL	SS	IMPEL	DoSS; Ok;
+IMPEL	ES	IMPEL	DoES; Ok;
+IMPEL	CR	IMPCR	DoES; Ok;
+IMPEL	LF	IMPLF	DoTT(EDI_TEL); DoHT; DoTA; Ok;
+
+#IMPCR	LF	IMPLF	DoTA; Ok;
+
+
+IMPLF	ES	IMPEL	DoES; Ok;
+IMPLF	DEFAULT	IMPTAG	DoTT(EDI_TST); DoHT; DoTA; Ok;
+
+
+
+
+
+#STATE  EVENT   TRANS   ACTION
+UN1	U	UN2	DoTA; Ok;
+UN2	N	UN3	DoTA; EDIFACTA; Type(EDI_EDIFACT); Ok;
+UN3	B	UNB4    DoTA; Ok;
+UN3	A	SSA1    DoTA; Ok;
+
+UNB1    U	UNB2    DoTA; Ok;
+UNB2    N	UNB3    DoTA; Ok;
+UNB3    B	UNB4    DoTA; Ok;
+UNB4    ES	EDAT	DoTS; Ok;
+UNB4	IS3	EDAT	DoTS; if(!Advice->has_ssa) { EDIFACTB } ; Ok;
+
+SSA1    DEFAULT SSA2	DoTA; StSS; Ok;
+SSA2    DEFAULT SSA3	DoTA; StES; Ok;
+SSA3    DEFAULT SSA4	DoTA; StDN; Ok;
+SSA4    DEFAULT SSA5	DoTA; StRI; Ok;
+SSA5    DEFAULT SSA6	DoTA; StRS; Ok;
+SSA6    DEFAULT UNB1	DoTA; StST; DoSA; Ok;
+
+ETAG    ES	EDAT    DoTS; Ok;
+ETAG    DEFAULT ETAG	DoTA; Ok;
+
+EDAT	RI      EREL	DoRI; Ok;
+EDAT	ES	EDAT	DoES; Ok;
+EDAT	SS	EDAT	DoSS; Ok;
+EDAT	ST      ETAG	DoST; Ok;
+EDAT	DEFAULT EDAT	DoTA; Ok;
+EREL	DEFAULT EDAT	DoTA; Ok;
+
+
+#TAG     ES	DATA    DoTS; Ok;
+#TAG     DEFAULT TAG     DoTA; Ok;
+
+#DATA    RI      RELEASE DoRI; Ok;
+#DATA    ES	DATA    DoES; Ok;
+#DATA    SS	DATA    DoSS; Ok;
+#DATA    ST      TAG     DoST; Ok;
+#DATA    DEFAULT DATA    DoTA; Ok;
+#RELEASE DEFAULT DATA    DoTA; Ok;
+
+
+
+
+
+
+#STATE  EVENT   TRANS   ACTION
+STX1	S	STX2	DoTA; Ok;
+STX2	T	STX3	DoTA; UNGTDI; Type(EDI_UNGTDI); Ok;
+STX3	X	STX4	DoTA; Ok;
+STX4	TS	UDAT	DoTS; Ok;
+                        
+UTAG	TS	UDAT	DoTS; Ok;
+UTAG	DEFAULT UTAG	DoTA; Ok;
+
+UDAT    RI      UREL	DoRI; Ok;
+UDAT    ES	UDAT	DoES; Ok;
+UDAT    SS	UDAT	DoSS; Ok;
+UDAT    ST      UTAG	DoST; Ok;
+UDAT    DEFAULT UDAT	DoTA; Ok;
+UREL	DEFAULT UDAT	DoTA; Ok;
+
+
+
+
+
+
+
+
+
+
+
+
+#STATE	EVENT	TRANS	ACTION
+ISA1	I	ISA2	DoTA; Ok;
+ISA2    S	ISA3    DoTA; Type(EDI_X12); Ok;
+ISA3    A	ISA4    DoTA; Ok;
+ISA4    DEFAULT ISA5    DoTS; StES; Ok;
+ISA5    DEFAULT ISA6    DoTA; Ok;
+ISA6    DEFAULT ISA7    DoTA; Ok;
+ISA7    ES      ISA8    DoES; Ok;
+ISA8    DEFAULT ISA9    DoTA; Ok;
+ISA9    DEFAULT ISA10   DoTA; Ok;
+ISA10   DEFAULT ISA11   DoTA; Ok;
+ISA11   DEFAULT ISA12   DoTA; Ok;
+ISA12   DEFAULT ISA13   DoTA; Ok;
+ISA13   DEFAULT ISA14   DoTA; Ok;
+ISA14   DEFAULT ISA15   DoTA; Ok;
+ISA15   DEFAULT ISA16   DoTA; Ok;
+ISA16   DEFAULT ISA17   DoTA; Ok;
+ISA17   DEFAULT ISA18   DoTA; Ok;
+ISA18   ES      ISA19   DoES; Ok;
+ISA19   DEFAULT ISA20   DoTA; Ok;
+ISA20   DEFAULT ISA21   DoTA; Ok;
+ISA21   ES      ISA22   DoES; Ok;
+ISA22   DEFAULT ISA23   DoTA; Ok;
+ISA23   DEFAULT ISA24   DoTA; Ok;
+ISA24   DEFAULT ISA25   DoTA; Ok;
+ISA25   DEFAULT ISA26   DoTA; Ok;
+ISA26   DEFAULT ISA27   DoTA; Ok;
+ISA27   DEFAULT ISA28   DoTA; Ok;
+ISA28   DEFAULT ISA29   DoTA; Ok;
+ISA29   DEFAULT ISA30   DoTA; Ok;
+ISA30   DEFAULT ISA31   DoTA; Ok;
+ISA31   DEFAULT ISA32   DoTA; Ok;
+ISA32   ES      ISA33   DoES; Ok;
+ISA33   DEFAULT ISA34   DoTA; Ok;
+ISA34   DEFAULT ISA35   DoTA; Ok;
+ISA35   ES      ISA36   DoES; Ok;
+ISA36   DEFAULT ISA37   DoTA; Ok;
+ISA37   DEFAULT ISA38   DoTA; Ok;
+ISA38   DEFAULT ISA39   DoTA; Ok;
+ISA39   DEFAULT ISA40   DoTA; Ok;
+ISA40   DEFAULT ISA41   DoTA; Ok;
+ISA41   DEFAULT ISA42   DoTA; Ok;
+ISA42   DEFAULT ISA43   DoTA; Ok;
+ISA43   DEFAULT ISA44   DoTA; Ok;
+ISA44   DEFAULT ISA45   DoTA; Ok;
+ISA45   DEFAULT ISA46   DoTA; Ok;
+ISA46   DEFAULT ISA47   DoTA; Ok;
+ISA47   DEFAULT ISA48   DoTA; Ok;
+ISA48   DEFAULT ISA49   DoTA; Ok;
+ISA49   DEFAULT ISA50   DoTA; Ok;
+ISA50   DEFAULT ISA51   DoTA; Ok;
+ISA51   ES      ISA52   DoES; Ok;
+ISA52   DEFAULT ISA53   DoTA; Ok;
+ISA53   DEFAULT ISA54   DoTA; Ok;
+ISA54   ES      ISA55   DoES; Ok;
+ISA55   DEFAULT ISA56   DoTA; Ok;
+ISA56   DEFAULT ISA57   DoTA; Ok;
+ISA57   DEFAULT ISA58   DoTA; Ok;
+ISA58   DEFAULT ISA59   DoTA; Ok;
+ISA59   DEFAULT ISA60   DoTA; Ok;
+ISA60   DEFAULT ISA61   DoTA; Ok;
+ISA61   DEFAULT ISA62   DoTA; Ok;
+ISA62   DEFAULT ISA63   DoTA; Ok;
+ISA63   DEFAULT ISA64   DoTA; Ok;
+ISA64   DEFAULT ISA65   DoTA; Ok;
+ISA65   DEFAULT ISA66   DoTA; Ok;
+ISA66   DEFAULT ISA67   DoTA; Ok;
+ISA67   DEFAULT ISA68   DoTA; Ok;
+ISA68   DEFAULT ISA69   DoTA; Ok;
+ISA69   DEFAULT ISA70   DoTA; Ok;
+ISA70   ES      ISA71   DoES; Ok;
+ISA71   DEFAULT ISA72   DoTA; Ok;
+ISA72   DEFAULT ISA73   DoTA; Ok;
+ISA73   DEFAULT ISA74   DoTA; Ok;
+ISA74   DEFAULT ISA75   DoTA; Ok;
+ISA75   DEFAULT ISA76   DoTA; Ok;
+ISA76   DEFAULT ISA77   DoTA; Ok;
+ISA77   ES      ISA78   DoES; Ok;
+ISA78   DEFAULT ISA79   DoTA; Ok;
+ISA79   DEFAULT ISA80   DoTA; Ok;
+ISA80   DEFAULT ISA81   DoTA; Ok;
+ISA81   DEFAULT ISA82   DoTA; Ok;
+ISA82   ES      ISA83   DoES; Ok;
+ISA83   DEFAULT ISA84   DoTA; Ok;
+ISA84   ES      ISA85   DoES; Ok;
+ISA85   DEFAULT ISA86   DoTA; Ok;
+ISA86   DEFAULT ISA87   DoTA; Ok;
+ISA87   DEFAULT ISA88   DoTA; Ok;
+ISA88   DEFAULT ISA89   DoTA; Ok;
+ISA89   DEFAULT ISA90   DoTA; Ok;
+ISA90   ES      ISA91   DoES; Ok;
+ISA91   DEFAULT ISA92   DoTA; Ok;
+ISA92   DEFAULT ISA93   DoTA; Ok;
+ISA93   DEFAULT ISA94   DoTA; Ok;
+ISA94   DEFAULT ISA95   DoTA; Ok;
+ISA95   DEFAULT ISA96   DoTA; Ok;
+ISA96   DEFAULT ISA97   DoTA; Ok;
+ISA97   DEFAULT ISA98   DoTA; Ok;
+ISA98   DEFAULT ISA99   DoTA; Ok;
+ISA99   DEFAULT ISA100  DoTA; Ok;
+ISA100  ES      ISA101  DoES; Ok;
+ISA101  DEFAULT ISA102  DoTA; Ok;
+ISA102  ES      ISA103  DoES; Ok;
+ISA103  DEFAULT ISA104  DoTA; Ok;
+ISA104  ES      ISA105  DoES; Ok;
+ISA105  DEFAULT ISA106  DoTA; StSS; Ok;
+ISA106  DEFAULT XTAG    DoST; StST; Ok;
+
+# FIXME - These next two lines are a hack.
+# I have no idea what the X12 spec says about how cr/lf chars are handled.
+# At least this allows them to be transparently ignored.
+XTAG	CR	XTAG	Ok;
+XTAG	LF	XTAG	Ok;
+
+XTAG	ES      XDAT	DoTS; Ok;
+XTAG	DEFAULT XTAG	DoTA; Ok;
+                                                      
+XDAT	DEFAULT XDAT	DoTA; Ok;
+XDAT	ES      XDAT	DoES; Ok;
+XDAT	SS      XDAT	DoSS; Ok;
+XDAT	ST      XTAG	DoST; Ok;
+
+
+
+DEFAULT DEFAULT DEFAULT Error(EDI_ESYNTAX);
+
+@AUTOMATON SYNTAX void* char
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Determine if an EDIFACT numeric value meets the spec
+## FIXME - _READ_ the spec, don't just guess ;)
+@CCODE  #define Eval ((edi_evaluation *) self)
+@CCODE	#define Err  return 1
+
+START	NUMBER	IPART	Eval->length  = 1; Ok;
+START	MINUS	SIGNED	Eval->pending = 1; Ok;
+START	DEFAULT	DFAULT	Eval->failure = 1; Err;
+
+SIGNED	NUMBER	IPART	Eval->length  = 1; Ok;
+
+IPART	NUMBER	IPART	Eval->pending = 0; Eval->length++; Ok;
+IPART	DECMARK	FPART	Eval->pending = 1; Ok;
+
+FPART	NUMBER	FPART	Eval->pending = 0; Eval->length++; Ok;
+
+DEFAULT	DEFAULT	DEFAULT	Eval->failure = 1; Err;
+
+@AUTOMATON EDIFACTNumeric void* char

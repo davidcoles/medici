@@ -1,0 +1,2206 @@
+#!/usr/bin/perl
+$| = 1;
+
+# ugh. this really needs some work doing ...
+
+# Regular expressions to select which files do what in which directory
+
+$DIR = { '92-1' => { MD => '[A-Z]{6}\.921',
+		     CD => 'TRCD\.921',
+		     CL => 'TRCL-.\.921',
+		     ED => 'TRED\.921',
+		     SD => 'TRSD\.921',
+		     DC => '1921'},
+	 
+	 # work needs doing on message structure
+	 '93-2' => { MD => '[A-Z]{6}\.932',
+		     CD => 'EDCD\.932',
+		     CL => 'EDCL-.\.932',
+		     ED => 'EDED\.932',
+		     SD => 'EDSD\.932',
+		     DC => '2932'},
+	 
+	 'S93A' => { MD => '[A-Z]{6}_S\.93A',
+		     CD => 'EDCD\.93A',
+		     CL => 'UNCL-.\.93A',
+		     ED => 'EDED\.93A',
+		     SD => 'EDSD\.93A' },
+	 
+	 'D93A' => { MD => '[A-Z]{6}_D\.93A',
+		     CD => 'TRCD\.93A',
+		     CL => 'UNCL-.\.93A',
+		     ED => 'TRED\.93A',
+		     SD => 'TRSD\.93A' },
+	 
+	 'D94A' => { MD => '[A-Z]{6}_D\.94A',
+		     CD => 'TRCD\.94A',
+		     CL => 'UNCL-.\.94A',
+		     ED => 'TRED\.94A',
+		     SD => 'TRSD\.94A' },
+	 
+	 'D94B' => { MD => '[A-Z]{6}_D\.94B',
+		     CD => 'TRCD\.94B',
+		     CL => 'UNCL-.\.94B',
+		     ED => 'TRED\.94B',
+		     SD => 'TRSD\.94B' },
+	 
+	 'D95A' => { MD => '[A-Z]{6}_D\.95A',
+		     CD => 'TRCD\.95A',
+		     CL => 'UNCL-.\.95A',
+		     ED => 'TRED\.95A',
+		     SD => 'TRSD\.95A' },
+	 
+	 'D95B' => { MD => '[A-Z]{6}_D\.95B',
+		     CD => 'TRCD\.95B',
+		     CL => 'UNCL-.\.95B',
+		     ED => 'TRED\.95B',
+		     SD => 'TRSD\.95B' },
+	 
+	 'D96A' => { MD => '[A-Z]{6}_D\.96A',
+		     CD => 'TRCD\.96A',
+		     CL => 'UNCL-.\.96A',
+		     ED => 'TRED\.96A',
+		     SD => 'TRSD\.96A' },
+	 
+	 'D96B' => { MD => '[A-Z]{6}_D\.96B',
+		     CD => 'TRCD\.96B',
+		     CL => 'UNCL-.\.96B',
+		     ED => 'TRED\.96B',
+		     SD => 'TRSD\.96B' },
+	 
+	 'D97A' => { MD => '[A-Z]{6}_D\.97A',
+		     CD => '[IE]DCD\.97A',
+		     CL => 'UNCL\.97A',
+		     ED => '[IE]DED\.97A',
+		     SD => '[IE]DSD\.97A' },
+	 
+	 'D97B' => { MD => '[A-Z]{6}_D\.97B',
+		     CD => '[IE]DCD\.97B',
+		     CL => 'UNCL\.97B',
+		     ED => '[IE]DED\.97B',
+		     SD => '[IE]DSD\.97B',
+		     SL => 'UNSL\.97B'},
+	 
+	 'D98A' => { MD => '[A-Z]{6}_D\.98A',
+		     CD => '[IE]DCD\.98A',
+		     CL => 'UNCL\.98A',
+		     ED => '[IE]DED\.98A',
+		     SD => '[IE]DSD\.98A',
+		     SL => 'UNSL\.98A' },
+	 
+	 'D98B' => { MD => '[A-Z]{6}_D\.98B',
+		     CD => '[IE]DCD\.98B',
+		     CL => 'UNCL\.98B',
+		     ED => '[IE]DED\.98B',
+		     SD => '[IE]DSD\.98B',
+		     SL => 'UNSL\.98B' },
+	 
+	 'D99A' => { MD => '[A-Z]{6}_D\.99A',
+		     CD => '[IE]DCD\.99A',
+		     CL => 'UNCL\.99A',
+		     ED => '[IE]DED\.99A',
+		     SD => '[IE]DSD\.99A',
+		     SL => 'UNSL\.99A', },
+	 
+	 'D99B' => { MD => '[A-Z]{6}_D\.99B',
+		     CD => '[IE]DCD\.99B',
+		     CL => 'UNCL\.99B',
+		     ED => '[IE]DED\.99B',
+		     SD => '[IE]DSD\.99B',
+		     #SL => 'UNSL\.99B'
+		 },
+	 
+	 'D00A' => { MD => '[A-Z]{6}_D\.00A',
+		     CD => '[IE]DCD\.00A',
+		     CL => 'UNCL\.00A',
+		     ED => '[IE]DED\.00A',
+		     SD => '[IE]DSD\.00A',
+		     #SL => 'UNSL\.00A'
+		 },
+	 
+	 'D00B' => { MD => '[A-Z]{6}_D\.00B',
+		     CD => '[IE]DCD\.00B',
+		     CL => 'UNCL\.00B',
+		     ED => '[IE]DED\.00B',
+		     SD => '[IE]DSD\.00B',
+		     #SL => 'UNSL\.00B'
+		 },
+	 
+	 'D01A' => { MD => '[A-Z]{6}_D\.01A',
+		     CD => '[IE]DCD\.01A',
+		     CL => 'UNCL\.01A',
+		     ED => '[IE]DED\.01A',
+		     SD => '[IE]DSD\.01A',
+		     #SL => 'UNSL\.01A'
+		 },
+	 
+	 'D01B' => { MD => '[A-Z]{6}_D\.01B',
+		     CD => '[IE]DCD\.01B',
+		     CL => 'UNCL\.01B',
+		     ED => '[IE]DED\.01B',
+		     SD => '[IE]DSD\.01B',
+		     #SL => 'UNSL\.01B'
+		 },
+	 
+	 'D01C' => { MD => '[A-Z]{6}_D\.01C',
+		     CD => '[IE]DCD\.01C',
+		     CL => 'UNCL\.01C',
+		     ED => '[IE]DED\.01C',
+		     SD => '[IE]DSD\.01C',
+		     #SL => 'UNSL\.01C'
+		 },
+	 
+	 'D02A' => { MD => '[A-Z]{6}_D\.02A',
+		     CD => '[IE]DCD\.02A',
+		     CL => 'UNCL\.02A',
+		     ED => '[IE]DED\.02A',
+		     SD => '[IE]DSD\.02A',
+		     #SL => 'UNSL\.02A'
+		 },
+	 
+	 'D02B' => { MD => '[A-Z]{6}_D\.02B',
+		     CD => '[IE]DCD\.02B',
+		     CL => 'UNCL\.02B',
+		     ED => '[IE]DED\.02B',
+		     SD => '[IE]DSD\.02B',
+		     #SL => 'UNSL\.02B'
+		 },
+	 
+	 'D03A' => { MD => '[A-Z]{6}_D\.03A',
+		     CD => '[IE]DCD\.03A',
+		     CL => 'UNCL\.03A',
+		     ED => '[IE]DED\.03A',
+		     SD => '[IE]DSD\.03A',
+		     #SL => 'UNSL\.03A'
+		 },
+	 
+	 'D04A' => { MD => '[A-Z]{6}_D\.04A',
+		     CD => '[IE]DCD\.04A',
+		     CL => 'UNCL\.04A',
+		     ED => '[IE]DED\.04A',
+		     SD => '[IE]DSD\.04A',
+		     #SL => 'UNSL\.04A'
+		 },	 
+     };
+
+
+$xml = 1;
+
+#if($ARGV[0] eq '-s') {
+#    $xml = 0;
+#    shift;
+#}
+
+%files = ();
+defined($dir = shift) or die &usage;
+
+chdir($dir) or die "Couldn't chdir($dir): $!\n";
+
+opendir(DIR, '.') or die "Couldn't opendir(.): $!\n";
+@files = readdir(DIR);
+closedir(DIR);
+
+$dir =~ tr/a-z/A-Z/;
+
+($version, $release, $dir) = ($2, $3, $1) if $dir =~ /(([A-Z])(\d{2}[A-Z]))/;
+($version, $release, $dir) = ($3, $2, $1) if $dir =~ /((\d{2})-(\d))/;
+
+foreach (sort keys %{$DIR->{$dir}}) {
+    $re = $DIR->{$dir}->{$_};
+    @{$files{$_}} = grep(/^$re$/i, @files);
+}
+
+if($xml) {
+    print '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>',"\n";
+
+    printf "%s\n\n", xmlComment("EDIFACT version $version, release $release");
+
+    printf "%s\n", xmlStart('tsg',
+			    'version' => $version,
+			    'release' => $release);
+
+    my $uned = [&read_uned(@{$files{ED}})];
+    my $uncl = [&read_uncl(@{$files{CL}}, @{$files{SL}})];
+    &uned2xml($uned, $uncl);
+    
+    &unsd2xml(@{$files{SD}});
+    &uncd2xml(@{$files{CD}});
+    &unsm2xml($DIR->{$dir}{DC} ? $DIR->{$dir}{DC} : $dir, @{$files{MD}});
+
+    # system segment stuff from ISO 9735 omitted in directories
+    print <DATA>;
+    
+    printf "%s\n", xmlEnd('tsg');
+} else {
+    &unsd2francesco(@{$files{SD}});
+    &uncd2francesco(@{$files{CD}});
+    &uned2francesco(@{$files{ED}});
+    &uncl2francesco(@{$files{CL}}, @{$files{SL}},);
+    &unsm2francesco($DIR->{$dir}{DC} ? $DIR->{$dir}{DC} : $dir, @{$files{MD}});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub read_unsd {
+    my(@files) = @_;
+    my @segment = ();
+    
+    foreach(@files) {
+        my $segment = {};
+	
+        open(FILE, $_) or die "Couldn't open($_): $!\n";
+	
+	while(<FILE>) {
+	    $segment = {} if /^[-\304]{3,}/;
+	    
+	    if(/^\s*$/) {
+		$segment->{_last} = _none;
+		
+	    } elsif(!defined $segment->{_code} &&
+		    /^\s*(\S{0,2})\s+([a-z]{3})\s+(\S.*?)\s*$/i) {
+		$segment->{_flag} = $1;
+		$segment->{_code} = $2;
+		$segment->{_name} = $3;
+		$segment->{_last} = '_name';
+		push(@segment, $segment);
+		
+	    } elsif(/^(\S*)\s+([a-z]{4})[a-z]*:\s+(\S?.*?)\s*$/i) {
+		my $attr = $2;
+		$attr =~ tr/[A-Z]/[a-z]/;
+		$segment->{_.$attr} = $3;
+		$segment->{_last} = _.$attr;
+		
+	    } elsif($segment->{_last} eq _none &&
+   /^(\d*)\s*(\S?)\s+(\S{4})\s+(\S.*?)\s+([A-Z])\s*(\d*)\s*(\S*)\s*$/i) {
+		my($indx, $flag, $code) = ($1, $2, $3);
+		my($name, $reqr, $reps) = ($4, $5, $6);
+		my $cplx = ($code =~ /^[a-z]/i) ? 1 : 0;
+		push(@{$segment->{_list}}, { _indx => $indx, _flag => $flag,
+					     _code => $code, _name => $name,
+					     _reqr => $reqr, _reps => $reps,
+					     _cplx => $cplx});
+		$segment->{_last} = _elem;
+	    } else {
+		$segment->{$segment->{_last}} .= $_;
+		$segment->{$segment->{_last}} =~ s/\s+/ /g;
+		$segment->{$segment->{_last}} =~ s/\s*$//;
+		$segment->{$segment->{_last}} =~ s/^\s*//;
+	    }
+	}
+	close(FILE);
+    }
+
+    @segment;
+}
+
+sub read_uncd {
+    my(@files) = @_;
+    my @elem = ();
+    
+    foreach(@files) {
+	my $elem = {};
+	
+	open(FILE, $_) or die "Couldn't open($_): $!\n";
+	
+	while(<FILE>) {
+	    $elem = {} if /^[-\304]{3,}/;
+	    
+	    if(/^\s*$/) {
+		$elem->{_last} = _none;
+		
+	    } elsif(!defined $elem->{_code} &&
+		    /^\s*(\S{0,2})\s+([a-z]\d{3})\s+(\S.*?)\s*$/i) {
+		$elem->{_flag} = $1;
+		$elem->{_code} = $2;
+		$elem->{_name} = $3;
+		$elem->{_last} = '_name';
+		push(@elem, $elem);
+		
+	    } elsif(/^\s*(\S{0,2})\s+([a-z]{4}):\s+(\S?.*?)\s*$/i) {
+		my $attr = $2;
+		$attr =~ tr/[A-Z]/[a-z]/;
+		$elem->{_.$attr} = $3;
+		$elem->{_last} = _.$attr;
+		
+	    } elsif(/^(\d*)\s*(\S?)\s+(\d{4})\s+(\S.*?)\s+(\S)\s+(\S+)\s*$/i) {
+		push(@{$elem->{_list}}, { _indx => $1, _flag => $2,
+					   _code => $3, _name => $4,
+					   _reqr => $5, _repr => $6});
+	    } else {
+		$elem->{$elem->{_last}} .= $_;
+		$elem->{$elem->{_last}} =~ s/\s+/ /g;
+		$elem->{$elem->{_last}} =~ s/\s*$//;
+		$elem->{$elem->{_last}} =~ s/^\s*//;
+	    }
+	}
+	close(FILE);
+    }
+    @elem;
+}
+
+sub read_uned {
+    my(@files) = @_;
+    my($type, $fixd, $size);
+    my @elem = ();
+
+    foreach(@files) {
+	my $elem = {};
+	
+	open(FILE, $_) or die "Couldn't open($_): $!\n";
+	
+	while(<FILE>) {
+	    $elem = {} if /^[-\304]{3,}/;
+	    
+	    if(/^\s*$/) {
+		$elem->{_last} = _none;
+	    } elsif(!defined $elem->{_code} &&
+		    /(\S?)\s+(\d{4})\s+(\S.*?)\s*$/) {
+		my $name = $3;
+		$elem->{_flag} = $1;
+		$elem->{_code} = $2;
+		$elem->{_last} = _name;
+		$elem->{_usge} = $1 if $name =~ s/\s*\[(\S+)\]\s*$//;
+		$elem->{_name} = $name;
+		push(@elem, $elem);
+		
+	    } elsif(/^(\S?)\s+([a-z]{4}):\s+(\S?.*?)\s*$/i) {
+		my $attr = $2;
+		$attr =~ tr/[A-Z]/[a-z]/;
+		$elem->{_.$attr} = $3;
+		$elem->{_last} = _.$attr;
+		
+	    } else {
+		$elem->{$elem->{_last}} .= $_;
+		$elem->{$elem->{_last}} =~ s/\s+/ /g;
+		$elem->{$elem->{_last}} =~ s/\s+$//;
+		
+	    }
+	}
+	close(FILE);
+    }
+
+    
+    foreach (@elem) {
+	if($_->{_repr} =~ /([a-z]+)(\.?\.?)(\d+)/) {
+	    ($form, $fixd, $size) = ($1, $2, $3);
+	    $fixd = ($fixd =~ /\S/ ? 0 : 1);
+	    $type = 'U';
+	    $type = 'N' if $form =~ /n/;
+	    $type = 'A' if $form =~ /a/;
+	    $type = 'X' if $form =~ /an/;
+	    
+	} else {
+	    ($type, $fixd, $size) = ('ERROR', 0, 0);
+	}
+
+	$_->{_type} = $type;
+	$_->{_min} = $fixd ? $size : 1;
+	$_->{_max} = $size;
+    }
+
+    @elem;
+}
+
+sub read_uncl {
+    my(@files) = @_;
+    my @elem;
+    
+    foreach $file (@files) {
+	my $elem = undef;
+	my $item = undef;
+	my $ed = 0;
+
+	open(FILE, $file) or die "Couldn't open $_: $!\n";
+	
+	while(<FILE>) {
+	    chomp;
+	    
+	    if($. == 1 && /^PART/) { while(<FILE>) { last if /^[-\304]{3,}/ } }
+	    
+	    if(/^[-\304]{3,}/) {
+		# last line (DOS characters)
+		$elem = undef;
+		$item = undef;
+		
+	    } elsif(/^\s*$/) {
+		$elem->{_last} = undef if defined $elem;
+
+	    } elsif($ed && /^(\S*)\s+([a-z]{4})[a-z]*:\s+(\S?.*?)\s*$/i) {
+		# description of element
+                my($flag, $attr, $val) = ($1, $2, $3);
+                $attr =~ tr/[A-Z]/[a-z]/;
+                $elem->{_.$attr} = $val;
+                $elem->{_last} = _.$attr;
+		$ed = 1;
+		
+	    } elsif(!defined $elem && /^([\S\s]+)\s+(\d{4})\s+(\S.*\S)\s*$/) {
+		# dunno
+		my($flag, $code, $name) = ($1, $2, $3);
+		$elem = {
+		    _flag => $flag,
+		    _code => $code,
+		    _name => $name,
+		};
+		push(@elem, $elem);
+		
+	    } elsif(defined $elem && defined $elem->{_last}) {
+		# hmm
+		#warn "+++$_\n" if $elem->{_code} == 1153;
+		$elem->{$elem->{_last}} .= $_;
+		$elem->{$elem->{_last}} =~ s/\s+/ /g;
+		$elem->{$elem->{_last}} =~ s/\s*$//;
+		$elem->{$elem->{_last}} =~ s/^\s*//;
+		
+	    } elsif(defined $elem && ! defined $elem->{_last} &&
+		    /^(..)(.{7})\s+(\S.*?)\s*$/) {
+		#warn "---$_\n" if $elem->{_code} == 1153;
+		$ed = 0;
+		my($flag, $code, $name) = ($1, $2, $3);
+		if($code =~ /\S/) {
+		    $code =~ s/^\s*//;
+		    $code =~ s/\s*$//;
+		    $item = {
+			_flag => $flag,
+			_code => $code,
+			_name => $name,
+		    };
+		    push(@{$elem->{_list}}, $item);
+		    
+		} else {
+		    $item->{_desc} .= $_;
+		    $item->{_desc} =~ s/\s+/ /g;
+		    $item->{_desc} =~ s/\s*$//;
+		    $item->{_desc} =~ s/^\s*//;
+		    
+		}
+	    }
+	}
+    }
+    @elem;
+}
+
+sub read_unsm {
+    my($dir, @files) = @_;
+    my @messages;
+    
+    foreach my $file (@files) {
+	open(FILE, $file) or die "Couldn't open $_: $!\n";
+	
+	my $info = &document_info(FILE);
+	
+	while(<FILE>) {
+	    # FIXME - need to check last line read in subs if
+	    # we are wanting to parse more than one section
+	    if(/^\s?(\d+\.[\d\.]*)\s+(\S.*?)\s*$/) {
+		my($section, $title) = ($1, $2);	    
+		#printf "$section $title\n";
+		
+		if($title =~ /Segment\s+table/i) {
+		    $info->{_list} = &read_segment_table(FILE, $info->{_type});
+		    push(@messages, $info);
+		}
+		if($title =~ /Segment\s+Clarification/i) {
+		    $info->{_indx} =
+			&read_data_segment_clarification(FILE, $section);
+		}
+	    }
+	}
+	close(FILE);
+    }
+    @messages;
+}
+
+sub read_document_info {
+    my($fh) = @_;
+    my $info = {};
+    
+    while(<$fh>) {
+	last if /^(\d+\.[\d\.]*)/; # (section header)
+	$info->{_type}     = $1 if /Message\s+Type\s*:\s*(\S+)/i;
+	$info->{_version}  = $1 if /Version\s*:\s*(\S+)/i;
+	$info->{_release}  = $1 if /Release\s*:\s*(\S+)/i;
+	$info->{_agency}   = $1 if /Contr. Agency\s*:\s*(\S+)/i;
+	$info->{_status}   = $1 if /Status\s*:\s*(\S+)/i;
+	$info->{_revision} = $1 if /Revision\s*:\s*(\S+)/i;
+	$info->{_date}     = $1 if /Date\s*:\s*(\S+)/i;
+    }
+    return $info;
+}
+
+sub read_segment_table {
+    my($fh, $type) = @_;
+    my @stack = ( { _list => [] } );
+    
+    while(<$fh>) {
+	# Finish processing if we see the start of a new section
+	last if /^(\d+\.[\d\.]*)/;
+	
+	# Strip trailing whitespace, and ingnore blank lines
+	s/[\r\n\s]+$//;
+	next if /^$/;
+	
+	# If there is no entry on the stack we have underflowed
+	if(defined($list = $stack[$#stack])) {
+	    # ok
+	    $list = $list->{_list};
+	} else {
+	    warn "Loop-stack underflow in $type at line $.\n";
+	    $list = []; # everything now gets lost
+	}
+	
+	# Does this line indicate a new segment group?
+	if(/^(\d{0,4})\s*(\S?)\s+.*Segment\s+group\s+(\d+).*(\S)\s+(\d+)/i) {
+	    my $item = {
+		_loop => 1,
+		_indx => length($1) ? $1 : undef ,
+		_flag => $2,
+		_code => $3,
+		_reqr => $4,
+		_reps => $5,
+		_list => [],
+	    };
+	    #printf "%spush SG %s\n", ' ' x $#stack, $3;
+	    push(@$list, $item);
+	    push(@stack, $item);
+	    next; # start of a segment group cannot end a group - short circuit
+	}
+	
+	# Does this line, instead, indicate a segment ?
+	elsif(/^(\d{0,4})\s*(\S?)\s+(\S+)\s+(\S.*?)\s+(\S)\s+(\d+)/) {
+	    #printf "%s%s (%s)\n", ' 'x$#loop, $3, $1;
+	    my $item = {
+		_indx => length($1) ? $1 : undef,
+		_flag => $2,
+		_code => $3,
+		_name => $4,
+		_reqr => $5,
+		_reps => $6,
+	    };
+	    #printf "%spush EL %s\n", ' ' x $#stack, $3;
+	    push(@$list, $item);
+	}	 
+	
+	# Multiple loops closed in one line (?)
+	if(/([\301+]+)[\177-\377|]*$/) {
+	    foreach(split(//, $1)) {
+		pop(@stack);
+	    }
+	}
+	
+	# Single loop closed (?)
+	if(/(\331)[\177-\377]*$/) {
+	    pop(@stack);
+	}
+
+	# It would appear that other lines are simply column headings and
+	# continuation columns and can be ignored.
+	
+    }
+    
+    $stack[0]->{_list};
+}
+
+sub read_data_segment_clarification {
+    my($fh, $section) = @_;
+    my $indx;
+    my %indx;
+    my $cont = 0;
+    my $note = 0;
+
+    while(<$fh>) {
+        if(/^(\d+\.[\d\.]*)/) {
+            last unless is_subsection($section, $1);
+        } elsif(/^(\d{4})(...)\s*(\S.*?)[:,]\s*(.*?)\s*$/) {
+            $indx = $1;
+            $indx{$indx}->{_flag} = $2;
+            $indx{$indx}->{_code} = $3;
+            $indx{$indx}->{_name} = $4;
+            $cont = /-\s*$/ ? 1 : 0;
+	    $note = 0;
+	} elsif(/^\s+Note:\s*(.*?)\s*$/) {
+	    $note = 1;
+	    $indx{$indx}->{_note} = $1;
+	} elsif($note) {
+            s/^\s*|\s*$//g;
+            $indx{$indx}->{_note} .= " $_";
+	    $indx{$indx}->{_note} =~ s/^\s*|\s*$//g;
+        } elsif($cont) {
+            s/^\s*|\s*$//g;
+            $cont = /-\s*$/ ? 1 : 0;
+            $indx{$indx}->{_name} .= $_;
+        } else {
+            s/^\s*|\s*$//g;
+            $indx{$indx}->{_desc} .= " $_" if defined $indx;
+            $indx{$indx}->{_desc} =~ s/^\s*|\s*$//g;
+        }
+    }
+  done:
+
+    \%indx;
+}
+
+sub is_subsection {
+    my($section, $subsect) = @_;
+    my @section = split(/\./, $section);
+    my @subsect = split(/\./, $subsect);
+    foreach my $part (@section) { return 0 if shift(@subsect) != $part };
+    1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub unsd2xml {
+    my(@files) = @_;
+    
+    printf " %s\n", xmlStart('segments');
+    
+    foreach my $segment (&read_unsd(@files)) {
+	printf "  %s\n", xmlStart('segment',
+				  'code' => $segment->{_code},
+				  'name' => $segment->{_name},
+				  'desc' => $segment->{_func},
+				  'note' => $segment->{_note},
+				  );
+	
+	foreach(@{$segment->{_list}}) {
+	    next if $_->{_flag} =~ /-/; # removed from spec
+	    my $reqr = $_->{_reqr} eq 'M' ? 'mandatory' : 'conditional';
+	    my $reps = $_->{_reps} ? $_->{_reps} : 1;
+	    my $type = $_->{_cplx} ? 'composite' : 'simple';
+	    printf "   %s\n", xmlEmpty('elemref',
+				       'code' => $_->{_code},
+				       #'indx' => $_->{_indx},
+				       'reqr' => $reqr ,
+				       #'reps' => $reps,
+				       'type' => $type,
+				       );
+	}
+	
+	printf "  %s\n\n", xmlEnd('segment');
+    }
+    
+    printf "  %s\n\n\n", xmlEnd('segments');
+}
+
+sub uncd2xml {
+    my(@files) = @_;
+    
+    printf " %s\n", xmlStart('composites');
+    foreach $element (&read_uncd(@files)) {
+	printf "  %s\n", xmlStart('composite',
+				 'code' => $element->{_code},
+				 'name' => $element->{_name},
+				 'desc' => $element->{_desc},
+				 'note' => $element->{_note});
+	
+	foreach(@{$element->{_list}}) {
+	    my $reqr = $_->{_reqr} eq 'M' ? 'mandatory' : 'conditional';
+            my $reps = $_->{_reps} ? $_->{_reps} : 1;
+	    printf "   %s\n", xmlEmpty('component',
+				       'code' => $_->{_code},
+				       'reqr' => $reqr,
+				       #'reps' => $reps,
+				       #'indx' => $_->{_indx}
+				       );
+	}
+
+	printf "  %s\n\n", xmlEnd('composite');
+    }
+    printf " %s\n\n\n", xmlEnd('composites');
+}
+
+sub uned2xml {
+    my($uned, $uncl) = @_;
+    my %uncl;
+    
+    printf " %s\n", xmlStart('elements');
+    
+    if(defined $uncl) { foreach(@$uncl) { $uncl{$_->{_code}} = $_ } }
+    
+    foreach $element (@$uned) {
+	my $repr = 'mixed';
+	$repr = 'alpha'   if $element->{_type} eq 'A';
+	$repr = 'numeric' if $element->{_type} eq 'N';
+	
+	my %attr = ('code' => $element->{_code},
+		    'name' => $element->{_name},
+		    'min'  => $element->{_min},
+		    'max'  => $element->{_max},
+		    'desc' => $element->{_desc},
+		    'note' => $element->{_note},
+		    'usge' => $element->{_usge},
+		    'repr' => $repr);
+	
+	if(defined ($uncl = $uncl{$element->{_code}})) {
+	    printf "  %s\n", xmlStart('element', %attr);
+	    &uncv2xml($uncl);
+	    printf "  %s\n\n", xmlEnd('element');
+	} else {
+	    printf "  %s\n\n", xmlEmpty('element', %attr);
+	}
+	
+    }
+    printf " %s\n\n\n", xmlEnd('elements');
+}
+
+sub uncv2xml {
+    my($uncv) = @_;
+    foreach(@{$uncv->{_list}}) {
+	printf "   %s\n", xmlEmpty('value',
+				   'code' => $_->{_code},
+				   'name' => $_->{_name},
+				   'desc' => $_->{_desc});
+    }
+}
+
+sub uncl2xml {
+    my($codelists) = @_;
+    
+    printf " %s\n", xmlStart('codelists');
+    
+    foreach $elem (@$codelists) {
+	printf "  %s\n", xmlStart('codelist', 'code' => $elem->{_code});
+	&uncv2xml($elem);
+	printf "  %s\n\n\n", xmlEnd('codelist');
+    }
+    
+    printf " %s\n", xmlEnd('codelists');
+}
+
+sub unsm2xml {
+    my($dir, @files) = @_;
+    my @transactions = &read_unsm($dir, @files);
+    
+    printf " %s\n", xmlStart('transactions');
+    
+    foreach $transaction (@transactions) {
+	printf "  %s\n", xmlStart('transaction',
+				  'code'    => $transaction->{_type},
+				  'version' => $transaction->{_version},
+				  'release' => $transaction->{_release},
+				  'agency'  => $transaction->{_agency}
+				  );
+
+	_unsm2xml(3, $transaction->{_list}, $transaction->{_indx});
+	
+	printf "  %s\n\n", xmlEnd('transaction');
+    }
+    
+    printf " %s\n\n\n", xmlEnd('transactions');
+}
+
+sub _unsm2xml {
+    my($indent, $list, $indx) = @_;
+    
+    foreach my $item (@$list) {
+	#my $desc = $indx->{$item->{_indx}}->{_desc};
+	#my $name = $indx->{$item->{_indx}}->{_name};
+	my $reqr = 'conditional';
+	$reqr = 'mandatory' if $item->{_reqr} eq 'M';
+
+	my %attr = (
+		    #'indx' => $item->{_indx},
+		    'code' => $item->{_code},
+		    'reps' => $item->{_reps},
+		    #'reqr' => $item->{_reqr},
+		    'reqr' => $reqr,
+
+		    'name' => $indx->{$item->{_indx}}->{_name},
+		    'desc' => $indx->{$item->{_indx}}->{_desc},
+		    'note' => $indx->{$item->{_indx}}->{_note},
+		    );
+	
+	if($item->{_loop}) {
+	    printf "%s%s\n", ' 'x$indent,xmlStart('loop', %attr);
+	    _unsm2xml($indent + 1, $item->{_list}, $indx);
+	    printf "%s%s\n", ' 'x$indent, xmlEnd('loop');
+	    
+	} else {
+	    printf "%s%s\n", ' 'x$indent, xmlEmpty('segref', %attr);
+	}
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# http://www.w3.org/TR/2004/REC-xml-20040204/#dt-escape
+# <!ENTITY lt     "&#38;#60;">
+# <!ENTITY gt     "&#62;">
+# <!ENTITY amp    "&#38;#38;">
+# <!ENTITY apos   "&#39;">
+# <!ENTITY quot   "&#34;">
+
+sub xmlText {
+    my(@text) = @_;
+    my $text = '';
+    foreach my $val (@text) {
+#        $val =~ s/\046/&#38;#38;/g; # & - must do this one first
+#        $val =~ s/\042/&#34;/g;     # "
+#        $val =~ s/\047/&#39;/g;     # '
+#        $val =~ s/\074/&#38;#60;/g; # <
+#        $val =~ s/\074/&#62;/g;     # >
+
+        $val =~ s/\046/&amp;/g;  # & - must do this one first
+        $val =~ s/\042/&quot;/g; # "
+        $val =~ s/\047/&apos;/g; # '
+        $val =~ s/\074/&lt;/g;   # <
+        $val =~ s/\076/&gt;/g;   # >
+
+        $text .= $val;
+    }
+    return $text;
+}
+
+sub xmlAttr {
+    my($key, $val) = @_;
+    return unless defined $key && $key =~ /\S/;
+    return unless defined $val;
+    return sprintf '%s="%s"', $key, xmlText($val);
+}
+
+sub xmlTag {
+    my($tag, %attr) = @_;
+    my($key,  @attr);
+    foreach $key (sort { $a cmp $b } keys %attr) {
+        my $attr = &xmlAttr($key, $attr{$key});
+        push(@attr, $attr) if defined $attr;
+    }
+    return join(' ', $tag, @attr);
+}
+
+sub xmlPI      { return sprintf "<?%s?>", &xmlTag(shift(@_), @_) }
+sub xmlComment { return sprintf "<!-- %s -->", xmlText(@_) }
+sub xmlStart   { return sprintf "<%s>",   &xmlTag(shift(@_), @_) }
+sub xmlEmpty   { return sprintf "<%s/>",  &xmlTag(shift(@_), @_) }
+sub xmlEnd     { return sprintf "</%s>",  $_[0]}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################
+# This is all the old code
+######################################################################
+
+
+sub unsd2francesco {
+    my(@files) = @_;
+    my @segment = ();
+    
+    foreach(@files) {
+        my $segment = {};
+	
+        open(FILE, $_) or die "Couldn't open($_): $!\n";
+	
+	while(<FILE>) {
+	    $segment = {} if /^[-\304]{3,}/;
+	    
+	    if(/^\s*$/) {
+		$segment->{_last} = _none;
+		
+	    } elsif(!defined $segment->{_code} &&
+		    /^\s*(\S{0,2})\s+([a-z]{3})\s+(\S.*?)\s*$/i) {
+		$segment->{_flag} = $1;
+		$segment->{_code} = $2;
+		$segment->{_name} = $3;
+		$segment->{_last} = '_name';
+		push(@segment, $segment);
+		
+	    } elsif(/^(\S*)\s+([a-z]{4})[a-z]*:\s+(\S?.*?)\s*$/i) {
+		my $attr = $2;
+		$attr =~ tr/[A-Z]/[a-z]/;
+		$segment->{_.$attr} = $3;
+		$segment->{_last} = _.$attr;
+		
+	    } elsif($segment->{_last} eq _none &&
+   /^(\d*)\s*(\S?)\s+(\S{4})\s+(\S.*?)\s+([A-Z])\s*(\d*)\s*(\S*)\s*$/i) {
+		push(@{$segment->{_list}}, { _indx => $1, _flag => $2,
+					     _code => $3, _name => $4,
+					     _reqr => $5, _reps => $6});
+		$segment->{_last} = _elem;
+	    } else {
+		$segment->{$segment->{_last}} .= $_;
+		$segment->{$segment->{_last}} =~ s/\s+/ /g;
+		$segment->{$segment->{_last}} =~ s/\s*$//;
+		$segment->{$segment->{_last}} =~ s/^\s*//;
+	    }
+	}
+	close(FILE);
+    }
+    
+    
+    print "\nSEGMENT\n";
+    foreach (@segment) {
+	printf "\t%s\t%s\t%s\n",
+	$_->{_code},
+	$_->{_name},
+	$_->{_func},
+	$_->{_note};
+    }
+    
+    print "\nSEGLIST\n";
+    foreach my $segment (@segment) {
+	foreach(@{$segment->{_list}}) {
+	    next if $_->{_flag} =~ /-/;
+
+	    printf "\t%s\t%s\t%1s\t%s\n",
+	    $segment->{_code},
+	    $_->{_code},
+	    $_->{_reqr},
+	    $_->{_code} =~ /[a-z]/i ? 'COMPOSITE' : 'ELEMENT',
+	    $_->{_reps} ? $_->{_reps} : 1,
+	    $_->{_indx};
+	}
+    }
+}
+
+
+
+
+
+
+
+sub uncd2francesco {
+    my(@files) = @_;
+    my @elem = ();
+    
+    foreach(@files) {
+	my $elem = {};
+	
+	open(FILE, $_) or die "Couldn't open($_): $!\n";
+	
+	while(<FILE>) {
+	    $elem = {} if /^[-\304]{3,}/;
+	    
+	    if(/^\s*$/) {
+		$elem->{_last} = _none;
+		
+	    } elsif(!defined $elem->{_code} &&
+		    /^\s*(\S{0,2})\s+([a-z]\d{3})\s+(\S.*?)\s*$/i) {
+		$elem->{_flag} = $1;
+		$elem->{_code} = $2;
+		$elem->{_name} = $3;
+		$elem->{_last} = '_name';
+		push(@elem, $elem);
+		
+	    } elsif(/^\s*(\S{0,2})\s+([a-z]{4}):\s+(\S?.*?)\s*$/i) {
+		my $attr = $2;
+		$attr =~ tr/[A-Z]/[a-z]/;
+		$elem->{_.$attr} = $3;
+		$elem->{_last} = _.$attr;
+		
+	    } elsif(/^(\d*)\s*(\S?)\s+(\d{4})\s+(\S.*?)\s+(\S)\s+(\S+)\s*$/i) {
+		push(@{$elem->{_list}}, { _indx => $1, _flag => $2,
+					   _code => $3, _name => $4,
+					   _reqr => $5, _repr => $6});
+	    } else {
+		$elem->{$elem->{_last}} .= $_;
+		$elem->{$elem->{_last}} =~ s/\s+/ /g;
+		$elem->{$elem->{_last}} =~ s/\s*$//;
+		$elem->{$elem->{_last}} =~ s/^\s*//;
+	    }
+	}
+	close(FILE);
+    }
+
+    print "\nCOMPOSITE\n";
+    foreach (@elem) {
+	printf "\t%s\t%s\t%s\n",
+	$_->{_code},
+	$_->{_name},
+	$_->{_desc},
+	$_->{_note};
+    }
+
+
+    print "\nCOMPONENT\n";
+    foreach my $elem (@elem) {
+	foreach(@{$elem->{_list}}) {
+	    printf "\t%s\t%s\t%1s\t\n",
+	    $elem->{_code},
+	    $_->{_code},
+	    $_->{_reqr},
+	    $_->{_reps} ? $_->{_reps} : 1,
+	    $_->{_indx};
+	}
+    }
+
+}
+
+
+
+
+
+
+
+sub uned2francesco {
+    my(@files) = @_;
+    my($type, $fixd, $size);
+    my @elem = ();
+
+    foreach(@files) {
+	my $elem = {};
+	
+	open(FILE, $_) or die "Couldn't open($_): $!\n";
+	
+	while(<FILE>) {
+	    $elem = {} if /^[-\304]{3,}/;
+	    
+	    if(/^\s*$/) {
+		$elem->{_last} = _none;
+	    } elsif(!defined $elem->{_code} &&
+		    /(\S?)\s+(\d{4})\s+(\S.*?)\s*$/) {
+		my $name = $3;
+		$elem->{_flag} = $1;
+		$elem->{_code} = $2;
+		$elem->{_last} = _name;
+		$elem->{_usge} = $1 if $name =~ s/\s*\[(\S+)\]\s*$//;
+		$elem->{_name} = $name;
+		push(@elem, $elem);
+		
+	    } elsif(/^(\S?)\s+([a-z]{4}):\s+(\S?.*?)\s*$/i) {
+		my $attr = $2;
+		$attr =~ tr/[A-Z]/[a-z]/;
+		$elem->{_.$attr} = $3;
+		$elem->{_last} = _.$attr;
+		
+	    } else {
+		$elem->{$elem->{_last}} .= $_;
+		$elem->{$elem->{_last}} =~ s/\s+/ /g;
+		$elem->{$elem->{_last}} =~ s/\s+$//;
+		
+	    }
+	}
+	close(FILE);
+    }
+
+    
+    print "\nELEMENT\n";
+    foreach (@elem) {
+	if($_->{_repr} =~ /([a-z]+)(\.?\.?)(\d+)/) {
+	    ($form, $fixd, $size) = ($1, $2, $3);
+	    $fixd = ($fixd =~ /\S/ ? 0 : 1);
+	    $type = 'U';
+	    $type = 'N' if $form =~ /n/;
+	    $type = 'A' if $form =~ /a/;
+	    $type = 'X' if $form =~ /an/;
+
+	} else {
+	    ($type, $fixd, $size) = ('ERROR', 0, 0);
+	}
+	
+	printf "\t%s\t%s\t%d\t%d\t%s\t%s\t%s\t%s\n",
+	$_->{_code},
+	$type,
+	$fixd ? $size : 1,
+	$size,
+	$_->{_name},
+	$_->{_desc},
+	$_->{_note},
+	$_->{_usge};
+    }
+}
+
+
+sub unsm2francesco {
+    my($dir, @files) = @_;
+    my %segment_tables;
+    my $file;
+    
+    foreach $file (@files) {
+	open(FILE, $file) or die "Couldn't open $_: $!\n";
+	
+	my $info = &document_info(FILE);
+	while(<FILE>) {
+	    
+	  new_section:
+	    if(/^\s?(\d+\.[\d\.]*)\s+(\S.*?)\s*$/) {
+		my($section, $title) = ($1, $2);	    
+		#printf "$section $title\n";
+		if($title =~ /Segment\s+table/i) {
+		    $segment_tables{$info->{_type}} =
+			&segment_table(FILE, $info->{_type});
+		    goto new_section;
+		}
+	    }
+	}
+	close(FILE);
+    }
+
+    print "\nLOOP\n";
+    foreach $file (sort keys %segment_tables) {
+	@list = @{$segment_tables{$file}};
+	
+	foreach $loop (@list) {
+	    foreach (@{$loop->{_list}}) {
+		next if $info->{_flag} =~ /-/; # ???
+		
+		$code = $_->{_code};
+		$cont = $loop->{defined $loop->{_indx} ? _indx : _code};
+		$indx = defined $_->{_indx} ? $_->{_indx} : $_->{_code};
+		
+		printf "\t%s\t%s\t%s\t%s\t%s\t%d\t%s\n",
+		$file,
+		$cont,
+		$indx,
+		$code,
+		$_->{_reqr},
+		$_->{_reps},
+		$_->{_loop} ? 'LOOP' : 'SEGMENT';
+	    }	
+	    warn "Possible corruption in $file! UNT/UIT not last segment!\n",
+	    if !defined $cont && $code ne 'UNT' && $code ne 'UIT';
+	    print "\n";
+	}
+    }
+}
+
+sub document_info {
+    my($fh) = @_;
+    my $info = {};
+    
+    while(<$fh>) {
+	last if /^(\d+\.[\d\.]*)/;
+	$info->{_type}     = $1 if /Message\s+Type\s*:\s*(\S+)/i;
+	$info->{_version}  = $1 if /Version\s*:\s*(\S+)/i;
+	$info->{_release}  = $1 if /Release\s*:\s*(\S+)/i;
+	$info->{_agency}   = $1 if /Contr. Agency\s*:\s*(\S+)/i;
+	$info->{_status}   = $1 if /Status\s*:\s*(\S+)/i;
+	$info->{_revision} = $1 if /Revision\s*:\s*(\S+)/i;
+	$info->{_date}     = $1 if /Date\s*:\s*(\S+)/i;
+    }
+    return $info;
+}
+
+sub segment_table {
+    my($fh, $type) = @_;
+    my $main = { _list => [] };
+    my @list = ($main);
+    my @loop = ($main);
+    
+    while(<$fh>) {
+	last if /^(\d+\.[\d\.]*)/;
+	
+	s/[\r\n\s]+$//;
+	next if /^$/;
+	
+	if(defined($list = $loop[$#loop])) {
+	    $list = $list->{_list};
+	} else {
+	    warn "Loop-stack underflow in $type at line $.\n";
+	    $list = [];
+	}
+
+	if(/^(\d{0,4})\s*(\S?)\s+.*Segment\s+group\s+(\d+).*(\S)\s+(\d+)/i) {
+	    my $item = {
+		_loop => 1,
+		_indx => length($1) ? $1 : undef ,
+		_flag => $2,
+		_code => $3,
+		_reqr => $4,
+		_reps => $5,
+		_list => [],
+	    };
+	    push(@$list, $item);
+	    push(@loop, $item);
+	    push(@list, $item);
+	    next;
+	    
+	} elsif(/^(\d{0,4})\s*(\S?)\s+(\S+)\s+(\S.*?)\s+(\S)\s+(\d+)/) {
+	    #printf "%s%s (%s)\n", ' 'x$#loop, $3, $1;
+	    my $item = {
+		_indx => length($1) ? $1 : undef,
+		_flag => $2,
+		_code => $3,
+		_name => $4,
+		_reqr => $5,
+		_reps => $6,
+	    };	    
+	    push(@$list, $item);
+	}	 
+	
+	if(/([\301+]+)[\177-\377|]*$/) {
+	    foreach(split(//, $1)) {
+		pop(@loop);
+		#print "pop\n";
+	    }
+	}
+
+	if(/(\331)[\177-\377]*$/) {
+	    pop(@loop);
+	    #print "pop\n";
+	}	
+    }
+    return \@list;
+}
+
+sub uncl2francesco {
+    my(@files) = @_;
+    my @elem;
+    foreach $file (@files) {
+	my $elem = undef;
+	my $item = undef;
+
+	open(FILE, $file) or die "Couldn't open $_: $!\n";
+	
+	while(<FILE>) {
+	    if($. == 1 && /^PART/) { while(<FILE>) { last if /^[-\304]{3,}/ } }
+	    
+	    if(/^[-\304]{3,}/) {
+		$elem = undef;
+		$item = undef;
+		
+	    } elsif(/^\s*$/) {
+		$elem->{_last} = undef if defined $elem;
+
+	    } elsif(/^(\S*)\s+([a-z]{4})[a-z]*:\s+(\S?.*?)\s*$/i) {
+                my($flag, $attr, $val) = ($1, $2, $3);
+                $attr =~ tr/[A-Z]/[a-z]/;
+                $elem->{_.$attr} = $val;
+                $elem->{_last} = _.$attr;
+		
+	    } elsif(!defined $elem && /^([\S\s]+)\s+(\d{4})\s+(\S.*\S)\s*$/) {
+		my($flag, $code, $name) = ($1, $2, $3);
+		$elem = {
+		    _flag => $flag,
+		    _code => $code,
+		    _name => $name,
+		};
+		push(@elem, $elem);
+		
+	    } elsif(defined $elem && defined $elem->{_last}) {
+		$elem->{$elem->{_last}} .= $_;
+		$elem->{$elem->{_last}} =~ s/\s+/ /g;
+		$elem->{$elem->{_last}} =~ s/\s*$//;
+		$elem->{$elem->{_last}} =~ s/^\s*//;
+		
+	    } elsif(defined $elem && ! defined $elem->{_last} &&
+		    /^(..)(.{7})\s+(\S.*?)\s*$/) {
+		my($flag, $code, $name) = ($1, $2, $3);
+		if($code =~ /\S/) {
+		    $code =~ s/^\s*//;
+		    $code =~ s/\s*$//;
+		    $item = {
+			_flag => $flag,
+			_code => $code,
+			_name => $name,
+		    };
+		    push(@{$elem->{_list}}, $item);
+		    
+		} else {
+		    $item->{_desc} .= $_;
+		    $item->{_desc} =~ s/\s+/ /g;
+		    $item->{_desc} =~ s/\s*$//;
+		    $item->{_desc} =~ s/^\s*//;
+		    
+		}
+	    }
+	}
+    }
+
+
+    print "\nCODELIST\n";
+    foreach $elem (@elem) {
+	foreach(@{$elem->{_list}}) {
+	    printf "\t%s\t%s\t%s\t%s\n",
+	    $elem->{_code},
+	    $_->{_code},
+	    $_->{_name},
+	    $_->{_desc};
+	}
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+sub usage {
+    return <<EOF
+Usage: $0 <directory>
+EOF
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub doctype {
+    return <<EOF;
+<!DOCTYPE tsg [
+
+<!ELEMENT tsg ((segments|composites|elements|codelists|transactions)+)>
+<!ATTLIST tsg
+    version CDATA #IMPLIED
+    release CDATA #IMPLIED
+>
+
+
+<!-- segments:func <=> composites:desc -->
+
+<!ELEMENT segments     (segment+)>
+<!ELEMENT composites   (composite+)>
+<!ELEMENT elements     (element+)>
+<!ELEMENT codelists    (codelist+)>
+<!ELEMENT transactions (transaction+)>
+
+<!ELEMENT segment ((elemref)*)>
+<!ATTLIST segment
+    code CDATA #REQUIRED
+    name CDATA #IMPLIED
+    desc CDATA #IMPLIED
+    note CDATA #IMPLIED
+>
+
+<!ELEMENT elemref EMPTY>
+<!ATTLIST elemref
+    code CDATA #REQUIRED
+    indx CDATA #IMPLIED
+    reqr (mandatory|conditional) #REQUIRED
+    type (simple|composite) #REQUIRED
+>
+
+<!ELEMENT composite (component*)>
+<!ATTLIST composite
+    code CDATA #REQUIRED
+    name CDATA #IMPLIED
+    desc CDATA #IMPLIED
+    note CDATA #IMPLIED
+>
+
+<!ELEMENT component EMPTY>
+<!ATTLIST component
+    code CDATA #REQUIRED
+    indx CDATA #IMPLIED
+    reqr (mandatory|conditional) #REQUIRED
+>
+
+<!ELEMENT element (value*)>
+<!ATTLIST element
+    code CDATA   #REQUIRED
+    name CDATA   #IMPLIED
+    min  CDATA   #IMPLIED
+    max  CDATA   #IMPLIED
+    desc CDATA   #IMPLIED
+    note CDATA   #IMPLIED
+    usge CDATA   #IMPLIED
+    repr (alpha|numeric|mixed|1decimal|2decimal|3decimal|4decimal) 'mixed'
+>
+
+<!ELEMENT codelist (value*)>
+<!ATTLIST codelist
+    code CDATA #REQUIRED
+>
+
+<!ELEMENT value EMPTY>
+<!ATTLIST value
+    code CDATA #REQUIRED
+    name CDATA #IMPLIED
+    desc CDATA #IMPLIED
+    note CDATA #IMPLIED
+>
+
+<!ELEMENT transaction ((segref|loop)+)>
+<!ATTLIST transaction
+    code    CDATA #REQUIRED
+    agency  CDATA #IMPLIED
+    release CDATA #IMPLIED
+    type    CDATA #IMPLIED
+    version CDATA #IMPLIED
+>
+
+<!ELEMENT segref EMPTY>
+<!ATTLIST segref
+    code CDATA #REQUIRED
+    desc CDATA #IMPLIED
+    name CDATA #IMPLIED
+    note CDATA #IMPLIED
+    reps CDATA #REQUIRED
+    indx CDATA #IMPLIED
+    reqr (mandatory|conditional) #REQUIRED
+>
+
+<!ELEMENT loop ((segref|loop)+)>
+<!ATTLIST loop
+    code CDATA #REQUIRED
+    desc CDATA #IMPLIED
+    name CDATA #IMPLIED
+    note CDATA #IMPLIED
+    reps CDATA #REQUIRED
+    indx CDATA #IMPLIED
+    reqr (mandatory|conditional) #REQUIRED
+>
+
+
+]>
+EOF
+}
+
+
+
+
+
+
+
+
+__END__; # Attach edifact.xml here with <tsg> wrapper removed
+  <elements>
+
+    <element code="0001" name="Syntax identifier" desc="a3 upper case Controlling Agency (e.g. UNO=UN/ECE) and a1 stating level (e.g. A)  (which together give UNOA)" min="4" max="4" repr="alpha">
+      <value code="UNOA" name="UN/ECE level A" desc="As defined in the basic code table of ISO 646 with the exceptions of lower case letters, alternative graphic character allocations and national or application- oriented graphic character allocations."/>
+      <value code="UNOB" name="UN/ECE level B" desc="As defined in the basic code table of ISO 646 with the exceptions of alternative graphic character allocations and national or application-oriented graphic character allocations."/>
+      <value code="UNOC" name="UN/ECE level C" desc="As defined in ISO 8859-1 : Information processing - Part 1: Latin alphabet No. 1."/>
+      <value code="UNOD" name="UN/ECE level D" desc="As defined in ISO 8859-2 : Information processing - Part 2: Latin alphabet No. 2."/>
+      <value code="UNOE" name="UN/ECE level E" desc="As defined in ISO 8859-5 : Information processing - Part 5: Latin/Cyrillic alphabet."/>
+      <value code="UNOF" name="UN/ECE level F" desc="As defined in ISO 8859-7 : Information processing - Part 7: Latin/Greek alphabet."/>
+    </element>
+    
+    
+    
+    <!--
+    <element code="0002" name="Syntax version number" desc="Increments 1 for each new version. Shall be 2 to indicate this version" min="1" max="1" repr="numeric"/>
+    -->
+    <element code="0002" name="Syntax version number" desc="Increments 1 for each new version." min="1" max="1" repr="numeric"/>
+
+
+    <element code="0004" name="Sender identification" desc="Code or name as specified in IA" min="1" max="35" repr="mixed"/>
+    
+    <element code="0007" name="Partner identification code qualifier" desc="Used with sender/recipient identification code" min="1" max="4" repr="mixed">
+      <value code="1" name="DUNS (Dun + Bradstreet)" desc="Self explanatory."/>
+      <value code="4" name="IATA (International Air Transport Association)" desc="Self explanatory."/>
+      <value code="5" name="INSEE (Institut National de la Statistique et des Etudes" desc="Economiques) - SIRET French national statistics institute. SIRET means Systeme Informatique du Repertoire des entreprises et de leurs ETablissements."/>
+      <value code="8" name="UCC Communications ID (Uniform Code Council Communications" desc="Identifier) The Uniform Code Council Communications Identifier is a ten digit code used to uniquely identify physical and logical locations."/>
+      <value code="9" name="DUNS (Dun + Bradstreet) with 4 digit suffix" desc="Self explanatory."/>
+      <value code="12" name="Telephone number" desc="Self explanatory."/>
+      <value code="14" name="EAN (European Article Numbering Association)" desc="Self explanatory."/>
+      <value code="18" name="AIAG (Automotive Industry Action Group)" desc="Self explanatory."/>
+      <value code="22" name="INSEE (Institut National de la Statistique et des Etudes" desc="Economiques) - SIREN French national statistics institute. SIREN means Systeme Informatique du Repertoire des ENtreprises (et de leurs etablissements)."/>
+      <value code="30" name="ISO 6523: Organization identification" desc="Self explanatory."/>
+      <value code="31" name="DIN (Deutsches Institut fuer Normung)" desc="German standardization institute."/>
+      <value code="33" name="BfA (Bundesversicherungsanstalt fuer Angestellte)" desc="German social security association."/>
+      <value code="34" name="National Statistical Agency" desc="Self explanatory."/>
+      <value code="51" name="GEIS (General Electric Information Services)" desc="Self explanatory."/>
+      <value code="52" name="INS (IBM Network Services)" desc="Self explanatory."/>
+      <value code="53" name="Datenzentrale des Einzelhandels" desc="German data centre for retail trade."/>
+      <value code="54" name="Bundesverband der Deutschen Baustoffhaendler" desc="German building material trade association."/>
+      <value code="55" name="Bank identifier code" desc="Self explanatory."/>
+      <value code="56" name="Statens Teleforvaltning" desc="Norwegian telecommunications regulatory authority (NTRA)."/>
+      <value code="57" name="KTNet (Korea Trade Network Services)" desc="Self explanatory."/>
+      <value code="58" name="UPU (Universal Postal Union)" desc="Self explanatory."/>
+      <value code="59" name="ODETTE (Organization for Data Exchange through Tele-Transmission in Europe)" desc="European automotive industry project."/>
+      <value code="61" name="SCAC (Standard Carrier Alpha Code)" desc="Directory of standard multimodal carriers and tariff agent codes. The SCAC lists and codes transportation companies."/>
+      <value code="63" name="ECA (Electronic Commerce Australia)" desc="Australian association for electronic commerce."/>
+      <value code="65" name="TELEBOX 400 (Deutsche Telekom)" desc="German telecommunications service."/>
+      <value code="80" name="NHS (National Health Service)" desc="United Kingdom National Health Service."/>
+      <value code="82" name="Statens Teleforvaltning" desc="Norwegian telecommunications regulatory authority (NTRA)."/>
+      <value code="84" name="Athens Chamber of Commerce" desc="Greek Chamber of Commerce."/>
+      <value code="85" name="Swiss Chamber of Commerce" desc="Swiss Chamber of Commerce."/>
+      <value code="86" name="US Council for International Business" desc="United States Council for International Business."/>
+      <value code="87" name="National Federation of Chambers of Commerce and Industry" desc="Belgium National Federation of Chambers of Commerce and Industry."/>
+      <value code="89" name="Association of British Chambers of Commerce" desc="Association of British Chambers of Commerce."/>
+      <value code="90" name="SITA (Societe Internationale de Telecommunications" desc="Aeronautiques) SITA (Societe Internationale de Telecommunications Aeronautiques)."/>
+      <value code="91" name="Assigned by seller or seller's agent" desc="Self explanatory."/>
+      <value code="92" name="Assigned by buyer or buyer's agent" desc="Self explanatory."/>
+      <value code="103" name="TW, Trade-van" desc="Trade-van is an EDI VAN service center for customs, transport, and insurance in national and international trade."/>
+      <value code="128" name="BNCR (Telekurs Banken Clearing Number)" desc="Swiss national bank number assigned by Telekurs AG for the purpose of identifying a non-clearing banking institution."/>
+      <value code="129" name="BPI (Telekurs Business Partner Identification)" desc="Swiss national business number assigned by Telekurs AG for the purpose of identifying a non-clearing banking institution."/>
+      <value code="ZZZ" name="Mutually defined" desc="Self explanatory."/>
+    </element>
+    
+    
+    
+    <element code="0008" name="Address for reverse routing" desc="Address for reverse routing" min="1" max="14" repr="mixed"/>
+    <element code="0010" name="Recipient Identification" desc="Code or name as specified in IA" min="1" max="35" repr="mixed"/>
+    <element code="0014" name="Routing address" desc="If used, normally coded sub-address for onward routing" min="1" max="14" repr="mixed"/>
+    
+    <element code="0013" name="Service segment tag, coded" desc="Code identifying a service segment." repr="alpha" min="3" max="3">
+      <value code="UCD" name="Data element error indication" desc="To identify an erroneous simple, composite or component data element, and to identify the nature of the error."/>
+      <value code="UCF" name="Functional group response" desc="To identify a functional group in the subject interchange and to indicate acknowledgement or rejection (action taken) of the UNG and UNE segments, and to identify any error related to these segments. Depending on the action code, it may also indicate the action taken on the messages within that functional group."/>
+      <value code="UCI" name="Interchange response" desc="To identify the subject interchange, to indicate interchange receipt, to indicate acknowledgement or rejection (action taken) of the UNA, UNB and UNZ segments, and to identify any error related to these segments. Depending on the action code, it may also indicate the action taken on the functional groups and messages within that interchange."/>
+      <value code="UCM" name="Message response" desc="To identify a message in the subject interchange, and to indicate that message's acknowledgement or rejection (action taken), and to identify any error related to the UNH and UNT segments."/>
+      <value code="UCS" name="Segment error indication" desc="To identify either a segment containing an error or a missing segment, and to identify any error related to the complete segment."/>
+      <value code="UNA" name="Service string advice" desc="To define the characters selected for use as delimiters and indicators in the rest of the interchange that follows."/>
+      <value code="UNB" name="Interchange header" desc="To start, identify and specify an interchange."/>
+      <value code="UNE" name="Functional group trailer" desc="To end and check the completeness of a functional group."/>
+      <value code="UNG" name="Functional group header" desc="To head, identify and specify a functional group."/>
+      <value code="UNH" name="Message header" desc="To head, identify and specify a message."/>
+      <value code="UNS" name="Section control" desc="To separate header, detail and summary sections of a message."/>
+      <value code="UNT" name="Message trailer" desc="To end and check the completeness of a message."/>
+      <value code="UNZ" name="Interchange trailer" desc="To end and check the completeness of an interchange."/>
+    </element>
+    
+    
+    <element code="0017" name="Date" desc="YYMMDD" min="6" max="6" repr="numeric"/>
+    <element code="0019" name="Time" desc="HHMM" min="4" max="4" repr="numeric"/>
+    <element code="0020" name="Interchange control reference" desc="Unique reference assigned by sender" min="1" max="14" repr="mixed"/>
+    <element code="0022" name="Recipient's reference/password" desc="As specified in IA. May be password to recipient's system or to third party network" min="1" max="14" repr="mixed"/>
+    <element code="0025" name="Recipient's reference/password qualifier" desc="If specified in IA" min="2" max="2" repr="mixed">
+      <value code="AA" name="Reference" desc="Self explanatory."/>
+      <value code="BB" name="Password" desc="Self explanatory."/>
+    </element>
+    
+    <element code="0026" name="Application reference" desc="Optionally message identification if the interchange contains only one type of message" min="1" max="14" repr="mixed"/>
+    <element code="0029" name="Processing priority code" desc="Used if specified in IA" min="1" max="1" repr="alpha">
+      <value code="A" name="Highest priority" desc="Self explanatory."/>
+    </element>
+    
+    <element code="0031" name="Acknowledgement request" desc="Set = 1 if sender requests acknowledgement, i.e. UNB and UNZ segments received and identified" min="1" max="1" repr="numeric">
+      <value code="1" name="Requested" desc="Acknowledgement is requested."/>
+    </element>
+    
+    <element code="0032" name="Communications agreement id" desc="If used, to identify type of communication agreement controlling the interchange, e.g. Customs or ECE agreement. Code or name as specified in IA" min="1" max="35" repr="mixed"/>
+  
+    <element code="0035" name="Test indicator" desc="Set = 1 if the interchange is a test. Otherwise not used" min="1" max="1" repr="numeric">
+      <value code="1" name="Interchange is a test" desc="Self explanatory."/>
+  </element>
+    
+    
+    <element code="0036" name="Interchange control count" desc="The count of the number of messages or, if used, the number of functional groups in the interchange. One of these counts shall appear." min="1" max="6" repr="numeric"/>
+    <element code="0038" name="Functional group identification" desc="Identifies the one message type in the functional group" min="1" max="6" repr="mixed"/>
+    <element code="0040" name="Application sender's identification" desc="Code or name identifying the division, department etc. within the originating sender's organization" min="1" max="35" repr="mixed"/>
+    <element code="0044" name="Recipient's identification" desc="Code or name identifying the division,department etc. within the recipients organization for which the group of messages is intended" min="1" max="35" repr="mixed"/>
+    <element code="0048" name="Functional group reference number" desc="Unique reference number assigned by sender's division, department etc." min="1" max="14" repr="mixed"/>
+    
+    <element code="0051" name="Controlling agency" desc="Code to identify the agency controlling the specification, maintenance and publication of the message type" min="1" max="2" repr="mixed">
+      
+      <value code="AA" name="EDICONSTRUCT" desc="French construction project."/>
+      <value code="AB" name="DIN (Deutsches Institut fuer Normung)" desc="German standardization institute."/>
+      <value code="AC" name="ICS (International Chamber of Shipping)" desc="Self explanatory."/>
+      <value code="AD" name="UPU (Union Postale Universelle)" desc="Universal Postal Union."/>
+      <value code="AE" name="United Kingdom ANA (Article Numbering Association)" desc="Identifies the Article Numbering Association of the United Kingdom."/>
+      <value code="AF" name="ANSI ASC X12 (American National Standard Institute Accredited Standards Committee X12)" desc="Identifies the United States electronic data interchange standards body."/>
+      <value code="CC" name="CCC (Customs Co-operation Council)" desc="Self explanatory."/>
+      <value code="CE" name="CEFIC (Conseil Europeen des Federations de l'Industrie" desc="Chimique) EDI project for chemical industry."/>
+      <value code="EC" name="EDICON" desc="UK Construction project."/>
+      <value code="ED" name="EDIFICE (Electronic industries project)" desc="EDI Forum for companies with Interest in Computing and Electronics (EDI project for EDP/ADP sector)."/>
+      <value code="EE" name="EC + EFTA (European Communities and European Free Trade" desc="Association) Self explanatory."/>
+      <value code="EN" name="EAN (European Article Numbering Association)" desc="Self explanatory."/>
+    <value code="ER" name="UIC (International Union of railways)" desc="European railways."/>
+      <value code="EU" name="European Union" desc="Self explanatory."/>
+    <value code="EX" name="IECC (International Express Carriers Conference)" desc="Self explanatory."/>
+      <value code="IA" name="IATA (International Air Transport Association)" desc="Self explanatory."/>
+    <value code="KE" name="KEC (Korea EDIFACT Committee)" desc="Self explanatory."/>
+      <value code="LI" name="LIMNET" desc="UK Insurance project."/>
+      <value code="OD" name="ODETTE (Organization for Data Exchange through Tele-Transmission in Europe)" desc="European automotive industry project."/>
+      <value code="RI" name="RINET (Reinsurance and Insurance Network)" desc="Self explanatory."/>
+      <value code="RT" name="UN/ECE/TRADE/WP.4/GE.1/EDIFACT Rapporteurs' Teams" desc="Self explanatory."/>
+      <value code="UN" name="UN/ECE/TRADE/WP.4" desc="United Nations Economic UN Economic Commission for Europe (UN/ECE), Committee on the development of trade (TRADE), Working Party on facilitation of international trade procedures (WP.4)."/>
+    </element>
+    
+    
+    
+    <element code="0052" name="Message version number" desc="Version number of the message type in the functional group" min="1" max="3" repr="mixed">
+      <value code="1" name="Status 1 version" desc="Message approved and issued as a status 1 (trial) message. (Valid for directories published after March 1990 and prior to March 1993)."/>
+      <value code="2" name="Status 2 version" desc="Message approved and issued as a status 2 (formal recommendation) message. (Valid for directories published after March 1990 and prior to March 1993)."/>
+      <value code="88" name="1988 version" desc="Message approved and issued in the 1988 release of the UNTDID (United Nations Trade Data Interchange Directory) as a status 2 (formal recommendation) message."/>
+      <value code="89" name="1989 version" desc="Message approved and issued in the 1989 release of the UNTDID (United Nations Trade Data Interchange Directory) as a status 2 (formal recommendation) message."/>
+      <value code="90" name="1990 version" desc="Message approved and issued in the 1990 release of the UNTDID (United Nations Trade Data Interchange Directory) as a status 2 (formal recommendation) message."/>
+      <value code="D" name="Draft version/UN/EDIFACT Directory" desc="Message approved and issued as a draft message (Valid for directories published after March 1993 and prior to March 1997). Message approved as a standard message (Valid for directories published after March 1997)."/>
+      <value code="S" name="Standard version" desc="Message approved and issued as a standard message. (Valid for directories published after March 1993 and prior to March 1997)."/>
+    </element>
+    
+    <element code="0054" name="Message release number" desc="Release number within current version number" min="1" max="3" repr="mixed">
+    <value code="1" name="First release" desc="Message approved and issued in the first release of the year of the UNTDID (United Nations Trade Data Interchange Directory). (Valid for directories published prior to March 1990)"/>
+      <value code="2" name="Second release" desc="Message approved and issued in the second release of the year of the UNTDID (United Nations Trade Data Interchange Directory) (Valid for directories published prior to March 1990)."/>
+      <value code="902" name="Trial release 1990" desc="Message approved and issued in the 1990 status 1 (trial) release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="911" name="Trial release 1991" desc="Message approved and issued in the 1991 status 1 (trial) release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="912" name="Standard release 1991" desc="Message approved and issued in the 1991 status 2 (standard) release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="921" name="Trial release 1992" desc="Message approved and issued in the 1992 status 1 (trial) release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="932" name="Standard release 1993" desc="Message approved and issued in the 1993 status 2 (standard) release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="93A" name="Release 1993 - A" desc="Message approved and issued in the 1993 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="94A" name="Release 1994 - A" desc="Message approved and issued in the first 1994 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="94B" name="Release 1994 - B" desc="Message approved and issued in the second 1994 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="95A" name="Release 1995 - A" desc="Message approved and issued in the first 1995 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="95B" name="Release 1995 - B" desc="Message approved and issued in the second 1995 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="96A" name="Release 1996 - A" desc="Message approved and issued in the first 1996 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="96B" name="Release 1996 - B" desc="Message approved and issued in the second 1996 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="97A" name="Release 1997 - A" desc="Message approved and issued in the first 1997 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="97B" name="Release 1997 - B" desc="Message approved and issued in the second 1997 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+    <value code="98A" name="Release 1998 - A" desc="Message approved and issued in the first 1998 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="98B" name="Release 1998 - B" desc="Message approved and issued in the second 1998 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+      <value code="99A" name="Release 1999 - A" desc="Message approved and issued in the first 1999 release of the UNTDID (United Nations Trade Data Interchange Directory)."/>
+    </element>
+    
+    
+    
+    <element code="0057" name="Association assigned code" desc="A code assigned by the association responsible for the design and maintenance of the type of message concerned" min="1" max="6" repr="mixed"/>
+    <element code="0058" name="Application password" desc="Password to recepient's division, department or sectional system (if required)" min="1" max="14" repr="mixed"/>
+    <element code="0060" name="Number of messages" desc="The count of the number of messages in the functional group" min="1" max="6" repr="numeric"/>
+    <element code="0062" name="Message reference number" desc="A sender's unique message reference" min="1" max="14" repr="mixed"/>
+
+    <element code="0065" name="Message type" desc="Type of message being transmitted" min="1" max="6" repr="mixed">
+      <value code="APERAK" name="Application error and acknowledgement message" desc="A code to identify the application error and acknowledgement message."/>
+      <value code="AUTACK" name="Secure authentication and acknowledgement message" desc="A code to identify the secure authentication and acknowledgement message."/>
+      <value code="AUTHOR" name="Authorization message" desc="A code to identify the authorization message."/>
+      <value code="AVLREQ" name="Availability request - interactive message" desc="A code to identify the availability request - interactive message."/>
+      <value code="AVLRSP" name="Availability response - interactive message" desc="A code to identify the availability response - interactive message."/>
+      <value code="BALANC" name="Balance message" desc="A code to identify the balance message."/>
+      <value code="BANSTA" name="Banking status message" desc="A code to identify the banking status message."/>
+      <value code="BAPLIE" name="Bayplan/stowage plan occupied and empty locations message" desc="A code to identify the bayplan/stowage plan occupied and empty locations message."/>
+      <value code="BAPLTE" name="Bayplan/stowage plan total numbers message" desc="A code to identify the bayplan/stowage plan total numbers message."/>
+      <value code="BMISRM" name="Bulk marine inspection summary report message" desc="A code to identify the bulk marine inspection summary report message."/>
+      <value code="BOPBNK" name="Bank transactions and portfolio transactions report message" desc="A code to identify the bank transactions and portfolio transactions report message."/>
+      <value code="BOPCUS" name="Balance of payment customer transaction report message" desc="A code to identify the balance of payment customer transaction report message."/>
+      <value code="BOPDIR" name="Direct balance of payment declaration message" desc="A code to identify the direct balance of payment declaration message."/>
+      <value code="BOPINF" name="Balance of payment information from customer message" desc="A code to identify the balance of payment information from customer message."/>
+      <value code="CALINF" name="Vessel call information message" desc="A code to identify the vessel call information message."/>
+      <value code="CASINT" name="Request for legal administration action in civil proceedings" desc="message A code to identify the request for legal administration action in civil proceedings message."/>
+    <value code="CASRES" name="Legal administration response in civil proceedings message" desc="A code to identify the legal administration response in civil proceedings message."/>
+      <value code="CHACCO" name="Chart of accounts message" desc="A code to identify the chart of accounts message."/>
+      <value code="CLASET" name="Classification information set message" desc="A code to identify the classification information set message."/>
+      <value code="CNTCND" name="Contractual conditions message" desc="A code to identify the contractual conditions message."/>
+      <value code="COARRI" name="Container discharge/loading report message" desc="A code to identify the container discharge/loading report message."/>
+      <value code="CODECO" name="Container gate-in/gate-out report message" desc="A code to identify the container gate-in/gate-out report message."/>
+      <value code="CODENO" name="Permit expiration/clearance ready notice message" desc="A code to identify the permit expiration/clearance ready notice message."/>
+      <value code="COEDOR" name="Container stock report message" desc="A code to identify the container stock report message."/>
+      <value code="COHAOR" name="Container special handling order message" desc="A code to identify the container special handling order message."/>
+      <value code="COLREQ" name="Request for a documentary collection message" desc="A code to identify the request for a documentary collection message."/>
+      <value code="COMDIS" name="Commercial dispute message" desc="A code to identify the commercial dispute message."/>
+      <value code="CONAPW" name="Advice on pending works message" desc="A code to identify the advice on pending works message."/>
+      <value code="CONDPV" name="Direct payment valuation message" desc="A code to identify the direct payment valuation message."/>
+      <value code="CONDRA" name="Drawing administration message" desc="A code to identify the drawing administration message."/>
+      <value code="CONDRO" name="Drawing organisation message" desc="A code to identify the drawing organisation message."/>
+      <value code="CONEST" name="Establishment of contract message" desc="A code to identify the establishment of contract message."/>
+      <value code="CONITT" name="Invitation to tender message" desc="A code to identify the invitation to tender message."/>
+      <value code="CONPVA" name="Payment valuation message" desc="A code to identify the payment valuation message."/>
+      <value code="CONQVA" name="Quantity valuation message" desc="A code to identify the quantity valuation message."/>
+      <value code="CONRPW" name="Response of pending works message" desc="A code to identify the response of pending works message."/>
+      <value code="CONTEN" name="Tender message" desc="A code to identify the tender message."/>
+      <value code="CONTRL" name="Syntax and service report message" desc="A code to identify the syntax and service report message."/>
+      <value code="CONWQD" name="Work item quantity determination message" desc="A code to identify the work item quantity determination message."/>
+      <value code="COPARN" name="Container announcement message" desc="A code to identify the container announcement message."/>
+      <value code="COPINO" name="Container pre-notification message" desc="A code to identify the container pre-notification message."/>
+      <value code="COPRAR" name="Container discharge/loading order message" desc="A code to identify the container discharge/loading order message."/>
+      <value code="COREOR" name="Container release order message" desc="A code to identify the container release order message."/>
+      <value code="COSTCO" name="Container stuffing/stripping confirmation message" desc="A code to identify the container stuffing/stripping confirmation message."/>
+      <value code="COSTOR" name="Container stuffing/stripping order message" desc="A code to identify the container stuffing/stripping order message."/>
+      <value code="CREADV" name="Credit advice message" desc="A code to identify the credit advice message."/>
+      <value code="CREEXT" name="Extended credit advice message" desc="A code to identify the extended credit advice message."/>
+      <value code="CREMUL" name="Multiple credit advice message" desc="A code to identify the multiple credit advice message."/>
+      <value code="CUSCAR" name="Customs cargo report message" desc="A code to identify the customs cargo report message."/>
+      <value code="CUSDEC" name="Customs declaration message" desc="A code to identify the customs declaration message."/>
+      <value code="CUSEXP" name="Customs express consignment declaration message" desc="A code to identify the customs express consignment declaration message."/>
+      <value code="CUSPED" name="Periodic customs declaration message" desc="A code to identify the periodic customs declaration message."/>
+      <value code="CUSREP" name="Customs conveyance report message" desc="A code to identify the customs conveyance report message."/>
+      <value code="CUSRES" name="Customs response message" desc="A code to identify the customs response message."/>
+      <value code="DEBADV" name="Debit advice message" desc="A code to identify the debit advice message."/>
+      <value code="DEBMUL" name="Multiple debit advice message" desc="A code to identify the multiple debit advice message."/>
+      <value code="DELFOR" name="Delivery schedule message" desc="A code to identify the delivery schedule message."/>
+      <value code="DELJIT" name="Delivery just in time message" desc="A code to identify the delivery just in time message."/>
+      <value code="DESADV" name="Despatch advice message" desc="A code to identify the despatch advice message."/>
+      <value code="DESTIM" name="Equipment damage and repair estimate message" desc="A code to identify the equipment damage and repair estimate message."/>
+      <value code="DGRECA" name="Dangerous goods recapitulation message" desc="A code to identify the dangerous goods recapitulation message."/>
+      <value code="DIRDEB" name="Direct debit message" desc="A code to identify the direct debit message."/>
+      <value code="DIRDEF" name="Directory definition message" desc="A code to identify the directory definition message."/>
+      <value code="DMRDEF" name="Data maintenance request definition message" desc="A code to identify the data maintenance request definition message."/>
+      <value code="DMSTAT" name="Data maintenance status report/query message" desc="A code to identify the data maintenance status report/query message."/>
+      <value code="DOCADV" name="Documentary credit advice message" desc="A code to identify the documentary credit advice message."/>
+      <value code="DOCAMA" name="Advice of an amendment of a documentary credit message" desc="A code to identify the advice of an amendment of a documentary credit message."/>
+      <value code="DOCAMI" name="Documentary credit amendment information message" desc="A code to identify the documentary credit amendment information message."/>
+      <value code="DOCAMR" name="Request for an amendment of a documentary credit message" desc="A code to identify the request for an amendment of a documentary credit message."/>
+      <value code="DOCAPP" name="Documentary credit application message" desc="A code to identify the documentary credit application message."/>
+      <value code="DOCARE" name="Response to an amendment of a documentary credit message" desc="A code to identify the response to an amendment of a documentary credit message."/>
+      <value code="DOCINF" name="Documentary credit issuance information message" desc="A code to identify the documentary credit issuance information message."/>
+    <value code="ENTREC" name="Accounting entries message" desc="A code to identify the accounting entries message."/>
+      <value code="FINCAN" name="Financial cancellation message" desc="A code to identify the financial cancellation message."/>
+      <value code="FINPAY" name="Multiple interbank funds transfer message" desc="A code to identify the multiple interbank funds transfer message."/>
+      <value code="FINSTA" name="Financial statement of an account message" desc="A code to identify the financial statement of an account message."/>
+      <value code="GENRAL" name="General purpose message" desc="A code to identify the general purpose message."/>
+      <value code="GESMES" name="Generic statistical message" desc="A code to identify the generic statistical message."/>
+      <value code="HANMOV" name="Cargo/goods handling and movement message" desc="A code to identify the cargo/goods handling and movement message."/>
+      <value code="IFCSUM" name="Forwarding and consolidation summary message" desc="A code to identify the forwarding and consolidation summary message."/>
+      <value code="IFTCCA" name="Forwarding and transport shipment charge calculation message" desc="A code to identify the forwarding and transport shipment charge calculation message."/>
+      <value code="IFTDGN" name="Dangerous goods notification message" desc="A code to identify the dangerous goods notification message."/>
+      <value code="IFTFCC" name="International transport freight costs and other charges" desc="message A code to identify the international transport freight costs and other charges message."/>
+      <value code="IFTIAG" name="Dangerous cargo list message" desc="A code to identify the dangerous cargo list message."/>
+      <value code="IFTMAN" name="Arrival notice message" desc="A code to identify the arrival notice message."/>
+      <value code="IFTMBC" name="Booking confirmation message" desc="A code to identify the booking confirmation message."/>
+      <value code="IFTMBF" name="Firm booking message" desc="A code to identify the firm booking message."/>
+      <value code="IFTMBP" name="Provisional booking message" desc="A code to identify the provisional booking message."/>
+      <value code="IFTMCS" name="Instruction contract status message" desc="A code to identify the instruction contract status message."/>
+      <value code="IFTMIN" name="Instruction message" desc="A code to identify the instruction message."/>
+      <value code="IFTRIN" name="Forwarding and transport rate information message" desc="A code to identify the forwarding and transport rate information message."/>
+      <value code="IFTSAI" name="Forwarding and transport schedule and availability" desc="information message A code to identify the forwarding and transport schedule and availability information message."/>
+      <value code="IFTSTA" name="International multimodal status report message" desc="A code to identify the international multimodal status report message."/>
+      <value code="IFTSTQ" name="International multimodal status request message" desc="A code to identify the international multimodal status request message."/>
+      <value code="IMPDEF" name="EDI implementation guide definition message" desc="A code to identify the edi implementation guide definition message."/>
+      <value code="INFENT" name="Enterprise accounting information message" desc="A code to identify the enterprise accounting information message."/>
+      <value code="INSDES" name="Instruction to despatch message" desc="A code to identify the instruction to despatch message."/>
+      <value code="INSPRE" name="Insurance premium message" desc="A code to identify the insurance premium message."/>
+      <value code="INSREQ" name="Inspection request message" desc="A code to identify the inspection request message."/>
+      <value code="INSRPT" name="Inspection report message" desc="A code to identify the inspection report message."/>
+      <value code="INVOIC" name="Invoice message" desc="A code to identify the invoice message."/>
+      <value code="INVRPT" name="Inventory report message" desc="A code to identify the inventory report message."/>
+      <value code="IPPOMO" name="Motor insurance policy message" desc="A code to identify the motor insurance policy message."/>
+      <value code="ITRRPT" name="In transit report detail message" desc="A code to identify the in transit report detail message."/>
+      <value code="JAPRES" name="Job application result message" desc="A code to identify the job application result message."/>
+      <value code="JINFDE" name="Job information demand message" desc="A code to identify the job information demand message."/>
+      <value code="JOBAPP" name="Job application proposal message" desc="A code to identify the job application proposal message."/>
+      <value code="JOBCON" name="Job order confirmation message" desc="A code to identify the job order confirmation message."/>
+      <value code="JOBMOD" name="Job order modification message" desc="A code to identify the job order modification message."/>
+      <value code="JOBOFF" name="Job order message" desc="A code to identify the job order message."/>
+      <value code="KEYMAN" name="Security key and certificate management message" desc="A code to identify the security key and certificate management message."/>
+      <value code="LREACT" name="Life reinsurance activity message" desc="A code to identify the life reinsurance activity message."/>
+      <value code="LRECLM" name="Life reinsurance claims message" desc="A code to identify the life reinsurance claims message."/>
+      <value code="MEDPID" name="Person identification message" desc="A code to identify the person identification message."/>
+      <value code="MEDREQ" name="Medical service request message" desc="A code to identify the medical service request message."/>
+      <value code="MEDRPT" name="Medical service report message" desc="A code to identify the medical service report message."/>
+      <value code="MEDRUC" name="Medical resource usage and cost message" desc="A code to identify the medical resource usage and cost message."/>
+      <value code="MEQPOS" name="Means of transport and equipment position message" desc="A code to identify the means of transport and equipment position message."/>
+      <value code="MOVINS" name="Stowage instruction message" desc="A code to identify the stowage instruction message."/>
+      <value code="MSCONS" name="Metered services consumption report message" desc="A code to identify the metered services consumption report message."/>
+      <value code="ORDCHG" name="Purchase order change request message" desc="A code to identify the purchase order change request message."/>
+      <value code="ORDERS" name="Purchase order message" desc="A code to identify the purchase order message."/>
+      <value code="ORDRSP" name="Purchase order response message" desc="A code to identify the purchase order response message."/>
+      <value code="OSTENQ" name="Order status enquiry message" desc="A code to identify the order status enquiry message."/>
+      <value code="OSTRPT" name="Order status report message" desc="A code to identify the order status report message."/>
+      <value code="PARTIN" name="Party information message" desc="A code to identify the party information message."/>
+      <value code="PAXLST" name="Passenger list message" desc="A code to identify the passenger list message."/>
+      <value code="PAYDUC" name="Payroll deductions advice message" desc="A code to identify the payroll deductions advice message."/>
+      <value code="PAYEXT" name="Extended payment order message" desc="A code to identify the extended payment order message."/>
+      <value code="PAYMUL" name="Multiple payment order message" desc="A code to identify the multiple payment order message."/>
+      <value code="PAYORD" name="Payment order message" desc="A code to identify the payment order message."/>
+      <value code="PRICAT" name="Price/sales catalogue message" desc="A code to identify the price/sales catalogue message."/>
+      <value code="PRIHIS" name="Pricing history message" desc="A code to identify the pricing history message."/>
+      <value code="PRODAT" name="Product data message" desc="A code to identify the product data message."/>
+      <value code="PRODEX" name="Product exchange reconciliation message" desc="A code to identify the product exchange reconciliation message."/>
+      <value code="PROINQ" name="Product inquiry message" desc="A code to identify the product inquiry message."/>
+      <value code="PROTAP" name="Project tasks planning message" desc="A code to identify the project tasks planning message."/>
+      <value code="PRPAID" name="Insurance premium payment message" desc="A code to identify the insurance premium payment message."/>
+      <value code="QALITY" name="Quality data message" desc="A code to identify the quality data message."/>
+      <value code="QUOTES" name="Quote message" desc="A code to identify the quote message."/>
+      <value code="RDRMES" name="Raw data reporting message" desc="A code to identify the raw data reporting message."/>
+      <value code="REBORD" name="Reinsurance bordereau message" desc="A code to identify the reinsurance bordereau message."/>
+      <value code="RECADV" name="Receiving advice message" desc="A code to identify the receiving advice message."/>
+      <value code="RECALC" name="Reinsurance calculation message" desc="A code to identify the reinsurance calculation message."/>
+      <value code="RECECO" name="Credit risk cover message" desc="A code to identify the credit risk cover message."/>
+      <value code="RECLAM" name="Reinsurance claims message" desc="A code to identify the reinsurance claims message."/>
+      <value code="REMADV" name="Remittance advice message" desc="A code to identify the remittance advice message."/>
+      <value code="REPREM" name="Reinsurance premium message" desc="A code to identify the reinsurance premium message."/>
+      <value code="REQDOC" name="Request for document message" desc="A code to identify the request for document message."/>
+      <value code="REQOTE" name="Request for quote message" desc="A code to identify the request for quote message."/>
+      <value code="RESETT" name="Reinsurance settlement message" desc="A code to identify the reinsurance settlement message."/>
+      <value code="RESMSG" name="Reservation message" desc="A code to identify the reservation message."/>
+      <value code="RESREQ" name="Reservation request - interactive message" desc="A code to identify the reservation request - interactive message."/>
+      <value code="RESRSP" name="Reservation response - interactive message" desc="A code to identify the reservation response - interactive message."/>
+      <value code="RETACC" name="Reinsurance technical account message" desc="A code to identify the reinsurance technical account message."/>
+      <value code="RETANN" name="Announcement for returns message" desc="A code to identify the announcement for returns message."/>
+      <value code="RETINS" name="Instruction for returns message" desc="A code to identify the instruction for returns message."/>
+      <value code="SAFHAZ" name="Safety and hazard data message" desc="A code to identify the safety and hazard data message."/>
+      <value code="SANCRT" name="International movement of goods governmental regulatory" desc="message A code to identify the international movement of goods governmental regulatory message."/>
+      <value code="SLSFCT" name="Sales forecast message" desc="A code to identify the sales forecast message."/>
+      <value code="SLSRPT" name="Sales data report message" desc="A code to identify the sales data report message."/>
+      <value code="SOCADE" name="Social administration message" desc="A code to identify the social administration message."/>
+      <value code="SSIMOD" name="Modification of identity details message" desc="A code to identify the modification of identity details message."/>
+      <value code="SSRECH" name="Worker's insurance history message" desc="A code to identify the worker's insurance history message."/>
+      <value code="SSREGW" name="Notification of registration of a worker message" desc="A code to identify the notification of registration of a worker message."/>
+      <value code="STATAC" name="Statement of account message" desc="A code to identify the statement of account message."/>
+      <value code="STLRPT" name="Settlement transaction reporting message" desc="A code to identify the settlement transaction reporting message."/>
+      <value code="SUPCOT" name="Superannuation contributions advice message" desc="A code to identify the superannuation contributions advice message."/>
+      <value code="SUPMAN" name="Superannuation maintenance message" desc="A code to identify the superannuation maintenance message."/>
+      <value code="SUPRES" name="Supplier response message" desc="A code to identify the supplier response message."/>
+      <value code="TANSTA" name="Tank status report message" desc="A code to identify the tank status report message."/>
+      <value code="TIQREQ" name="Travel, tourism and leisure information inquiry request -" desc="interactive message A code to identify the travel, tourism and leisure information inquiry request - interactive message."/>
+      <value code="TIQRSP" name="Travel, tourism and leisure information inquiry response -" desc="interactive message A code to identify the travel, tourism and leisure information inquiry response - interactive message."/>
+      <value code="VATDEC" name="Value added tax message" desc="A code to identify the value added tax message."/>
+      <value code="VESDEP" name="Vessel departure message" desc="A code to identify the vessel departure message."/>
+      <value code="WASDIS" name="Waste disposal information message" desc="A code to identify the waste disposal information message."/>
+      <value code="WKGRDC" name="Work grant decision message" desc="A code to identify the work grant decision message."/>
+      <value code="WKGRRE" name="Work grant request message" desc="A code to identify the work grant request message."/>
+    </element>
+    
+    
+    <element code="0068" name="Common access reference" desc="Key to relate all subsequent transfers of data to the same business case of file. Within the 35 characters the IA may specify component elements" min="1" max="35" repr="mixed"/>
+    <element code="0070" name="Sequence of transfers" desc="Starts at 1 and is incremented by 1 for each transfer" min="1" max="2" repr="numeric"/>
+    
+    <element code="0073" name="First and last transfer" desc="C = Creation, must be present for first transfer if more than one foreseen, F = Final, must be present for last transfer" min="1" max="1" repr="alpha">
+      <value code="C" name="Creation" desc="First transmission of a number of transfers of the same message."/>
+      <value code="F" name="Final" desc="Last transmission
+	of a number of transfers of the same message."/>
+    </element>
+    
+    <element code="0074" name="Number of segments in the message" desc="Control count including UNH and UNT" min="1" max="6" repr="numeric"/>
+    <element code="0077" name="Text reference code" desc="Qualifies and identifies the purpose and function of the segment if indicated in the message specification" min="3" max="3" repr="mixed"/>
+    <element code="0078" name="Free form text" desc="Not machine-processable information" min="1" max="70" repr="mixed"/>
+    <element code="0081" name="Section identification" desc="Separates sections in a message by one of the following codes: D separates the header and detail sections S separates the detail and summary sections" min="1" max="1" repr="alpha">
+      <value code="D" name="Header/detail section separation" desc="To qualify the segment UNS, when separating the header from the detail section of a message."/>
+      <value code="S" name="Detail/summary section separation" desc="To qualify the segment UNS, when separating the detail from the summary section of a message."/>
+    </element>
+    
+    
+    <element code="0083" name="Action, coded" desc="A code indicating acknowledgement, or rejection (the action taken) of a subject interchange, or part of the subject interchange." repr="mixed" min="1" max="3">
+      <value code="1" name="Acknowledged (this level and all lower levels)" desc="Self explanatory."/>
+      <value code="2" name="Acknowledged - errors detected and reported" desc="Self explanatory."/>
+      <value code="3" name="One or more rejected - next lower level" desc="Self explanatory."/>
+      <value code="4" name="This level and all lower levels rejected" desc="The corresponding referenced-level and all its lower referenced-levels are rejected. One or more errors are reported at this reporting-level or a lower reporting- level."/>
+      <value code="5" name="UNB/UNZ accepted" desc="Self explanatory."/>
+      <value code="6" name="UNB/UNZ rejected" desc="Self explanatory."/>
+      <value code="7" name="This level acknowledged, next lower level acknowledged if" desc="not explicitly rejected The corresponding referenced-level is acknowledged. All messages or functional groups at the next lower referenced-level are acknowledged except those explicitly reported as rejected at the next lower reporting-level in this CONTRL message."/>
+      <value code="8" name="Interchange received" desc="Indication of interchange receipt implies that the recipient of the subject interchange: has received the interchange; and acknowledges the parts of the interchange that have been checked in order to assure that the data elements copied into the reporting UCI segment are syntactically correct; and has accepted liability for notifying the sender of acknowledgement or rejection of the other parts of the interchange; and has taken reasonable precautions in order to ensure that the sender is so notified."/>
+    </element>
+    
+    
+    
+    <element code="0085" name="Syntax Error, coded" desc="A code indicating the syntax error detected." repr="mixed" min="1" max="3">
+      <value code="1" name="UNA not supported" desc="Notification that the UNA character string cannot be understood or complied with."/>
+      <value code="2" name="Syntax version or level not supported" desc="Notification that the syntax version and/or level is not supported by the recipient."/>
+      <value code="3" name="Message version/release not supported" desc="Notification that the message type, version number and/or release number in the UNG and/or UNH segments are not supported by the recipient."/>
+      <value code="4" name="Service segment missing/invalid" desc="Notification that a service segment is missing, contains invalid data or cannot be processed for any reason."/>
+      <value code="5" name="Trailer check in error" desc="Notification that data contained in the trailer does not agree with data in the header and/or that the functional group or message or segment count is incorrect."/>
+      <value code="6" name="Data segment missing/invalid" desc="Notification that a data segment is missing, contains invalid data or cannot be processed for any reason."/>
+      <value code="7" name="Interchange recipient not actual recipient" desc="Notification that the Interchange recipient (S003) is different from the actual recipient."/>
+      <value code="8" name="Too many data elements in segment" desc="Indication that a data segment contains too many data elements."/>
+      <value code="9" name="Mandatory data element missing" desc="Indication that a mandatory data element is missing in a service or data segment."/>
+      <value code="10" name="Data element attribute error" desc="Indication that a data element does not conform to the relevant message or segment specification."/>
+      <value code="11" name="Password invalid" desc="Indication that the password in segment UNB is invalid."/>
+      <value code="12" name="Invalid value" desc="Notification that the value of a simple data element, composite data element or component data element does not conform to the relevant specifications for the value."/>
+      <value code="13" name="Missing" desc="Notification that a mandatory (or otherwise required) service or user segment, data element, composite data element or component data element is missing"/>
+      <value code="14" name="Value not supported in this position" desc="Notification that the recipient does not support use of the specific value of an identified simple data element, composite data element or component data element in the position where it is used. The value may be valid according to the relevant specifications and may be supported if it is used in another position."/>
+      <value code="15" name="Not supported in this position" desc="Notification that the recipient does not support use of the segment type, simple data element type, composite data element type or component data element type in the specific in the identified position."/>
+      <value code="16" name="Too many constituents" desc="Notification that the identified segment contained to many data elements or that the identified composite data element contained too many component data elements."/>
+      <value code="17" name="No agreement" desc="No agreement exist that allows receipt of an interchange, functional group or message with the value of the identified simple data element, composite data element or component data element."/>
+      <value code="18" name="Unspecified error" desc="Notification that an error has been identified, but the nature of the error is not reported."/>
+      <value code="19" name="Invalid decimal notation" desc="Notification that the character indicated as decimal notation in UNA is invalid, or the decimal notation used in a data element is not consistent with the one indicated in UNA."/>
+      <value code="20" name="Character invalid as service character" desc="Notification that a character advised in UNA is invalid as service character."/>
+      <value code="21" name="Invalid character(s)" desc="Notification that one or more character(s) used in the interchange is not a valid character as defined by the syntax level indicated in UNB. The invalid character is part of the referenced-level, or followed immediately after the identified part of the interchange."/>
+      <value code="22" name="Invalid service character(s)" desc="Notification that the service character(s) used in the interchange is not a valid service character as advised in UNA or not one of the service characters in the syntax level indicated in UNB or defined in an interchange agreement. If the code is used in UCS or UCD, the invalid character followed immediately after the identified part of the interchange."/>
+      <value code="23" name="Unknown Interchange sender" desc="Notification that the Interchange sender (S002) is unknown."/>
+      <value code="24" name="Too old" desc="Notification that the received interchange or functional group is older than a limit specified in an IA or determined by the recipient."/>
+      <value code="25" name="Test indicator not supported" desc="Notification that a test processing could not be performed for the identified interchange, functional group or message."/>
+      <value code="26" name="Duplicate detected" desc="Notification that a possible duplication of a previously received interchange, functional group or message has been detected. The earlier transmission may have been rejected."/>
+      <value code="27" name="Security function not supported" desc="Notification that a security function related to the referenced-level or data element is not supported."/>
+      <value code="28" name="References do not match" desc="Notification that the control reference in UNB/UNG/UNH does not match the one in UNZ/UNE/UNT."/>
+      <value code="29" name="Control count does not match number of instances received" desc="Notification that the number of functional groups/ messages/segments does not match the number given in UNZ/UNE/UNT."/>
+      <value code="30" name="Functional groups and messages mixed" desc="Notification that individual messages and functional groups have been mixed at the same level in the interchange."/>
+      <value code="31" name="More than one message type in group" desc="Notification that different message types are contained in a functional group."/>
+      <value code="32" name="Lower level empty" desc="Notification that the interchange did not contain any messages or functional groups, or a functional group did not contain any messages."/>
+      <value code="33" name="Invalid occurrence outside message or functional group" desc="Notification that an invalid segment or data element occurred in the interchange, between messages or between functional groups. Rejection is reported at the level above."/>
+      <value code="34" name="Nesting indicator not allowed" desc="Notification that explicit nesting has been used in a message where it shall not be used."/>
+      <value code="35" name="Too many segment repetitions" desc="Notification that a segment was repeated too many times."/>
+      <value code="36" name="Too many segment group repetitions" desc="Notification that a segment group is repeated to many times."/>
+      <value code="37" name="Invalid type of character(s)" desc="Notification that one or more numeric characters were used in an alphabetic (component) data element or that one or more alphabetic characters were used in a numeric (component) data element."/>
+      <value code="38" name="Missing digit in front of decimal sign" desc="Notification that a decimal sign is not preceded by one or more digits."/>
+      <value code="39" name="Data element too long" desc="Notification that the length of the data element received exceeded the maximum length specified in the data element description."/>
+      <value code="40" name="Data element too short" desc="Notification that the length of the data element received is shorter than the minimum length specified in the data element description."/>
+      <value code="41" name="Permanent communication network error" desc="Notification that a permanent error was reported by the communication network used for transfer of the interchange. Re-transmission of an identical interchange with the same parameters at network level will not succeed."/>
+      <value code="42" name="Temporary communication network error" desc="Notification that a temporary error was reported by the communication network used for transfer of the interchange. Re-transmissions of an identical interchange may succeed."/>
+      <value code="43" name="Unknown interchange recipient" desc="Notification that the interchange recipient is not known by a network provider."/>
+      <value code="44" name="Application temporarily unavailable" desc="Notification that traffic for an application is inhibited."/>
+    </element>
+  </elements>
+
+  <composites>
+    <composite code="S001" name="Syntax identifier">
+      <component code="0001" reqr="mandatory"/>
+      <component code="0002" reqr="mandatory"/>
+    </composite>
+    
+    <composite code="S002" name="Interchange sender">
+      <component code="0004" reqr="mandatory"/>
+      <component code="0007" reqr="conditional"/>
+      <component code="0008" reqr="conditional"/>
+    </composite>
+    
+    <composite code="S003" name="Interchange recipient">
+      <component code="0010" reqr="mandatory"/>
+      <component code="0007" reqr="conditional"/>
+      <component code="0014" reqr="conditional"/>
+    </composite>  
+    
+    <composite code="S004" name="Date/time of preparation">
+      <component code="0017" reqr="mandatory"/>
+      <component code="0019" reqr="mandatory"/>
+    </composite>
+    
+    <composite code="S005" name="Recipients reference">
+      <component code="0022" reqr="mandatory"/>
+      <component code="0025" reqr="conditional"/>
+    </composite>
+    
+    <composite code="S006" name="Application sender's identification">
+      <component code="0040" reqr="mandatory"/>
+      <component code="0007" reqr="conditional"/>
+    </composite>
+    
+    <composite code="S007" name="Application recipients identification">
+      <component code="0044" reqr="mandatory"/>
+      <component code="0007" reqr="conditional"/>
+    </composite>
+    
+    <composite code="S008" name="Message version">
+      <component code="0052" reqr="mandatory"/>
+      <!--
+      conditional in V1
+      <component code="0054" reqr="conditional"/>
+      -->
+      <component code="0054" reqr="mandatory"/>
+      <component code="0057" reqr="conditional"/>
+    </composite>  
+    
+    <composite code="S009" name="Message identifier">
+      <component code="0065" reqr="mandatory"/>
+      <component code="0052" reqr="mandatory"/>
+      <!--
+      both conditional in V1
+      <component code="0054" reqr="conditional"/>
+      <component code="0051" reqr="conditional"/>
+      -->
+      <component code="0054" reqr="mandatory"/>
+      <component code="0051" reqr="mandatory"/>
+      <component code="0057" reqr="conditional"/>
+    </composite>
+    
+    <composite code="S010" name="Status of the transfer">
+      <component code="0070" reqr="mandatory"/>
+      <component code="0073" reqr="conditional"/>
+    </composite>
+  </composites>
+
+  <segments>
+    
+    <segment code="UNB" name="Interchange Header" desc="To start, identify and specify an interchange">
+      <elemref code="S001" reqr="mandatory" type="composite"/>
+      <elemref code="S002" reqr="mandatory" type="composite"/>
+      <elemref code="S003" reqr="mandatory" type="composite"/>
+      <elemref code="S004" reqr="mandatory" type="composite"/>
+      <elemref code="0020" reqr="mandatory" type="simple"/>
+      <elemref code="S005" reqr="conditional" type="composite"/>
+      <elemref code="0026" reqr="conditional" type="simple"/>
+      <elemref code="0029" reqr="conditional" type="simple"/>
+      <elemref code="0031" reqr="conditional" type="simple"/>
+      <elemref code="0032" reqr="conditional" type="simple"/>
+      <elemref code="0035" reqr="conditional" type="simple"/>
+    </segment>
+    
+    <segment code="UNZ" name="Interchange Trailer" desc="To end and check the completeness of an interchange">
+      <elemref code="0036" reqr="mandatory" type="simple"/>
+      <elemref code="0020" reqr="mandatory" type="simple"/>
+    </segment>
+    
+    <segment code="UNG" name="Functional Group Header" desc="To head, identify and specify a Functional Group">
+      <elemref code="0038" reqr="mandatory" type="simple"/>
+      <elemref code="S006" reqr="mandatory" type="composite"/>
+      <elemref code="S007" reqr="mandatory" type="composite"/>
+      <elemref code="S004" reqr="mandatory" type="composite"/>
+      <elemref code="0048" reqr="mandatory" type="simple"/>
+      <elemref code="0051" reqr="mandatory" type="simple"/>
+      <elemref code="S008" reqr="mandatory" type="composite"/>
+      <elemref code="0058" reqr="conditional" type="simple"/>
+    </segment>
+    
+    <segment code="UNE" name="Functional Group Trailer" desc="To end and check the completeness of a Functional Group">
+      <elemref code="0060" reqr="mandatory" type="simple"/>
+      <elemref code="0048" reqr="mandatory" type="simple"/>
+    </segment>
+    
+    <segment code="UNH" name="Message Header" desc="To head, identify and specify a Message">
+      <elemref code="0062" reqr="mandatory" type="simple"/>
+      <elemref code="S009" reqr="mandatory" type="composite"/>
+      <elemref code="0068" reqr="conditional" type="simple"/>
+      <elemref code="S010" reqr="conditional" type="composite"/>
+    </segment>
+    
+    <segment code="UNT" name="Message Trailer" desc="To end and check the completeness of a Message">
+      <elemref code="0074" reqr="mandatory" type="simple"/>
+      <elemref code="0062" reqr="mandatory" type="simple"/>
+    </segment>
+    
+    <segment code="TXT" name="Text" desc="To give information in addition to that in other segments in the service message, as required">
+      <elemref code="0077" reqr="conditional" type="simple"/>
+      <elemref code="0078" reqr="mandatory" type="simple"/>
+    </segment>
+    
+    <segment code="UNS" name="Section Control" desc="To separate Header, Detail and Summary sections of a message">
+      <elemref code="0081" reqr="mandatory" type="simple"/>
+    </segment>
+    
+  </segments>

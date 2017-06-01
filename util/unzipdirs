@@ -1,0 +1,85 @@
+#!/bin/sh
+
+# this script handles the unzipping of UN/EDIFACT directories
+# and organises the files within so that other scripts can find them
+
+UNZIP=unzip
+
+
+unzipZips () {
+    for zip in *.zip *.ZIP; do
+	test -f "$zip" && $UNZIP "$zip" >/dev/null
+    done
+}
+
+flattenDirectory () {
+    DXXX=""
+    case "$1" in
+    D93A) DXXX="DRAFT/PART2 DRAFT/TRCD DRAFT/TRFR DRAFT/TRSD";;
+    D95A) DXXX=TEMP/D95A;;
+    D95B) ;;
+    D96A) ;;
+    D96B) DXXX=EDIFACT/DIRECTOR/ARCHIVES/96B/DISK-ASC;;
+    D97A) DXXX=EDIFACT/D97ADISK;;
+    D97B) ;;
+    D98A) ;;
+    D98B) ;;
+    D99A) ;;
+    D99B) DXXX=EDIFACT/DIRECTOR;;
+    D00A) ;;
+    D00B) DXXX=EDIFACT/DISKETTE/D00b;;
+    D01A) ;;
+    D01B) ;;
+    D01C) ;;
+    D02A) ;;
+    D02B) ;;
+    D03A) DXXX=Edifact/Directory/Files;;
+    D03B) ;;
+    D04A) ;;
+
+
+    S93A) DXXX="STANDARD/EDCD STANDARD/EDFR STANDARD/EDMD STANDARD/EDSD";;
+
+    esac
+    for dxxx in $DXXX; do
+	if [ -d "$dxxx" ]; then mv "$dxxx"/* . 2>/dev/null;
+    fi; done
+
+    case "$1" in
+    D97A) if [ -d "EDIFACT/DIRECTOR" ]; then mv EDIFACT/*/*/* .; fi;;
+    esac
+}
+
+unzipDirectory () {
+
+    zip="$1"
+    dir=`basename $zip .zip`
+    DIR=`basename $zip .zip | tr a-z A-Z`
+
+    if [ -f "$zip" ]; then
+
+	mkdir "$dir" 2>/dev/null
+
+	(
+	    cd "$dir"
+	    $UNZIP ../"$zip" >/dev/null
+	    flattenDirectory "$DIR"
+	    for zip in *.zip *.ZIP; do
+		test -f "$zip" && $UNZIP "$zip" >/dev/null
+	    done
+	    flattenDirectory "$DIR"
+	)
+
+    fi
+}
+
+while [ "$1" != "" ]; do
+    unzipDirectory "$1"
+    shift
+done
+
+
+
+
+
+

@@ -1,0 +1,1091 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+
+<article id="f6e03d4172df0f94f1af508dbec965e4">
+  <articleinfo>
+    <title>The MEDICI Electronic Data Interchange
+    Library</title>
+
+    <author>
+      <firstname>David</firstname>
+      <surname>Coles</surname>
+    </author>
+
+    <corpauthor>S-Mart.NET</corpauthor>
+
+    <date>$Date: 2005/11/23 20:43:37 $</date>
+  </articleinfo>
+
+  <abstract>
+    <title>About MEDICI</title>
+
+    <para>
+      MEDICI is an <firstterm linkend="edi">Electronic Data
+	Interchange</firstterm> (<acronym>EDI</acronym>) library.
+	EDIFACT (ISO 9735), ANSI ASC X12 and UNGTDI (TRADACOMS)
+	syntaxes are currently supported. MEDICI provides a parser for
+	EDI streams and functions to query EDI guidelines for
+	validation, reference information and design notes. MEDICI
+	does not dictate how EDI guidelines should be implemented, but
+	provides an API which can be used to interrogate external
+	implementations and an example guideline implementation for
+	internal use.
+    </para>
+    
+    <para>
+      The operation of the MEDICI parser is roughly modelled after the
+      Expat XML library.
+    </para>
+    
+    <para>
+      If you would like improved X12 support please consider obtaining
+      a copy of the specification to donate to the MEDICI project.
+    </para>
+
+  </abstract>
+  
+  <sect1>
+    <title>Introduction</title>
+    <sect2>
+      <title>Introduction to EDI</title>
+      
+      <para>
+	Electronic Data Interchange (EDI) is the generic term given
+	toa selection of standards used for the
+	application-to-application exchange of business
+	information. It defines machine-readable formats for the
+	encoding of order placement, shipping notification and
+	invoicing, among many other business transactions.
+      </para>
+      
+      <para>The goal of <acronym>EDI</acronym> is to help to realise
+	the dream of the paperless office by providing a direct
+	electronic channel by which to carry out all aspects of
+	business-to-business transactions. Amongst the many advantages
+	that it provides, possibly the most useful are that it
+	eliminates the need for re-keying of orders and invoices sent
+	via telephone, fax or email, and improves the accuracy and
+	speed of communications between companies.</para>
+      
+      <para>The extent to which <acronym>EDI</acronym> lives up to
+	these goals is debatable. There are numerous different
+	standards which vary between countries and industry
+	sectors. Industry bodies may add their own message types and
+	codes which are not part of the core standards, so these
+	extensions must be supported and understood by all parties in
+	such transactions. <acronym>EDI</acronym> standards
+	(generally) only define the application level rules for
+	structuring the transactions, and not the protocols by which
+	the transactions are communicated. This has led to the
+	proliferation of a number of so-called <firstterm>Value Added
+	Networks</firstterm> (<acronym>VANs</acronym>) which provide
+	communication between companies via numerous gateways such as
+	modem dial-up connections and Internet protocols such as
+	FTP.</para>
+
+      <para>Organisations such as large corporations and government
+	agencies (eg. city councils) may insist on the use of
+	<acronym>EDI</acronym> as a prerequisite for trading, or may
+	provide preferable terms for partners who can communicate with
+	them electronically. <acronym>EDI</acronym> software is
+	frequently expensive, complex, and may require considerable
+	customisation by consultancy services. The cost of
+	transmitting interchanges via a <acronym>VAN</acronym> is
+	usually many magnitudes that which we have become used to on
+	the global IP network. Consequently, <acronym>EDI</acronym> is
+	not often used to its full advantage by <firstterm
+	linkend="sme">Small and Medium-sized Enterprises</firstterm>
+	(<acronym>SME</acronym>s).</para>
+
+    </sect2>
+
+    <sect2>
+      <title>Free/Open-source EDI software</title>
+
+      <para>The freely available EDI packages which I have managed to find
+	seem to fall into one of three catagories:
+      </para>
+      <itemizedlist>
+	<listitem>
+	  <simpara>Java-based application suites, often accessed via
+	    a web based application server interface. This requires a
+	    significant degree of supporting infrastructure, not least
+	    a machine capable of handling a Java virtual machine. This
+	    would almost certainly require a dedicated server and
+	    administrative resources for the care and feeding of the
+	    application.
+	  </simpara>
+	</listitem>
+
+	<listitem>
+	  <simpara>Platform or language specific applications. Really
+	    I am refering to Microsoft Windows or COBOL based suites.
+	    The Windows based packages are presumably intended to
+	    appeal to smaller businesses which can dedicate a Wintel
+	    box to EDI tasks and can hand-feed messages or at least
+	    supervise the retrieval and processing of
+	    them. Alternately larger organisations which have mainframe
+	    installations and a team of programmers to hand may be
+	    attracted by a COBOL package.
+	  </simpara>
+	</listitem>
+
+	<listitem>
+	  <simpara>Task-specific scripts. These generally transform
+	    the EDI data to another format such as XML. This allows
+	    the client to understand the messages at a higher level,
+	    but it does not give it sufficient data to explore the EDI
+	    message domain. This rather clumsy, jargon-oriented
+	    sentence is basically trying to say "It doesn't help if
+	    you want to write an integrated development environment
+	    around EDI".
+	  </simpara>
+	</listitem>
+      </itemizedlist>
+
+      <para>
+	Whilst looking for a package which could suit the needs of my
+	organisation, I felt there was a gap in the range of
+	open-source software on offer. We need to deal with a very
+	limited range of transactions for a small number of
+	partners. The adoption of a fully-fledged EDI suite would be
+	overkill, and would probably result in the amount of
+	administrative and customisation work exceeding that of the
+	data-entry task it was meant to replace. What was really
+	needed was a lightweight, flexible API to quickly extract
+	the goodness from a small set of messages.
+      </para>
+
+      <para>
+	Ideally I would be able to use an API from within Perl
+	applications. This would enable us to integrate the package
+	with the rest of our process. The package would be lightweight
+	enough to be run reasonably frequently from a range of
+	containers. It would be simple to embed the functionality into
+	a number of different processes which would use it in various
+	environments.
+      </para>
+      
+      <note>
+	<para>There seem to be a couple more projects which are closer
+	  to what I was looking for. However they are libraries
+	  written in Java, which isn't very helpful for a Perl
+	  environment.</para>
+      </note>
+      
+
+    </sect2>
+
+    <sect2>
+      <title>MEDICI</title>
+
+      <para>
+	The goal of MEDICI is to produce a library of code which
+	allows <acronym>EDI</acronym> applications to be written with
+	the complexities of the various standards hidden from the
+	author. It achieves this by abstracting the details of the
+	<acronym>EDI</acronym> stream behind a set of objects which
+	can be easily manipulated by the programmer through method
+	calls. Bindings to various scripting languages will give users
+	the power to quickly assemble applications which understand
+	<acronym>EDI</acronym> messages and integrate them into
+	existing components.
+      </para>
+
+      <para>
+	MEDICI operates as a stream-oriented parser similar to the
+	<productname>Expat</productname> library for XML
+	documents. The client application creates an instance of a
+	parser object, registers callbacks with it, and then feeds it
+	the <acronym>EDI</acronym> document. As the parser decodes the
+	stream the callbacks are triggered as structural events are
+	encountered. MEDICI takes care of ensuring that the document
+	meets the appropriate specifications, and can pragmatically
+	deal with violations according to the policies prescribed by
+	the client application.
+      </para>
+
+      <para>
+	Through callbacks, MEDICI passes references to data
+	dictionaries and context information which allows the
+	application to understand the structure of a message and the
+	semantics of the component parts.
+      </para>
+
+      <para>
+	At a later date it is the intention to also provide an
+	application framework utilising MEDICI which can provide some
+	level of support for conducting business based on
+	<acronym>EDI</acronym> interchanges, but for now this is left
+	as an excercise for the reader.
+      </para>
+
+    </sect2>
+
+    <sect2>
+      <title>MEDICI Features</title>
+      <itemizedlist>
+
+	<listitem>
+	  <simpara>Supports EDIFACT (ISO 9735), UNGTDI (TRADACOMS) and
+	    ANSI ASC X12 syntaxes.</simpara>
+	</listitem>
+
+	<listitem>
+	  <simpara>Support for interrogating EDI guidelines.</simpara>
+	</listitem>
+
+	<listitem>
+	  <simpara>Automatic syntax detection in parser.</simpara>
+	</listitem>
+
+	<listitem>
+	  <simpara>Message validation through external transaction set
+	  guideline implementations.</simpara>
+	</listitem>
+
+	<listitem>
+	  <simpara>Lightweight, embeddable and extensible.</simpara>
+	</listitem>
+
+	<listitem>
+	  <simpara>Free/Open-source. LGPL licensing model allows you
+	  to link applications against MEDICI without having to open
+	  your application (although you are of course encouraged to
+	  do so).</simpara>
+	</listitem>
+
+	<listitem>
+	  <simpara>Sets of bindings (in development) allow you
+	  to use MEDICI from within your favourite
+	  language(s).</simpara>
+	</listitem>
+
+	<listitem>
+          <simpara>A stream-based approach allows documents to be
+          parsed on-line; no memory hit is taken for an application
+          which simply routes EDI messages based on envelope data, for
+          example.</simpara>
+        </listitem>
+
+      </itemizedlist>
+    </sect2>
+
+
+
+  </sect1>
+
+  <sect1>
+    <title>Building and Installing</title>
+
+    <para>MEDICI is known to compile on:</para>
+    
+    <itemizedlist>
+      <listitem>
+	<simpara>Linux 2.x (GCC &#38; Intel C++ Compiler 7.1)</simpara>
+      </listitem>
+      
+      <listitem>
+	<simpara>Solaris 2.6 (GCC)</simpara>
+      </listitem>
+      
+      <listitem>
+	<simpara>IRIX 6.5 (MIPSpro &#38; GCC)</simpara>
+      </listitem>
+      
+      <listitem>
+	<simpara>NetBSD 1.5 / OpenBSD 2.9 / FreeBSD 4.8 (GCC)</simpara>
+      </listitem>
+
+      <listitem>
+	<simpara>Darwin 6.2 (GCC)</simpara>
+      </listitem>
+      
+      <listitem>
+	<simpara>Windows NT 4.0 (Borland C++ 4.0 &#38; GCC/Cygwin)</simpara>
+      </listitem>
+      
+    </itemizedlist>
+
+    <para>The code is pure ANSI C, so it should compile with any modern
+      OS/compiler combination.</para>
+
+    <sect2>
+      <title>Building</title>
+      
+      <para>MEDICI is supplied as a GNU gzip compressed tar file from
+	<ulink url="http://www.disintegration.org/~david/"
+	>http://www.disintegration.org/~david/</ulink>. Unpack the
+	distribution, <command>cd</command> into the directory and
+	follow the instructions for your platform below.</para>
+      
+      <sect3>
+	<title>Building under Unix (or GNU)</title>
+	
+	<para>Run the configure shell script to produce Makefiles and
+	  run make:</para>
+	
+	<simplelist>
+	  <member><command>./configure</command></member>
+	  <member><command>make</command></member>
+	</simplelist>
+
+	<para>And optionally:</para>
+	
+	<simplelist>
+          <member><command>make test</command></member>
+	</simplelist>
+	
+      </sect3>
+      
+      <sect3>
+	<title>Building under Windows</title>
+	
+	<para>
+	  If anyone has any experience with Windows compilation I
+	  would be grateful for a description of the process or
+	  Makefile equivalents.
+	</para>
+
+	<para>
+	  This from Brian Duhan:
+	  <blockquote>
+	    <para> Under the latest Cygwin I was able to configure and
+	      make it without problems.  Under Cygwin I could run all
+	      of the examples with the same results as on my debian
+	      box.  Running from DOS prompt or windows explorer gives
+	      me an error message about not finding cygwin1.dll.  I
+	      added c:\cygwin\bin to my windows PATH and they all run
+	      fine now.
+	    </para>
+	  </blockquote>
+	</para>
+	
+      </sect3>
+
+      <sect3>
+	<title>Building on an unsupported platform</title>
+	<para>
+	  The <filename>src</filename> directory contains all the
+	  source code for the core library. Simply compile and link
+	  all the code here to create a library. There are no
+	  dependencies on external libraries.
+	</para>
+
+	<para>
+	  The <filename>examples</filename> directory contains some
+	  example programs which use the library. Just point your
+	  compiler's include and library paths at the
+	  <filename>src</filename> directory and compile/link
+	  away. <command>#define HAVE_LIBEXPAT</command> in the
+	  <filename>config.h</filename> file if you have the Expat
+	  library on your system to allow the example programs to read
+	  the <link linkend="xml-tsg">XML transaction set
+	  guidelines</link> which allow applications to understand the
+	  structure of messages.
+	</para>
+      </sect3>
+
+    </sect2>
+
+    <sect2>
+      <title>Installation</title>
+      <para>
+	Installation is not yet supported. Simply add the
+	<filename>src</filename> directory to your compiler's include
+	and library paths to use MEDICI in your application.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Example applications</title>
+      
+      <para>
+	Some (very) simple example <quote>applications</quote> are
+	included in the <filename>examples</filename> directory. These
+	will read a file from the command line, or a stream from
+	<filename>stdin</filename>.
+      </para>
+
+      <para>
+	MEDICI only knows about the "system segments" of each EDI
+	standard - these are detailed in the syntax
+	specifications. The body of a message is made up of segments
+	described in a "directory" or "transaction set guidelines"
+	which are published by industry bodies or organisations such
+	as the <ulink url="http://unece.org/">UNECE</ulink>. There is
+	no way that the library could know about all of these guidelines -
+	there are simply too many of them - so instead MEDICI contains
+	a set of routines for interrogating an abstraction of the
+	guidelines. The client application provides an implementation
+	of the guidelines which MEDICI can then use to understand the
+	structure of the message.
+      </para>
+
+      <para>
+	The example applications use MEDICI's own internal
+	implementions (which are used for storing information about
+	system segments) and load in the actual data for the directory
+	from text or XML files at runtime. These files can be
+	downloaded from <ulink
+	url="http://www.disintegration.org/~david/tsg/"
+	id="xml-tsg">http://www.disintegration.org/~david/tsg/</ulink>. There
+	are a couple of utilities which can be used for converting
+	publically available specifiation files in the
+	<filename>util</filename> directory. See the <link
+	linkend="edifactsupport">EDIFACT</link> and <link
+	linkend="x12support">X12</link> support sections for details
+	of how to use these utilities.
+      </para>
+
+      <para>
+	Transaction set guidelines can be pretty big, and the internal
+	implementation operates very slowly with such large amounts of
+	data (it uses linear searches on C arrays). Bear in mind that
+	these are only example applications. A real application would
+	provide an implementation which would, say, read the
+	guidelines from an SQL database (possibly with caching) or
+	from a Berkley DB file.
+      </para>
+
+      <para>
+	Sample interchanges are provided in the
+	<filename>samples</filename> directory. These samples are
+	simple TeleSmart API files and various interchanges culled
+	from publicly available EDI documentation or contributed by
+	users. Additional sample files may be found in Michael
+	Koehne&#39;s <ulink
+	  url="http://www.xml-edifact.org/">XML-Edifact</ulink> Perl
+	module. If you can donate any example documents, please feel
+	more than welcome to do so.
+      </para>
+    </sect2>
+  </sect1>
+
+  <sect1>
+    <title>Using MEDICI</title>
+
+    <para>
+      Please see the programs in <filename>examples</filename> as the
+      interface is not fully defined yet. These examples will be kept
+      more up-to-date that this documentation could ever be until
+      then.
+    </para>
+    
+    <para>
+      EDI standards such as EDIFACT specify the representation of
+      message headers and trailers, but not the structure of
+      individual messages. These are specified in application specific
+      entities called <firstterm>directories</firstterm> or
+      <firstterm>transaction set guidelines</firstterm> which are
+      drafted by industry bodies and organisations such as the
+      UN/CEFACT. MEDICI provides an interface to work with these third
+      party directories, and includes some example directory
+      implementations to illustrate how to integrate them into an
+      application.
+    </para>
+
+
+    <para>
+      The MEDICI parser allows an application to interpret an EDI
+      stream in a similar way to an application reading an XML
+      stream. This means that the implicit looping structures in an
+      EDI stream are interpreted by the parser and presented to the
+      application as explicit <quote>start</quote> and
+      <quote>end</quote> events. The parser also ensures that these
+      events are balanced in the same way that a well-formed XML
+      document nests. The intention is not to force the user into
+      having to deal with XML (though it may make conversion to an XML
+      format easier), but embed the logic required to deal with
+      implicit nesting into the parser/directory objects, rather than
+      each appliction have to deal with it individually.
+    </para>
+
+    
+    <sect2 id="edifactsupport">
+      <title>EDIFACT support</title>
+      
+      <para>EDIFACT syntax versions 1 and 2 are currently
+	supported. Explicit nesting and repetition are not yet
+	supported as I have no sample documents. Full support up to
+	version 4 is inteded, but sample files will be needed for
+	implementation.</para>
+      
+      <para>
+	The official UN/EDIFACT standard directories can be downloaded
+	in ZIP format from <ulink
+	url="http://www.unece.org/trade/untdid/">The UNECE's Trade
+	Data Interchange Directory</ulink>. The
+	<command>untd2t</command> Perl script in the
+	<filename>util</filename> directory can be used to generate an
+	XML file from these directories. The directory must first be
+	fully extracted (ZIP files are contained within ZIP files!)
+	and the directory structure flattened
+	(<command>unzipdirs</command> can do this for you). Eg.:
+      </para>
+      <screen>
+[david@kang:~/medici]$ util/unzipdirs d96a.zip
+[david@kang:~/medici]$ util/untd2t d96a > d96a.xml
+[david@kang:~/medici]$ examples/describe -x d96a.xml samples/orders.edi
+      </screen>
+
+    </sect2>
+
+    <sect2>
+      <title>TRADACOMS support</title>
+
+      <para>The documentation from E-Centre is in Microsoft Word
+	format. This has delayed support considerably, but it is
+	getting there. You should find most segments are implemented,
+	but there is no support for message grammar as yet.</para>
+
+      <para>You can download a half script-generated, half hand-hacked
+	TAB separated file from <ulink
+	  url="http://www.disintegration.org/~david/tsg/tradacom.txt.gz"
+	  >the MEDICI site</ulink>. If anyone has XML/XSLT skills it
+	should be possible to convert the E-Centre Word files to
+	OpenOffice.org XML files and write a script to transform
+	those.
+      </para>
+      <screen>
+[david@kang:~/medici]$ examples/describe -t tradacom.txt samples/priinf.edi
+      </screen>
+
+      <note>
+	<simpara>I have recently noticed that the TRADACOMS guidelines
+	have essentially the same elements used in various segments or
+	composite elements with no common code, but instead the name
+	used to refer to them implies that the element is
+	identical. This will require an extensive manual refactoring
+	of the current TAB file. Given this upheaval, I will convert
+	the whole thing to the new XML format which should also make
+	adding transaction rules easier. If you have specific
+	TRADACOMS needs please contact me, otherwise you are at the
+	mercy of my lethargy ;)</simpara>
+      </note>
+      
+    </sect2>
+
+    <sect2 id="x12support">
+      <title>ANSI ASC X12 support</title>
+      
+      <para>
+	<firstterm>GuidelineXML</firstterm> (<acronym>gXML</acronym>)
+	files for a wide range of X12 transactions can be obtained
+	from <ulink
+	  url="http://www.commercedesk.com/">CommerceDesk.COM</ulink> by
+	following the link to the DISA X12 section of the repository.
+	The <command>gxml2t</command> Perl script in the
+	<filename>util</filename> directory can be used to generate a
+	simplified XML file from <acronym>gXML</acronym> which is
+	suitable for use with the example applications. Eg.:
+      </para>
+      
+      <screen>
+[david@kang:~/medici]$ util/gxml2t V4011_837.gxml > V4011_837.xml
+[david@kang:~/medici]$ examples/describe -x V4011_837.xml samples/837x12.edi
+      </screen>
+
+      <note>
+	<para>
+	  All X12 envelope work has been done empirically due to lack
+	  of a freely available specification. If you can donate a
+	  copy of the X12 specification to the MEDICI project, please
+	  get in touch.
+	</para>
+
+	<para>Apparently CommerceDesk.COM have taken down their
+	publically available gXML files. You can probably still get
+	them if you use their product. More details about Guideline
+	XML can be found at <ulink
+	url="http://xml.coverpages.org/gxml.html">coverpages.org</ulink>.
+	If you look carefully you might be able to find some example,
+	or maybe some evaluation software has them.</para>
+      </note>
+
+      
+    </sect2>
+
+    <sect2>
+      <title>Transaction-set Guidelines</title>
+
+      <para>A sample implementation of transaction-set guidelines is
+	included in the MEDICI source, and there is code to read in
+	the TSG from a file. Instead of inventing my own crazy way of
+	describing a tree-like structure I opted to just use
+	XML.</para>
+
+      <para>I think most people will have no trouble with that basics
+	of XML and I am certainly not going to use any of the more
+	complex features of it. It's pretty easy to read and edit in
+	nothing more than a simple text editor, and there are numerous
+	XML editors and modes available which simplify debugging if a
+	simple text editor doesn't cut it. It seems like the natural
+	fit.</para>
+
+      <para>Of course, there are potential downsides too. It will
+	require an XML parser to read the files. This seems easy
+	enough, I'm using Expat, it's freely available - but I have
+	heard from one user who was interested in running on an HP
+	NonStop platform. This didn't seem like a regular UNIX-like
+	environment, so it could well be that Expat has not been
+	ported to it. As an alternative there's also code for reading
+	in PYX formatted TSGs too.</para>
+
+      <sect3>
+	<title>XML TSG format</title>
+	<para></para>
+      </sect3>
+      
+     <sect3>
+        <title>PYX TSG format</title> <para>PYX is a line-oriented
+	alternate format for representing XML data. It is quite simple
+	to write a parser for PYX and so one is inlcuded in the
+	example code with the distribution. Because it is structured
+	in the same way as XML the same code functions can act as
+	element-handlers for the PYX parser as the Expat XML
+	parser. The included PYX parser API has similarly named
+	methods to the Expat parser, but with the
+	<function>XML_</function> prefix replaced by
+	<function>PYX_</function>. The XML reading code can therefore
+	be simply adapted to read PYX too with a simple
+	search-and-replace.</para>
+	
+	<para>XML files can be converted to PYX format with a utility
+	  such as XMLStarlet (eg. <computeroutput>xmlstarlet pyx
+	  file.xml</computeroutput>). If a machine is unable to run
+	  Expat the XML file can be converted to PYX on a machine
+	  which is able to run XMLStarlet and the PYX file can be
+	  copied onto the target machine. The target machine will then
+	  be able to read the PYX file natively.</para>
+	
+        <para>
+
+	  <itemizedlist>
+	    <title>PYX links</title>
+	    
+	    <listitem><simpara><ulink
+		url="http://pyxie.sourceforge.net/">The Pyxie library
+		(Python)</ulink> </simpara></listitem>
+
+	    <listitem><simpara><ulink
+		  url="http://www.xml.com/pub/a/2000/03/15/feature/index.html">
+		  Article about the Pyxie library on O'Reilly's
+		  XML.com.</ulink></simpara></listitem>
+	    
+	    <listitem><simpara><ulink
+		  url="http://www.ldodds.com/pyx/">Javascript PYX to XML
+		  converter demo page.</ulink> </simpara></listitem>
+	    
+	    <listitem><simpara><ulink
+		  url="http://xmlstar.sourceforge.net/">The XMLStarlet
+		  command line XML toolkit.</ulink></simpara></listitem>
+
+	  </itemizedlist>
+	</para>
+      </sect3>
+
+    </sect2>
+
+  </sect1>
+  
+  <sect1>
+    <title>Frequently Asked Questions</title>
+
+    <para>I lie. Mostly they are questions which I think people might
+    ask. A fair few are genuine though.</para>
+
+    <sect2>
+      <title>What is the purpose of MEDICI?</title>
+
+      <para>MEDICI aims to provide an object-oriented abstraction of
+	EDI protocols. Initially it will provide parser functionality,
+	but emitter features will be added later. It attempts to
+	support all segment based EDI syntaxes, although EDIFACT is
+	probably the best supported format due to the easily available
+	message specifications. MEDICI specifically does not provide
+	message directories (except system directories which are
+	essential for any level of operation). However it does provide
+	an API to deal with third party message directory
+	implementations.</para>
+    </sect2>
+
+    <sect2>
+      <title>Is MEDICI intended to be be used in medical billing
+	applications?</title>
+
+      <para>Not specifically, no. Although "medici" is uncomfortably
+	close to "medicine" there is no more profound link than that.
+	When initially writing MEDICI I was not aware of the HIPAA
+	standards, or that X12 was heavily used in them. Of course,
+	there are no reasons why the library cannot be used in medical
+	applications (other than code maturity), but it is no more
+	suited to it than any other area of commerce.</para>
+    </sect2>
+
+    <sect2 id="x12tsg">
+      <title>Why are there no X12 guidelines on your TSG page?</title>
+
+      <para>Because I have no (copyright free) machine readable
+      descriptions of X12 transactions (unlike the wonderful
+      UN/EDIFACT directories). If you have GuidelineXML files for your
+      transaction set then check out the <link linkend="x12support"
+      ><command>gxml2t</command></link> script in the
+      <filename>utils</filename> directory. Some assembly may be
+      required. Feel free to mail me with questions or if you feel
+      like contributing an IP-free TSG of your own.</para>
+    </sect2>
+
+    <sect2>
+      <title>Is MEDICI similar to any other parsing library?</title>
+
+      <para>Yes. MEDICI is modelled after &#34;expat&#34; the XML
+	library written by James Clark. Please read the fine
+	documentation for expat in lieu of documentation for MEDICI to
+	get an idea of the structure of an application using
+	MEDICI.</para>
+    </sect2>
+
+    <sect2>
+      <title>So, it can generate XML. Is that its main purpose?</title>
+
+      <para>No. The <filename>editoxml</filename> executable is simply
+	an example of how to write an application using MEDICI. It can
+	also be used for regression testing of the MEDICI
+	library.</para>
+    </sect2>
+
+    <sect2>
+      <title>Can it convert XML to EDI?</title>
+
+      <para>That is not what it is intended to do. I have had a few
+	people ask this, so I have included a file
+	<filename>util/xmltoedi.c</filename> which will take the
+	output of <filename>editoxml</filename> and strip all the XML
+	markup from it, but that is all. It won't magically convert
+	some arbitrary XML schema to EDI, and you will have to run
+	<filename>editoxml</filename> with all the right switches to
+	preserve separator characters. See
+	<filename>util/xmltoedi.c</filename> for details.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>OK, (Michael Koehne's) XML::Edifact is really
+	neat and I use it for my messages. Why are you guys developing
+	MEDICI?</title>
+
+      <para>XML::Edifact <emphasis>is</emphasis> neat - it has one specific
+	goal and it gets down to it with little fuss. Because of this
+	approach it does have limitations: The XML::Edifact package
+	only deals with EDIFACT; Specific versions of EDIFACT
+	directories need to be installed as part of the Perl
+	installation; It&#39;s Perl - I want C/C++/Perl/Python/etc.
+	bindings; It only supports XML - I don&#39;t want to have to
+	deal with <emphasis>two</emphasis> crazy formats to get at my
+	data!; XML::Edifact only deals with conversion of messages -
+	MEDICI provides an API to query message directories, perform
+	various levels of validity checks and dynamically support
+	industry specific directory specifications.</para>
+
+      <note>
+	<para>Michael Koehne's XML::Edifact can be found at <ulink
+	  url="http://www.xml-edifact.org/"
+	    >http://www.xml-edifact.org/</ulink>.</para>
+      </note>
+
+    </sect2>
+
+    <sect2>
+      <title>How do directories work?</title>
+
+      <para>Directories are represented as a struct and an associated
+	set of functions which provide an API. A directory implementor
+	provides a set of function pointers which implement the API by
+	accessing whatever back-end functionality is required. In this
+	way the implementor can create a directory back-end based on
+	technologies of his choice.</para>
+      
+      <para>The functions are the typical queries which will be
+	performed on the directory; What is a segment/element called?
+	What are the component elements of a composite element? What
+	does this coded value represent? etc..</para>
+    </sect2>
+    
+
+    <sect2>
+      <title>What are all these "Francesco" and "Giovanni" references?</title>
+
+      <para>These are implementations of directories (AKA "Transaction
+	Set Guidelines" or TSGs). I couldn't think of any objective
+	naming scheme for these implementations, so I chose first
+	names of members of the Medici family. Francesco is a static
+	source-code structure which is used for system
+	segments. Giovanni is a dynamically allocated scheme using the
+	included abstract data types and can be instantiated with any
+	import functions you care to write (trivial text and XML
+	interfaces are included).
+      </para>
+    </sect2>
+
+
+    <sect2>
+      <title>What's with the inconsistent "EDI_" and "edi_" function
+	naming?</title>
+
+      <para>
+	Initially I started off using Expat as a model for the
+	structure of MEDICI along with it's "XML_" naming
+	scheme. Sadly EDI standards don't tend to be as elegant or
+	regular as XML, so I've had to shoe-horn various functions
+	in. Consequently to minimise the impact on the client programs
+	(<filename>examples</filename> directory) I have a set of
+	"external" API functions ("EDI_") which map onto "internal"
+	API functions ("edi_").
+      </para>
+    </sect2>
+
+
+    <sect2>
+      <title>I want a DOM based parser. Why aren&#39;t you doing it?</title>
+      
+      <para>DOM parsers can be (reasonably trivially) built from
+	stream-based parsers. A stream-based parser takes no memory
+	hit when parsing a large document. Once MEDICI is sufficiently
+	mature we may implement a DOM based API on top of it. If you
+	are that keen you can build one yourself using MEDICI, or
+	convert the EDI document to XML and use an XML DOM
+	package. Either way, get in touch and let us know that you
+	want this functionality!
+      </para>
+
+      <para>Actually, considering the amount of (de)allocation
+      needed for representing the (relatively) complex in-memory
+      structures, this would be far more sensible to implement in a
+      language other than C.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Why is it implemented in C?</title>
+
+      <para>Portability. MEDICI is written in pure ANSI C, so it
+	should compile on any reasonably modern system. With MEDICI
+	written in C it should be trivial to provide bindings for C++,
+	Perl, Python, etc..</para>
+    </sect2>
+
+    <sect2>
+      <title>Why is MEDICI so slow?</title>
+
+      <para>Directories are largely implemented as linked
+	lists - search times are therefore quite slow. This will
+	improve as I replace lists with hashes or trees. Can't wait?
+	Then write me!
+      </para>
+
+      <para>The <command>describe</command> and
+	<command>editoxml</command> examples will run slowly as they
+	consult directories. For a more realistic example of the speed
+	of the core library pass the stream through
+	<command>elements</command> instead; this does not reference a
+	directory, so you should find it runs around a couple of
+	magnitudes faster. Externally implemented directories may be
+	represented in any way - maybe as a Berkley DB file for
+	example.</para>
+    </sect2>
+
+
+    <sect2>
+      <title>Why did you do this?</title>
+
+      <para>EDI systems are generally used by large companies which
+	can offset the high cost of implementation with economies of
+	scale. In my day job I was compelled to use EDI for business
+	reasons. Rather than spend thousands of dollars buying an EDI
+	application and hiring consultants to customise it to our
+	legacy database system I wrote the small amount of
+	functionality which we needed from scratch in Perl. These are
+	rather simple-minded scripts which were developed in a purely
+	empirical manner; ie. they work on the limited range of
+	messages that we have received so far, but they will not cope
+	with valid messages slightly outside of the scope of which we
+	have experienced.  MEDICI is an attempt to proactively develop
+	a system which will replace the scripts if they become
+	inadequate.</para>
+    </sect2>
+
+  </sect1>
+
+  <appendix>
+
+    <title>Legalese</title>
+
+    <sect1>
+      <title>LICENSE</title>
+      
+      <programlisting>
+	
+	The MEDICI Electronic Data Interchange Library Copyright (C)
+	2002 David Coles
+	
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later
+	version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free
+	Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+	MA 02111-1307 USA
+	
+      </programlisting>
+    </sect1>
+    
+    <sect1>
+
+      <title>TELESMART API</title>
+
+      <para>Value Added Network - Edifact Commands And
+	Acknowledgements By Telesmart API Ltd and TeleOrdering Ltd
+      </para>
+
+      <para>Whitaker (owners of TeleOrdering) is now part of VNU. The
+	specification document (docs/telesmart.txt) is attributed to
+	them. The specification document and derived works are
+	included in this project with the kind permission of the IT
+	Director, VNU Entertainment Media Ltd.</para>
+
+      <para>This project has no other connection with Telesmart,
+	TeleOrdering, Whitaker or VNU.</para>
+    </sect1>
+  </appendix>
+
+  <appendix>
+    <title>Links</title>
+
+
+    <section>
+      <title>EDI Standards bodies and related</title>
+
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    <ulink
+	      url="http://www.unece.org/trade/untdid/welcome.htm"> United
+	      Nations Directories for Electronic Data Interchange for
+	      Administration, Commerce and Transport</ulink> and <ulink
+	      url="http://www.unece.org/trade/untdid/down_index.htm">the
+	      directories themselves</ulink>
+	  </para>
+	</listitem>
+
+	<listitem>
+          <para><ulink
+	      url="http://www.gs1uk.org/">GS1UK/E-Centre</ulink> (will
+	    probably send you a copy of TRADACOMS standard if you
+	    enquire nicely).</para>
+	</listitem>
+
+        <listitem>
+          <para><ulink url="http://www.bic.org.uk/edistuff.html">Book
+	      Industry Communication - EDI</ulink> - lots of best practice
+	    guides, implementation guidelines, etc. - TRADACOMS
+	    oriented)</para>
+	</listitem>
+	    
+	<listitem>
+          <para><ulink url="http://www.x12.org/x12org/">Data
+	Interchange Standards Association - ASC X12</ulink></para>
+	</listitem>
+
+      </itemizedlist>
+
+    </section>
+
+    <section>
+
+      <title>EDI Software/ASPs</title>
+
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    <ulink
+	      url="http://www.accpac.com/products/exchange/">ACCPAC
+	      Exchange</ulink></para>
+	</listitem>
+	
+	<listitem>
+	  <para><ulink url="http://spe-edi.com/">Spe+EDI</ulink>
+	  (excellent links page on this site).</para>
+	</listitem>
+	
+	<listitem>
+	  <para>
+	    <ulink url="http://www.cyclonecommerce.com/">Cyclone
+	    Commerce, Inc</ulink></para>
+	</listitem>
+	
+	<listitem>
+	  <para>
+	    <ulink url="http://www.bic.org.uk/edistuff.html">BIC EDI
+	    / Electronic Commerce</ulink></para>
+	</listitem>
+      </itemizedlist>
+
+    </section>
+
+  </appendix>
+
+  <glossary>
+    <title>Glossary</title>
+
+    <glossentry>
+      <glossterm>EDI</glossterm>
+
+      <glosssee otherterm="edi"></glosssee>
+    </glossentry>
+
+    <glossentry id="edi">
+      <glossterm>Electronic Data Interchange</glossterm>
+
+      <glossdef>
+        <para>Catch-all term for the EDIFACT, TRADACOMS and X12 families of
+        standards for transmitting business transactions electronically</para>
+      </glossdef>
+    </glossentry>
+
+    <glossentry>
+      <glossterm>SME</glossterm>
+
+      <glosssee otherterm="sme"></glosssee>
+    </glossentry>
+
+    <glossentry id="sme">
+      <glossterm>Small and Medium-sized Enterprises</glossterm>
+
+      <acronym>SME</acronym>
+
+      <glossdef>
+        <para><ulink
+        url="http://europa.eu.int/smartapi/cgi/sga_doc?smartapi!celexapi!prod!CELEXnumdoc&#38;lg=EN&#38;numdoc=31996H0280&#38;model=guichett">
+        Recommendation 96/280/EC</ulink> (Link to Eur-Lex)</para>
+      </glossdef>
+    </glossentry>
+  </glossary>
+</article>
+
+
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: xml
+End:
+-->

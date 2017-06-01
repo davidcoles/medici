@@ -1,0 +1,202 @@
+#!/usr/bin/perl
+
+$head = 0;
+
+if($ARGV[0] eq '-h') {
+    $head = 1;
+    shift;
+}
+
+print &fsachead (@automata);
+
+while(<>) {
+    chop;
+    next if /^\s*$/;
+
+    if(/^\s*#\s*(.*?)\s*$/) {
+       printf "/* %-70s */\n", $1;
+       next;
+   }
+
+
+    if(/^\@/) {
+	if(/^\@AUTOMATON\s+(.*)/) {
+	    my($name, $this, $symbol) = (split(/\s+/, $1));
+	    &cdefines($name);
+	    &automaton($name, $this, $symbol) unless $head;
+	    push(@automata, $name);
+	    %code = ();
+	    %trans = ();
+	    %state = ();
+	    %event = ();
+	}
+
+	print "$1\n" if /^\@CCODE\s+(.*)/ && !$head;
+	next;
+    }
+
+    while(/^\s*(.*)\s*\\\s*$/) {
+	my $old = $1;
+	my $new = <>;
+	chop $new;
+	$_ = $old.$new;
+    }
+
+    my($state, $event, $trans, $ccode) = split(/\s+/, $_, 4);
+    
+    $ccode{$state}{$event} = $ccode;    
+    $trans{$state}{$event} = $trans;
+    $state{$state}++;
+    $event{$event}++;
+    $state{$trans}++;
+}
+
+print &fsaccode unless $head;
+
+
+
+
+
+
+
+
+
+
+
+
+###########################################################################
+
+
+sub ccodename {
+    my($name, $state, $event) = @_;
+    sprintf "%s_%s_%s", $name, $state, $event;
+}
+
+sub cdefines {
+    my($name) = @_;
+    my @state = (DEFAULT, grep(!/^DEFAULT$/, sort keys(%state)));
+    my @event = (DEFAULT, grep(!/^DEFAULT$/, sort keys(%event)));
+    my $n;
+    for $n (0..$#event){ printf "#define %s_%-8s %d\n", $name, $event[$n], $n }
+    for $n (1..$#state){ printf "#define %s_%-8s %d\n", $name, $state[$n], $n }
+    print "\n";
+}
+
+
+sub automaton {
+    my($name, $this, $symbol) = @_;
+    my @state = (DEFAULT, grep(!/^DEFAULT$/, sort keys(%state)));
+    my @event = (DEFAULT, grep(!/^DEFAULT$/, sort keys(%event)));
+
+    foreach $state (@state) {
+	foreach $event (@event) {
+	    printf
+		"static int %-30s(%s self, %s SYMBOL, int EVENT) { %s }\n",
+	    ccodename($name, $state, $event),
+	    $this,
+	    $symbol,
+	    $ccode{$state}{$event}
+	    if defined $ccode{$state}{$event};
+	}
+    }
+    print "\n";
+
+    printf "static FSARule %s_rules[%d][%d] = {\n",
+    $name, $#state+1, $#event+1,;
+    #print " /*"; foreach(@event ) { printf " %-38s   ", $_ }; print "*/\n";
+
+    foreach $state (@state) {
+	printf "  /* %s */\n  {\n", $state;
+	foreach $event (@event) {
+	    printf "   {%s_%-8s, %-24s},\n",
+	    $name,
+	    defined $trans{$state}{$event}?$trans{$state}{$event}:"DEFAULT",
+	    defined $ccode{$state}{$event}?ccodename($name,$state,$event):NULL;
+	}
+	printf "  },\n";
+    }
+    print "};\n\n";
+
+    printf "void %s_init(FSAutomaton *fsa) {\n", $name;
+    printf "  FSAInit(fsa, &%s_rules[0][0], %d, %d, %s_START);\n",
+    $name, $#state+1, $#event+1, $name;
+    print "}\n\n"
+}
+
+
+sub fsachead {
+    my(@inits) = @_;
+    $ret = <<EOF;
+#ifndef EDI_FSA_H
+#define EDI_FSA_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+typedef struct { int trans; int (*ccode)(void*, char, int); } FSARule;
+typedef struct { int state, states, events; FSARule *rules; } FSAutomaton;
+
+void FSAInit   (FSAutomaton *, FSARule *, int, int, int);
+int  FSAProcess(FSAutomaton *, void *, char, int);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /*EDI_FSA_H*/
+
+EOF
+
+    foreach(@inits) {
+	$ret .= sprintf "void %s_init(FSAutomaton *fsa);\n", $_;
+    }
+    return $ret;
+}
+
+
+sub fsaccode {
+    return <<EOF;
+#include <stdlib.h>
+    
+void FSAInit
+(FSAutomaton *self, FSARule *rules, int states, int events, int state) {
+    self->events = events;
+    self->states = states;
+    self->rules = rules;
+    self->state = state;
+}
+
+int FSAProcess(FSAutomaton *self, void *user, char symbol, int event) {
+    FSARule *rules = self->rules;
+    int state = self->state;
+    int events = self->events;
+    int states = self->states;
+    int trans = 0;
+    int (*ccode)(void*, char, int) = 0;
+
+    if(state < 0 || state >= states ||
+       event < 0 || event >= events)
+    {
+	trans = rules[0].trans;
+        ccode = rules[0].ccode;
+    }
+    else if((trans = rules[events * state + event].trans))
+	ccode = rules[events * state + event].ccode;
+    else if((trans = rules[events * state].trans))
+	ccode = rules[events * state].ccode;
+    else
+    {
+	trans = rules[0].trans;
+	ccode = rules[0].ccode;
+    }
+
+    self->state = trans;
+
+    return ccode ? ccode(user, symbol, event) : 0;
+}
+
+EOF
+}
+

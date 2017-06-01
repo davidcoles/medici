@@ -1,0 +1,53 @@
+
+	    The MEDICI Electronic Data Interchange Library
+
+
+OVERVIEW
+
+The goal of MEDICI is to produce a library of code which allows EDI
+applications to be written without the author having to worry about
+the complexities various standards involved. It achieves this by
+abstracting the details of the EDI stream behind a number of objects
+which can be easily manipulated by the programmer through method
+calls. Bindings to various scripting languages will give users the
+power to quickly assemble applications which understand EDI messages
+and integrate them into existing components.
+
+MEDICI operates as a stream-oriented parser similar to the Expat
+library for XML documents. The application creates an instance of a
+parser object, registers callbacks with it, and then feeds it the EDI
+document. As the parser object decodes the stream the callbacks are
+triggered as various events are encountered. MEDICI takes care of
+ensuring the correct format and structure of the source document and
+optionally takes care of validating segments. Deviations from the
+published standards may be accomodated with "pragmas". This allows the
+calling application to state which errors are too trivial to cause the
+parser to halt.
+
+Through the callbacks MEDICI passes references to data dictionaries
+and context information which allows the application to understand the
+structure of a message and provide semantics for the component parts.
+
+At a later date it is the intention to also provide an application
+framework utilising MEDICI which can provide some level of support for
+conducting business based on EDI interchanges, but for now this is
+left as an excercise for the reader ;)
+
+
+TELESMART API
+
+Value Added Network - Edifact Commands And Acknowledgements
+By Telesmart API Ltd and TeleOrdering Ltd
+  
+Whitaker (owners of TeleOrdering) is now part of VNU. The
+specification document (docs/telesmart.txt) is attributed to them. The
+specification document and derived works are included in this project
+with the kind permission of the IT Director, VNU Entertainment Media
+Ltd.
+
+This project has no other connection with Telesmart, TeleOrdering,
+Whitaker or VNU.
+
+
+
+

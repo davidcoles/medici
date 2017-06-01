@@ -1,0 +1,26 @@
+SHELL   = /bin/sh
+CC      = @CC@
+CFLAGS  = @CFLAGS@ -I.. -DHAVE_CONFIG_H
+LDFLAGS = @LIBS@
+
+FSA2C	= ../util/fsa2c
+OBJS	= fsa.o adt.o prmtrs.o drctry.o parser.o \
+	  segment.o common.o frncsc.o giovanni.o medici.o token.o \
+	  edifact.o ungtdi.o x12.o imp.o
+
+all: libmedici.a
+
+libmedici.a: $(OBJS)
+	ar cr $@ $(OBJS)
+	@RANLIB@ $@
+
+fsa.c: fsa.fsa
+	$(FSA2C)    fsa.fsa > fsa.c
+	$(FSA2C) -h fsa.fsa > fsa.h
+
+depend:
+	makedepend *.c
+
+clean:
+	rm -rf html latex 2>/dev/null || true
+	rm *.a *.o 2>/dev/null || true

@@ -1,0 +1,8 @@
+
+	    The MEDICI Electronic Data Interchange Library
+
+Please refer to the "Building and Installing" section of the MEDICI
+documentation in the 'doc' directory for instructions. The quickstart
+guide for the impatient is:
+
+	 ./configure && make

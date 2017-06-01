@@ -1,0 +1,84 @@
+<!-- <!DOCTYPE tsg SYSTEM "tsg.dtd" [    -->
+
+<!ENTITY % item "
+    code CDATA #REQUIRED
+    name CDATA #IMPLIED
+    desc CDATA #IMPLIED
+    note CDATA #IMPLIED
+">
+
+<!ENTITY % reqr "reqr (mandatory | conditional) #REQUIRED">
+<!ENTITY % type "type (simple | composite) #REQUIRED">
+<!ENTITY % repr "repr (alpha | numeric | mixed | 1decimal | 2decimal |
+    3decimal | 4decimal | enum | date | time) 'mixed'">
+
+<!ELEMENT tsg (#PCDATA|segments|composites|elements|codelists|transactions)*>
+<!ATTLIST tsg
+    version CDATA #IMPLIED
+    release CDATA #IMPLIED
+>
+
+<!ELEMENT segments     (#PCDATA | segment)*>
+<!ELEMENT composites   (#PCDATA | composite)*>
+<!ELEMENT elements     (#PCDATA | element)*>
+<!ELEMENT codelists    (#PCDATA | codelist)*>
+<!ELEMENT transactions (#PCDATA | transaction)*>
+
+<!ELEMENT segment (#PCDATA | elemref)*>
+<!ATTLIST segment %item; >
+
+<!ELEMENT elemref EMPTY>
+<!ATTLIST elemref
+    code CDATA #REQUIRED
+    indx CDATA #IMPLIED
+    %reqr; %type;
+>
+
+<!ELEMENT composite (#PCDATA | component)*>
+<!ATTLIST composite %item; >
+
+<!ELEMENT component EMPTY>
+<!ATTLIST component
+    code CDATA #REQUIRED
+    indx CDATA #IMPLIED
+    %reqr;
+>
+
+<!ELEMENT element (#PCDATA | value)*>
+<!ATTLIST element %item;
+    min  CDATA #IMPLIED
+    max  CDATA #IMPLIED
+    usge CDATA #IMPLIED
+    %repr;
+>
+
+<!ELEMENT codelist (#PCDATA | value)*>
+<!ATTLIST codelist
+    code CDATA #REQUIRED
+>
+
+<!ELEMENT value EMPTY>
+<!ATTLIST value %item; >
+
+<!ELEMENT transaction (#PCDATA | segref | loop)*>
+<!ATTLIST transaction
+    code    CDATA #REQUIRED
+    agency  CDATA #IMPLIED
+    release CDATA #IMPLIED
+    type    CDATA #IMPLIED
+    version CDATA #IMPLIED
+>
+
+<!ELEMENT segref EMPTY>
+<!ATTLIST segref %item;
+    reps CDATA #REQUIRED
+    indx CDATA #IMPLIED
+    %reqr;
+>
+
+<!ELEMENT loop (#PCDATA | segref | loop)*>
+<!ATTLIST loop %item;
+    reps CDATA #REQUIRED
+    indx CDATA #IMPLIED
+    %reqr;
+>

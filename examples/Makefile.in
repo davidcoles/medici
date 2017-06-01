@@ -1,0 +1,38 @@
+CC        = @CC@
+CFLAGS    = @CFLAGS@ -I.. -I../src -DHAVE_CONFIG_H
+LDFLAGS   = @LIBS@ -L../src -lmedici
+LIBS      = ../src/libmedici.a
+
+CXX       = g++
+CXXFLAGS  = $(CFLAGS)
+
+BINARIES  = tokens elements edisplit describe editoxml telesmart medici pyxtest
+
+all: $(BINARIES)
+
+tokens: tokens.o $(LIBS)
+	$(CC) $(CFLAGS) -o $@ tokens.o $(LDFLAGS)
+
+elements: elements.o $(LIBS)
+	$(CC) $(CFLAGS) -o $@ elements.o $(LDFLAGS)
+
+edisplit: edisplit.o $(LIBS)
+	$(CC) $(CFLAGS) -o $@ edisplit.o $(LDFLAGS)
+
+describe: describe.o xmltsg.o expyx.o $(LIBS)
+	$(CC) $(CFLAGS) -o $@ describe.o xmltsg.o expyx.o $(LDFLAGS)
+
+editoxml: editoxml.o xmlout.o xmltsg.o expyx.o $(LIBS)
+	$(CC) $(CFLAGS) -o $@ editoxml.o xmlout.o xmltsg.o expyx.o $(LDFLAGS)
+
+telesmart: telesmart.o xmltsg.o expyx.o $(LIBS)
+	$(CC) $(CFLAGS) -o $@ telesmart.o xmltsg.o expyx.o $(LDFLAGS)
+
+medici: medici.o xmltsg.o expyx.o $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ medici.o xmltsg.o expyx.o $(LDFLAGS)
+
+pyxtest: pyxtest.o expyx.o $(LIBS)
+	$(CC) $(CFLAGS) -o $@ pyxtest.o expyx.o $(LDFLAGS)
+	
+clean:
+	rm -- $(BINARIES) *.o 2>/dev/null || true
