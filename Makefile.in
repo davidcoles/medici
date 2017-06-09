@@ -26,3 +26,65 @@ indent:
 	find src examples -name \*.h -exec indent -gnu {} \;
 
 release: all docs indent distclean
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BASEURL = https://www.unece.org/fileadmin/DAM/trade/untdid
+
+directories: 92-1.xml d97a.xml d96a.xml
+
+88-1.zip:
+	test -f $@ || wget $(BASEURL)/d88/$@
+
+90-1.zip:
+	test -f $@ || wget $(BASEURL)/d90/$@
+
+90-2.zip:
+	test -f $@ || wget $(BASEURL)/d90/$@
+
+91-1.zip:
+	test -f $@ || wget $(BASEURL)/d91/$@
+
+91-2.zip:
+	test -f $@ || wget $(BASEURL)/d91/$@
+
+92-1.zip:
+	test -f $@ || wget $(BASEURL)/d92/$@
+
+93-2.zip:
+	test -f $@ || wget $(BASEURL)/d93/$@
+
+d93a.zip:
+	test -f $@ || wget $(BASEURL)/d93/$@
+
+s93a.zip:
+	test -f $@ || wget $(BASEURL)/d93/$@
+
+%.zip:
+	test -f $@ || wget $(BASEURL)/$*/$@
+
+
+%.xml: %.zip
+	test -d $* || util/unzipdirs $*.zip
+	util/untd2t $* > $*.xml
+
+dirclean:
+	rm -rf *.zip *.xml d??a d??b d??c 93-2 s93a 92-1 91-1 91-2 90-1 90-2 88-1
+
+# d16a d16b d15a d15b d14a d14b d13a d13b d12a d12b d11a d11b d10a d10b
+# d09a d09b d08a d08b d07a d07b d06a d06b d05a d05b d04a d04b d03a d03b
+# d02a d02b d01a d01b d01c d00a d00b d99a d99b d98a d98b d97a d97b d96a
+# d96b d95a d95b d94a d94b d93a 93-2 s93a 92-1 91-1 91-2 90-1 90-2 88-1
+
+
